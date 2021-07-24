@@ -1,0 +1,10 @@
+.Backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(32, 42, 58, .2);
+    backdrop-filter: blur(17.5px);
+    -webkit-backdrop-filter: blur(17.5px);
+}

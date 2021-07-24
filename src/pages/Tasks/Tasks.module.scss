@@ -1,0 +1,17 @@
+@import "../../assets/colors/colors";
+
+.Tasks {
+    max-width: 95%;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: $light-blue;
+    border-radius: 1rem;
+
+    .Header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .Main {}
+}

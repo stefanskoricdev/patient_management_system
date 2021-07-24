@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+@import "./assets/colors/colors";
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  scrollbar-width: .5rem;
+  scrollbar-color: rgb(159, 186, 176);
+}
+
+*::-webkit-scrollbar {
+  width: .5rem;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(100, 101, 106);
+  border-radius: 1rem;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: rgb(159, 186, 176);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Merriweather', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $dark-blue;
+
+  input,
+  button,
+  select,
+  textarea {
+    font-family: inherit;
+  }
+
+  input:focus,
+  button:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+  }
+
+  button {
+    transition: transform 200ms linear;
+  }
+
+  button:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+
+  ul,
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .alert-modal button {
+    background-color: rgb(101, 195, 157) !important;
+  }
+}
