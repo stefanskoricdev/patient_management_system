@@ -1,10 +1,14 @@
 import styles from "./MainHeader.module.scss";
-const MainHeader = (props) => {
+import { useContext } from "react";
+import AppContext from "../../store/appContext";
+const MainHeader = () => {
+  const appCtx = useContext(AppContext);
+  const { openNavHandler } = appCtx;
   return (
     <header className={styles.MainHeader}>
       <button
         data-id="nav-btn"
-        onClick={props.navBtnClick}
+        onClick={openNavHandler}
         className={styles.BurgerBtn}
       >
         <div data-id="nav-btn"></div>

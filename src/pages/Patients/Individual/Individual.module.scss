@@ -1,0 +1,44 @@
+@import "../../../assets/colors/colors";
+
+.IndividualWrapper {
+    margin: 2rem auto;
+    padding: 1rem 0;
+    background-color: $light-blue;
+    border-radius: 1rem;
+
+    .Header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 .5rem;
+        border-bottom: 1px solid $dark-blue;
+    }
+
+    .Nav {
+        display: flex;
+        width: 100%;
+        padding-top: 1rem;
+
+        a {
+            width: 30%;
+            margin: 0 auto;
+            padding: 1rem;
+            text-align: center;
+            background-color: $dark-blue;
+            border-radius: 1rem;
+        }
+
+        a.active,
+        a:active,
+        a:hover {
+            background-color: $whiteish;
+            color: $dark-blue;
+        }
+
+    }
+
+
+    .Main {
+        overflow-x: scroll;
+    }
+}

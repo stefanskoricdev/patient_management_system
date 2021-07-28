@@ -1,0 +1,136 @@
+@import "../../../assets/colors/colors";
+
+.PatientDetailModal {
+    height: fit-content;
+    width: 35rem;
+    max-width: 95%;
+    margin: 5rem auto;
+    border-radius: 4rem 0 4rem 0;
+    color: $whiteish;
+    background-color: $light-blue;
+    box-shadow: 5px 5px 10px $lightGreen;
+    overflow: hidden;
+    position: relative;
+
+    // When modal is active Sheduler component gets overflow: hidden property
+    .Header {
+        width: 100%;
+        background-color: none;
+    }
+
+    .Main {
+        padding-bottom: 3rem;
+        position: relative;
+
+        .Avatar {
+            position: absolute;
+            left: calc(50% - 7.5rem);
+            top: -25%;
+
+            img {
+                width: 15rem;
+                height: 15rem;
+            }
+        }
+
+        .MainInfo,
+        .Observation {
+            width: 35rem;
+            max-width: 95%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .MainInfo {
+            padding-top: 9rem;
+        }
+
+        .Observation {
+            max-height: 15rem;
+            overflow-y: scroll;
+        }
+    }
+
+    .Options {
+        display: none;
+        position: absolute;
+        top: .5rem;
+        right: .5rem;
+        flex-flow: column;
+
+        button {
+            background-color: transparent;
+            border: none;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .OptionsList {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            background-color: $whiteish;
+            border-radius: 1rem;
+
+            ul {
+                padding: 1rem 0;
+                margin: 0;
+
+                li {
+                    width: 95%;
+                    margin: 0 auto;
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    text-align: center;
+                    cursor: pointer;
+                }
+
+                li:hover {
+                    color: rgb(226, 226, 226);
+                }
+            }
+        }
+
+        .OptionsList.active {
+            width: 8rem;
+            height: fit-content;
+            animation: optionsOpen 200ms ease-in-out;
+            z-index: 5;
+        }
+    }
+}
+
+.PatientDetailModal:hover {
+    .Options {
+        display: flex;
+        opacity: 1;
+        animation: showOptionsBtn 200ms ease-in-out;
+    }
+}
+
+@keyframes optionsOpen {
+    from {
+        width: 0;
+        height: 0;
+    }
+
+    to {
+        width: 8rem;
+        height: fit-content;
+    }
+}
+
+@keyframes showOptionsBtn {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}

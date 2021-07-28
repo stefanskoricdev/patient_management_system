@@ -2,9 +2,15 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(32, 42, 58, .2);
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    //background-color: #9fbab0;
+    background: rgba(159, 186, 176, 0.40);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     backdrop-filter: blur(17.5px);
     -webkit-backdrop-filter: blur(17.5px);
+    z-index: 100;
 }

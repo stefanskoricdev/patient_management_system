@@ -2,14 +2,17 @@ import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./MainNavigation.module.scss";
 import logo from "../../assets/img/logo.png";
+import { useContext } from "react";
+import AppContext from "../../store/appContext";
 
 const MainNavigation = (props) => {
-  const { navBtnClicked } = props;
+  const appCtx = useContext(AppContext);
+  const { isNavBtnClicked } = appCtx;
   return (
     <Fragment>
       <nav
         className={
-          navBtnClicked
+          isNavBtnClicked
             ? [styles.MainNav, styles["active"]].join(" ")
             : styles.MainNav
         }
@@ -19,20 +22,20 @@ const MainNavigation = (props) => {
         </div>
         <ul className={styles.NavList}>
           <li>
-            <i className="fas fa-home"></i>
-            <NavLink className={styles.NavLink} to="/home">
+            <NavLink activeClassName={styles.active} to="/home">
+              <i className="fas fa-home"></i>
               Home
             </NavLink>
           </li>
           <li>
-            <i className="fas fa-hospital-user"></i>
-            <NavLink className={styles.NavLink} to="/patients">
+            <NavLink activeClassName={styles.active} to="/patients">
+              <i className="fas fa-hospital-user"></i>
               Patients
             </NavLink>
           </li>
           <li>
-            <i className="fas fa-tasks"></i>
-            <NavLink className={styles.NavLink} to="/tasks">
+            <NavLink activeClassName={styles.active} to="/tasks">
+              <i className="fas fa-tasks"></i>
               Tasks
             </NavLink>
           </li>

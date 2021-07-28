@@ -1,0 +1,94 @@
+@import "../../assets/colors/colors";
+
+.Scheduler {
+    position: relative;
+    min-width: 55rem;
+    margin-top: 1rem;
+    border-radius: 1rem;
+
+    li {
+        list-style: none;
+        color: $whiteish;
+    }
+
+    .Header {
+        margin-left: 4rem;
+        width: calc(100% - 4rem);
+        min-width: 50rem;
+        display: flex;
+        align-items: center;
+        background-color: $dark-blue;
+        height: 3rem;
+        border-radius: 1rem 1rem 0 0;
+
+        li {
+            width: 20%;
+            height: 100%;
+            border-right: 1px solid $whiteish;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+    }
+
+    .Main {
+        display: flex;
+        background-color: $whiteish;
+
+        .Time {
+            width: 4rem;
+            background-color: $dark-blue;
+
+            ul {
+                li {
+                    height: 10rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    color: $whiteish;
+                }
+            }
+        }
+
+        .Schedule {
+            width: calc(100% - 4rem);
+            display: grid;
+            grid-template-columns: repeat(5, 20% [col-start]);
+            grid-template-rows: repeat(14, 10rem [row-start]);
+            background-color: $whiteish;
+
+            li {
+                height: 10rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-bottom: .1rem solid $dark-blue;
+                border-right: .1rem solid $dark-blue;
+                cursor: pointer;
+
+                p {
+                    width: 90%;
+                    height: 80%;
+                    margin: 0 auto;
+                    padding: 0 2%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    border-radius: 0 2rem 0 2rem;
+                    color: rgb(54, 54, 58);
+                    font-size: 1.4rem;
+                    font-weight: 700;
+                }
+            }
+
+            li:hover {
+                background-color: rgb(230, 230, 230);
+            }
+        }
+    }
+}
