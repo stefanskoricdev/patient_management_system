@@ -24,19 +24,19 @@ const MainNavigation = (props) => {
           <li>
             <NavLink activeClassName={styles.active} to="/home">
               <i className="fas fa-home"></i>
-              Home
+              <p>Home</p>
             </NavLink>
           </li>
           <li>
             <NavLink activeClassName={styles.active} to="/patients">
               <i className="fas fa-hospital-user"></i>
-              Patients
+              <p>Patients</p>
             </NavLink>
           </li>
           <li>
             <NavLink activeClassName={styles.active} to="/tasks">
               <i className="fas fa-tasks"></i>
-              Tasks
+              <p>Tasks</p>
             </NavLink>
           </li>
 

@@ -3,14 +3,16 @@
 .MainNav {
     width: 70%;
     height: 100vh;
-    min-height: 25rem;
+    min-height: 30rem;
     position: absolute;
     top: 0;
     left: 0;
-    transform: translateX(-100%);
+    transform: translateX(-110%);
+    // translateX 110% to avoid shadow to be seen when nav is closed
     transition: transform 200ms ease-in-out;
+    border-radius: 0 1rem 1rem 0;
     background-color: $dark-blue;
-    z-index: 100;
+    z-index: 200;
 
     .Logo {
         width: 5rem;
@@ -26,17 +28,23 @@
     .NavList {
         padding: 1rem 0 1rem 1rem;
 
+        svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-right: 1rem;
+        }
+
         li {
             margin: 2rem 0;
 
             a {
+                display: flex;
                 padding: 1rem 0 1rem 1rem;
                 font-size: 1.2rem;
+                transition: border 100ms linear;
 
-                svg {
-                    width: 1.5rem;
-                    height: 1.5rem;
-                    margin-right: 1rem;
+                p {
+                    margin: 0;
                 }
             }
 
@@ -48,18 +56,15 @@
         }
 
         .Logout {
-            position: absolute;
-            left: 1rem;
-            bottom: 1rem;
             display: flex;
             align-items: center;
             background: none;
             border: none;
             color: $whiteish;
+            padding-left: 1rem;
 
             p {
-                margin-left: 1rem;
-                font-size: 1rem;
+                font-size: 1.2rem;
             }
         }
     }
@@ -67,4 +72,81 @@
 
 .MainNav.active {
     transform: translateX(0);
+    box-shadow: 15px 15px 20px $dark-blue;
+}
+
+@media (min-height: 450px) {
+    .MainNav {
+        position: fixed;
+
+        .Logout {
+            position: absolute;
+            left: 1rem;
+            bottom: 1rem;
+            margin-left: 0;
+        }
+    }
+
+
+
+
+}
+
+@media (min-width: 750px) {
+    .MainNav {
+        width: 50%;
+    }
+}
+
+@media (min-width: 1023px) {
+    .MainNav {
+        width: 5rem;
+        overflow-x: hidden;
+        transform: translateX(0);
+        animation: navClose 200ms linear;
+
+        .Logo {
+            margin: 0 auto;
+        }
+
+        .NavList {
+            width: 15rem;
+
+            p {
+                transition: opacity 200ms linear;
+                opacity: 0;
+            }
+        }
+    }
+
+    .MainNav.active {
+        transform: translateX(0);
+        width: 15rem;
+        animation: navOpen 200ms linear;
+
+        p {
+            transition: opacity 200ms linear;
+            opacity: 1;
+        }
+    }
+}
+
+@keyframes navOpen {
+    from {
+        width: 5rem;
+    }
+
+    to {
+        width: 15rem;
+    }
+}
+
+@keyframes navClose {
+    from {
+        width: 15rem;
+    }
+
+    to {
+        width: 5rem;
+    }
 }

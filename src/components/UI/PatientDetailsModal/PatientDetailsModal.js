@@ -24,29 +24,29 @@ const PatientDetailsModal = (props) => {
 
   return (
     <section onClick={openOptionsHandler} className={styles.PatientDetailModal}>
-      <div className={styles.Options}>
-        <button>
-          <img id="options-btn" src={dotsIcon} alt="dots" />
-        </button>
-        <div
-          className={
-            !isOptionsOpen
-              ? styles.OptionsList
-              : [styles.OptionsList, styles["active"]].join(" ")
-          }
-        >
-          <ul>
-            <li
-              onClick={() => {
-                props.deletePatient(targetedPatient.id);
-              }}
-            >
-              Delete
-            </li>
-          </ul>
-        </div>
-      </div>
       <header className={styles.Header}>
+        <div className={styles.Options}>
+          <button>
+            <img id="options-btn" src={dotsIcon} alt="dots" />
+          </button>
+          <div
+            className={
+              !isOptionsOpen
+                ? styles.OptionsList
+                : [styles.OptionsList, styles["active"]].join(" ")
+            }
+          >
+            <ul>
+              <li
+                onClick={() => {
+                  props.deletePatient(targetedPatient.id);
+                }}
+              >
+                Delete
+              </li>
+            </ul>
+          </div>
+        </div>
         <svg
           height="100%"
           width="100%"

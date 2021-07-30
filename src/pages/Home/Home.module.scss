@@ -13,3 +13,12 @@
         align-items: center;
     }
 }
+
+@media (min-width: 1023px) {
+    .Home {
+        margin-left: calc(5rem + 2.5%);
+        margin-right: 2.5%;
+    }
+}
+
+;

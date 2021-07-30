@@ -1,4 +1,8 @@
-export const createScheduleFields = (dataContainer, patientModalHandler) => {
+export const createScheduleFields = (
+  dataContainer,
+  patientModalHandler,
+  physio
+) => {
   let scheduleFields = [];
   const colorPallete = [
     "FFE194",
@@ -11,10 +15,14 @@ export const createScheduleFields = (dataContainer, patientModalHandler) => {
   if (dataContainer.length > 0) {
     for (let i = 0; i < 70; i++) {
       const existingData = dataContainer.findIndex((data) =>
-        data.id === `patient${i}` ? data : null
+        data.id === `${physio}-patient${i}` ? data : null
       );
       scheduleFields.push(
-        <li onClick={patientModalHandler} key={i}>
+        <li
+          data-id={`${physio}-patient${i}`}
+          onClick={patientModalHandler}
+          key={i}
+        >
           <p
             style={
               dataContainer[existingData]
@@ -28,7 +36,7 @@ export const createScheduleFields = (dataContainer, patientModalHandler) => {
                   }
                 : { backgroundColor: "inherit" }
             }
-            data-id={`patient${i}`}
+            data-id={`${physio}-patient${i}`}
           >
             {existingData >= 0
               ? `${dataContainer[existingData].firstName} ${dataContainer[existingData].lastName}`
@@ -40,8 +48,12 @@ export const createScheduleFields = (dataContainer, patientModalHandler) => {
   } else {
     for (let i = 0; i < 70; i++) {
       scheduleFields.push(
-        <li onClick={patientModalHandler} key={i}>
-          <p data-id={`patient${i}`}></p>
+        <li
+          data-id={`${physio}-patient${i}`}
+          onClick={patientModalHandler}
+          key={i}
+        >
+          <p data-id={`${physio}-patient${i}`}></p>
         </li>
       );
     }

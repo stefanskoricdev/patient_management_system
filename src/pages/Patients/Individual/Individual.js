@@ -37,13 +37,13 @@ const Individual = () => {
             <Redirect to="/patients/individual/dijana" />
           </Route>
           <Route path="/patients/individual/dijana">
-            <Scheduler />
+            <Scheduler physiotherapist={"Dijana"} />
           </Route>
           <Route path="/patients/individual/marko">
-            <h1>Marko Page</h1>
+            <Scheduler physiotherapist={"Marko"} />
           </Route>
           <Route path="/patients/individual/stefan">
-            <h1>Stefan Page</h1>
+            <Scheduler physiotherapist={"Stefan"} />
           </Route>
           <Route path="*">
             <Redirect to="/patients/individual/dijana" />

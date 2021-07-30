@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import db from "../../services/firebase";
 import styles from "./Scheduler.module.scss";
 import AddPatientModal from "../UI/AddPatientModal/AddPatientModal";
@@ -8,16 +8,27 @@ import Loader from "../UI/Loader/Loader";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { createScheduleFields } from "../../helpers/createScheduleFields";
+import LayoutContext from "../../store/layoutContext";
+import AppContext from "../../store/appContext";
 
 const mySwal = withReactContent(Swal);
 
-const Scheduler = () => {
-  const [patients, setPatients] = useState([]);
-  const [patientId, setPatientId] = useState();
-  const [isAddPatientModalOpen, setIsAddPatientModalOpen] = useState(false);
-  const [isPatientDetailsModalOpen, setIsPatientDetailsModalOpen] =
-    useState(false);
+const Scheduler = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const layoutCtx = useContext(LayoutContext);
+  const appCtx = useContext(AppContext);
+  const {
+    patientId,
+    isAddPatientModalOpen,
+    isPatientDetailsModalOpen,
+    patientModalHandler,
+    closePatientDetailsModal,
+    closeAddPatientModal,
+    setIsAddPatientModalOpen,
+  } = layoutCtx;
+
+  const { patients, setPatients } = appCtx;
 
   const firstNameInput = useRef();
   const lastNameInput = useRef();
@@ -28,28 +39,7 @@ const Scheduler = () => {
   const observationInput = useRef();
   const physiotherapistInput = useRef();
 
-  const patientModalHandler = (e) => {
-    if (e.target.innerHTML === "") {
-      setIsAddPatientModalOpen((prevState) => !prevState);
-      setPatientId(e.target.getAttribute("data-id"));
-      // Takes data-id attr value from 'li' element and gives it to a new patient as its ID. So when page loads
-      //each patient will be rendered to 'li' element with same ID.
-      return;
-    }
-    setIsPatientDetailsModalOpen((prevState) => !prevState);
-    setPatientId(e.target.getAttribute("data-id"));
-  };
-
-  const closePatientDetailsModal = (e) => {
-    if (e.target.id === "backdrop") {
-      setIsPatientDetailsModalOpen(false);
-    }
-  };
-  const closeAddPatientModal = (e) => {
-    if (e.target.id === "backdrop") {
-      setIsAddPatientModalOpen(false);
-    }
-  };
+  const { physiotherapist } = props;
 
   const addPatientHandler = (e) => {
     e.preventDefault();
@@ -103,7 +93,7 @@ const Scheduler = () => {
       .then((result) => {
         if (result.isConfirmed) {
           setIsLoading(true);
-          db.collection("patients")
+          db.collection("individual-patients")
             .doc(targetId)
             .delete()
             .then(() => {
@@ -134,7 +124,7 @@ const Scheduler = () => {
 
   const sendData = (newPatient) => {
     setIsLoading(true);
-    db.collection("patients")
+    db.collection("individual-patients")
       .doc(newPatient.id)
       .set(newPatient)
       .then(() => {
@@ -156,43 +146,13 @@ const Scheduler = () => {
       });
   };
 
-  const getData = () => {
-    let patientsList = [];
-    setIsLoading(true);
-    db.collection("patients")
-      .get()
-      .then((patients) => {
-        patients.forEach((patient) => {
-          const singlePatient = {
-            id: patient.data().id,
-            firstName: patient.data().firstName,
-            lastName: patient.data().lastName,
-            address: patient.data().address,
-            gender: patient.data().gender,
-            phone: patient.data().phone,
-            dateOfBirth: patient.data().dateOfBirth,
-            observation: patient.data().observation,
-            physiotherapist: patient.data().physiotherapist,
-          };
-          patientsList.push(singlePatient);
-        });
-        setPatients(patientsList);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        mySwal.fire({
-          title: "Something went wrong!",
-          text: `${error}`,
-          icon: "error",
-          customClass: { container: "alert-modal" },
-        });
-      });
-  };
-
-  useEffect(() => {
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const filteredPatients = patients.filter(
+    (patient) => patient.physiotherapist === physiotherapist
+  );
+  // getData() in App Provider fetches data from firebase and adds it to patients state
+  // which is sent in this component through appContext and then filtered according
+  //to which physio this component belongs to (we get that trough props).
+  //This way we avoid data being fetched every time we click physio tab!
 
   return (
     <section
@@ -256,7 +216,11 @@ const Scheduler = () => {
           </ul>
         </div>
         <section id="schedule" className={styles.Schedule}>
-          {createScheduleFields(patients, patientModalHandler)}
+          {createScheduleFields(
+            filteredPatients,
+            patientModalHandler,
+            physiotherapist
+          )}
         </section>
       </main>
     </section>

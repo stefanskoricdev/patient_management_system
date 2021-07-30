@@ -1,7 +1,6 @@
 @import "../../assets/colors/colors";
 
 .Scheduler {
-    position: relative;
     min-width: 55rem;
     margin-top: 1rem;
     border-radius: 1rem;
@@ -31,15 +30,20 @@
             font-weight: 700;
             font-size: 1.5rem;
         }
+
+        li:nth-child(5) {
+            border-right: none;
+        }
     }
+
 
     .Main {
         display: flex;
-        background-color: $whiteish;
 
         .Time {
             width: 4rem;
             background-color: $dark-blue;
+            border-radius: 1rem 0 0 1rem;
 
             ul {
                 li {

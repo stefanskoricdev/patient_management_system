@@ -13,3 +13,10 @@
         align-items: center;
     }
 }
+
+@media (min-width: 1023px) {
+    .Tasks {
+        margin-left: calc(5rem + 2.5%);
+        margin-right: 2.5%;
+    }
+}

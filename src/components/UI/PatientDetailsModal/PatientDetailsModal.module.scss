@@ -5,17 +5,73 @@
     width: 35rem;
     max-width: 95%;
     margin: 5rem auto;
+    overflow: hidden;
     border-radius: 4rem 0 4rem 0;
     color: $whiteish;
     background-color: $light-blue;
-    box-shadow: 5px 5px 10px $lightGreen;
-    overflow: hidden;
-    position: relative;
+    box-shadow: 5px 5px 10px $dark-blue;
 
     // When modal is active Sheduler component gets overflow: hidden property
     .Header {
         width: 100%;
         background-color: none;
+        position: relative;
+
+        .Options {
+            position: absolute;
+            top: .5rem;
+            right: .5rem;
+            flex-flow: column;
+
+            button {
+                background-color: transparent;
+                border: none;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .OptionsList {
+                position: absolute;
+                display: none;
+                top: 0;
+                right: 0;
+                width: 0;
+                height: 0;
+                border-radius: 1rem;
+                background-color: $light-blue;
+
+                ul {
+                    padding: 1rem 0;
+                    margin: 0;
+
+                    li {
+                        width: fit-content;
+                        margin: 0 auto;
+                        font-size: 1.2rem;
+                        font-weight: 700;
+                        text-align: center;
+                        color: $whiteish;
+                        cursor: pointer;
+                    }
+
+                    li:hover {
+                        border-bottom: 1px solid $whiteish;
+                    }
+                }
+            }
+
+            .OptionsList.active {
+                display: block;
+                width: 8rem;
+                height: fit-content;
+                min-height: 4rem;
+                animation: optionsOpen 200ms ease-in-out;
+                z-index: 5;
+            }
+        }
     }
 
     .Main {
@@ -50,78 +106,19 @@
             overflow-y: scroll;
         }
     }
-
-    .Options {
-        display: none;
-        position: absolute;
-        top: .5rem;
-        right: .5rem;
-        flex-flow: column;
-
-        button {
-            background-color: transparent;
-            border: none;
-
-            img {
-                width: 100%;
-                height: 100%;
-            }
-        }
-
-        .OptionsList {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 0;
-            height: 0;
-            background-color: $whiteish;
-            border-radius: 1rem;
-
-            ul {
-                padding: 1rem 0;
-                margin: 0;
-
-                li {
-                    width: 95%;
-                    margin: 0 auto;
-                    font-size: 1.2rem;
-                    font-weight: 700;
-                    text-align: center;
-                    cursor: pointer;
-                }
-
-                li:hover {
-                    color: rgb(226, 226, 226);
-                }
-            }
-        }
-
-        .OptionsList.active {
-            width: 8rem;
-            height: fit-content;
-            animation: optionsOpen 200ms ease-in-out;
-            z-index: 5;
-        }
-    }
-}
-
-.PatientDetailModal:hover {
-    .Options {
-        display: flex;
-        opacity: 1;
-        animation: showOptionsBtn 200ms ease-in-out;
-    }
 }
 
 @keyframes optionsOpen {
     from {
         width: 0;
         height: 0;
+        opacity: 0;
     }
 
     to {
         width: 8rem;
         height: fit-content;
+        opacity: 1;
     }
 }
 

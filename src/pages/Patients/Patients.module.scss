@@ -34,6 +34,26 @@
             font-size: 1.5rem;
             margin-bottom: 0;
         }
+
+        svg,
+        p {
+            transition: color 200ms linear;
+        }
     }
 
+    .PatientsLink:hover {
+
+        svg,
+        p {
+            color: $light-blue;
+        }
+    }
+
+}
+
+@media (min-width: 1023px) {
+    .Patients {
+        margin-left: calc(5rem + 2.5%);
+        margin-right: 2.5%;
+    }
 }
