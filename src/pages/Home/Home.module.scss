@@ -12,6 +12,23 @@
         justify-content: space-between;
         align-items: center;
     }
+
+    .Main {
+        .CurrentPatients {
+            width: 30rem;
+            max-width: 95%;
+            margin: 1rem auto;
+            padding: 1rem;
+            background-color: $dark-blue;
+            border-radius: 1rem;
+            text-align: center;
+
+            p {
+                font-size: 3rem;
+                margin: 1rem 0;
+            }
+        }
+    }
 }
 
 @media (min-width: 1023px) {

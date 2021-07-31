@@ -14,8 +14,6 @@ import AppContext from "../../store/appContext";
 const mySwal = withReactContent(Swal);
 
 const Scheduler = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
-
   const layoutCtx = useContext(LayoutContext);
   const appCtx = useContext(AppContext);
   const {
@@ -28,7 +26,7 @@ const Scheduler = (props) => {
     setIsAddPatientModalOpen,
   } = layoutCtx;
 
-  const { patients, setPatients } = appCtx;
+  const { patients, setPatients, isLoading, setIsLoading } = appCtx;
 
   const firstNameInput = useRef();
   const lastNameInput = useRef();

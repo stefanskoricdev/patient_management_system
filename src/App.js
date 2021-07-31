@@ -10,14 +10,19 @@ import AppContext from "./store/appContext";
 import Individual from "./pages/Patients/Individual/Individual";
 import Groups from "./pages/Patients/Groups/Groups";
 import LayoutProvider from "./store/LayoutProvider";
+import Loader from "./components/UI/Loader/Loader";
 function App() {
   const appCtx = useContext(AppContext);
-  const { isNavBtnClicked } = appCtx;
+  const { isNavBtnClicked, isLoading } = appCtx;
   return (
-    <div className={styles.App}>
+    <div
+      style={isLoading ? { height: "100vh", overflowY: "hidden" } : null}
+      className={styles.App}
+    >
       <LayoutProvider>
         <Layout isNavBtnClicked={isNavBtnClicked} className={styles.Layout}>
           <MainNavigation navBtnClicked={isNavBtnClicked} />
+          {isLoading && <Loader />}
           <Switch>
             <Route path="/" exact>
               <Redirect to="/home" />

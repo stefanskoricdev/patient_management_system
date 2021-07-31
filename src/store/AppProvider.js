@@ -1,10 +1,16 @@
 import { React, useState, useEffect } from "react";
 import AppContext from "./appContext";
 import db from "../services/firebase";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const mySwal = withReactContent(Swal);
 
 const AppProvider = (props) => {
   const [isNavBtnClicked, setIsNavBtnClicked] = useState(false);
   const [patients, setPatients] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const openNavHandler = () => {
     setIsNavBtnClicked(true);
@@ -18,6 +24,7 @@ const AppProvider = (props) => {
 
   const getData = () => {
     let patientsList = [];
+    setIsLoading(true);
     db.collection("individual-patients")
       .get()
       .then((patients) => {
@@ -34,11 +41,18 @@ const AppProvider = (props) => {
             physiotherapist: patient.data().physiotherapist,
           };
           patientsList.push(singlePatient);
+          setIsLoading(false);
         });
         setPatients(patientsList);
       })
       .catch((error) => {
-        console.log(error);
+        setIsLoading(false);
+        mySwal.fire({
+          title: "Something went wrong!!",
+          text: `${error}`,
+          icon: "error",
+          customClass: { container: "alert-modal" },
+        });
       });
   };
   //Getting data here and then i can use it trough app without fetching again
@@ -62,6 +76,8 @@ const AppProvider = (props) => {
     closeNavHandler,
     patients,
     setPatients,
+    isLoading,
+    setIsLoading,
   };
   return (
     <AppContext.Provider value={appContextValue}>
