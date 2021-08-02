@@ -14,18 +14,64 @@
     }
 
     .Main {
-        .CurrentPatients {
+        h1 {
+            font-size: 1.2rem;
+        }
+
+        .Stats {
+            .CurrentPatients {
+                width: 30rem;
+                max-width: 95%;
+                margin: 1rem auto;
+                padding: 1rem;
+                background-color: $dark-blue;
+                border-radius: 1rem;
+                text-align: center;
+
+                p {
+                    font-size: 1.2rem;
+                    margin: 1rem 0;
+                }
+            }
+        }
+
+        .PatientsListWrapper {
             width: 30rem;
             max-width: 95%;
+            height: fit-content;
             margin: 1rem auto;
-            padding: 1rem;
+            padding: 1rem 0;
             background-color: $dark-blue;
             border-radius: 1rem;
-            text-align: center;
 
-            p {
-                font-size: 3rem;
-                margin: 1rem 0;
+            .PatientsListTable {
+                table-layout: fixed;
+                width: 100%;
+
+                caption {
+                    border-bottom: 2px solid $light-blue;
+                }
+
+                tbody {
+                    display: block;
+                    max-height: 15rem;
+                    overflow: scroll;
+                    border-collapse: collapse;
+
+                    tr {
+                        display: block;
+                        width: 100%;
+                    }
+
+                    th,
+                    td {
+                        width: fit-content;
+                        min-width: 10rem;
+                        padding: .5rem;
+                        text-align: left;
+                        border-right: 1px solid $light-blue;
+                    }
+                }
             }
         }
     }
@@ -35,6 +81,28 @@
     .Home {
         margin-left: calc(5rem + 2.5%);
         margin-right: 2.5%;
+
+        .Main {
+            display: flex;
+
+            .Stats {
+                width: 50%;
+
+                .CurrentPatients {
+                    margin: 0 0 1rem;
+                }
+            }
+
+            .PatientsListWrapper {
+                width: 40rem;
+                margin: 0 auto;
+
+                .PatientsListTable {
+                    width: fit-content;
+                    margin: 0 auto;
+                }
+            }
+        }
     }
 }
 

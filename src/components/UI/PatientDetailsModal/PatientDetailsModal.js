@@ -4,9 +4,17 @@ import maleAvatar from "../../../assets/img/male_avatar.svg";
 import femaleAvatar from "../../../assets/img/female_avatar.svg";
 import dotsIcon from "../../../assets/img/dots_icon.png";
 import { getAge } from "../../../helpers/getAge";
+import { deleteData } from "../../actions/actions";
 
 const PatientDetailsModal = (props) => {
-  const { patients, patientId } = props;
+  const {
+    patients,
+    patientId,
+    setLoading,
+    setPatients,
+    setIsModalOpen,
+    collection,
+  } = props;
   const targetedPatientIndex = patients.findIndex(
     (patient) => patient.id === patientId
   );
@@ -39,7 +47,13 @@ const PatientDetailsModal = (props) => {
             <ul>
               <li
                 onClick={() => {
-                  props.deletePatient(targetedPatient.id);
+                  deleteData(
+                    setLoading,
+                    setIsModalOpen,
+                    setPatients,
+                    collection,
+                    targetedPatient.id
+                  );
                 }}
               >
                 Delete

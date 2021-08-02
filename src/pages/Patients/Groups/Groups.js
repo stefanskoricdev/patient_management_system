@@ -1,4 +1,4 @@
-import styles from "./Groups.module.scss";
+/* import styles from "./Groups.module.scss"; */
 
 const Groups = () => {
   return (

@@ -1,10 +1,6 @@
 import { React, useState, useEffect } from "react";
 import AppContext from "./appContext";
-import db from "../services/firebase";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-
-const mySwal = withReactContent(Swal);
+import { getData } from "../components/actions/actions";
 
 const AppProvider = (props) => {
   const [isNavBtnClicked, setIsNavBtnClicked] = useState(false);
@@ -22,44 +18,10 @@ const AppProvider = (props) => {
     }
   };
 
-  const getData = () => {
-    let patientsList = [];
-    setIsLoading(true);
-    db.collection("individual-patients")
-      .get()
-      .then((patients) => {
-        patients.forEach((patient) => {
-          const singlePatient = {
-            id: patient.data().id,
-            firstName: patient.data().firstName,
-            lastName: patient.data().lastName,
-            address: patient.data().address,
-            gender: patient.data().gender,
-            phone: patient.data().phone,
-            dateOfBirth: patient.data().dateOfBirth,
-            observation: patient.data().observation,
-            physiotherapist: patient.data().physiotherapist,
-          };
-          patientsList.push(singlePatient);
-          setIsLoading(false);
-        });
-        setPatients(patientsList);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        mySwal.fire({
-          title: "Something went wrong!!",
-          text: `${error}`,
-          icon: "error",
-          customClass: { container: "alert-modal" },
-        });
-      });
-  };
-  //Getting data here and then i can use it trough app without fetching again
-  //until user refreshes the page!
-
   useEffect(() => {
-    getData();
+    getData(setIsLoading, setPatients);
+    //Getting data here and then i can use it trough app without fetching again
+    //until user refreshes the page!
   }, []);
 
   useEffect(() => {

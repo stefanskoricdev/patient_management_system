@@ -1,13 +1,13 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./MainNavigation.module.scss";
 import logo from "../../assets/img/logo.png";
-import { useContext } from "react";
 import AppContext from "../../store/appContext";
 
-const MainNavigation = (props) => {
+const MainNavigation = () => {
   const appCtx = useContext(AppContext);
   const { isNavBtnClicked } = appCtx;
+
   return (
     <Fragment>
       <nav

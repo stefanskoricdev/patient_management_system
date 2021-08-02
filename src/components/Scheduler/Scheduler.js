@@ -1,5 +1,4 @@
-import { useState, useRef, useContext } from "react";
-import db from "../../services/firebase";
+import { useRef, useContext } from "react";
 import styles from "./Scheduler.module.scss";
 import AddPatientModal from "../UI/AddPatientModal/AddPatientModal";
 import Backdrop from "../UI/Backdrop/Backdrop";
@@ -10,8 +9,12 @@ import withReactContent from "sweetalert2-react-content";
 import { createScheduleFields } from "../../helpers/createScheduleFields";
 import LayoutContext from "../../store/layoutContext";
 import AppContext from "../../store/appContext";
+import { sendData } from "../actions/actions";
 
 const mySwal = withReactContent(Swal);
+
+const COLLECTION = "individual-patients";
+//Firebase DB collection name!
 
 const Scheduler = (props) => {
   const layoutCtx = useContext(LayoutContext);
@@ -24,6 +27,7 @@ const Scheduler = (props) => {
     closePatientDetailsModal,
     closeAddPatientModal,
     setIsAddPatientModalOpen,
+    setIsPatientDetailsModalOpen,
   } = layoutCtx;
 
   const { patients, setPatients, isLoading, setIsLoading } = appCtx;
@@ -72,76 +76,9 @@ const Scheduler = (props) => {
       });
       return;
     }
-    sendData(newPatient);
+    sendData(setIsLoading, COLLECTION, newPatient);
     setPatients((prevState) => [...prevState, newPatient]);
     setIsAddPatientModalOpen(false);
-  };
-
-  const deletePatientHandler = (targetId) => {
-    mySwal
-      .fire({
-        title: "Are you sure you want to delete patient?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "rgb(197, 27, 21)",
-        cancelButtonColor: "rgb(101, 195, 157)",
-        confirmButtonText: "Yes, delete it!",
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          setIsLoading(true);
-          db.collection("individual-patients")
-            .doc(targetId)
-            .delete()
-            .then(() => {
-              closePatientDetailsModal();
-              setPatients((prevState) =>
-                prevState.filter((patient) => patient.id !== targetId)
-              );
-              setIsLoading(false);
-              mySwal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted",
-                icon: "success",
-                customClass: { container: "alert-modal" },
-              });
-            })
-            .catch((error) => {
-              setIsLoading(false);
-              mySwal.fire({
-                title: "Something went wrong!!",
-                text: `${error}`,
-                icon: "error",
-                customClass: { container: "alert-modal" },
-              });
-            });
-        }
-      });
-  };
-
-  const sendData = (newPatient) => {
-    setIsLoading(true);
-    db.collection("individual-patients")
-      .doc(newPatient.id)
-      .set(newPatient)
-      .then(() => {
-        setIsLoading(false);
-        mySwal.fire({
-          title: "Success!",
-          text: "New patient has been created",
-          icon: "success",
-          customClass: { container: "alert-modal" },
-        });
-      })
-      .catch((error) => {
-        mySwal.fire({
-          title: "Something went wrong!",
-          text: `${error}`,
-          icon: "error",
-          customClass: { container: "alert-modal" },
-        });
-      });
   };
 
   const filteredPatients = patients.filter(
@@ -164,9 +101,12 @@ const Scheduler = (props) => {
       {isPatientDetailsModalOpen && (
         <Backdrop closeModal={closePatientDetailsModal}>
           <PatientDetailsModal
-            deletePatient={deletePatientHandler}
+            setIsModalOpen={setIsPatientDetailsModalOpen}
+            setLoading={setIsLoading}
+            setPatients={setPatients}
             patients={patients}
             patientId={patientId}
+            collection={COLLECTION}
           />
         </Backdrop>
       )}

@@ -4,6 +4,7 @@ import Backdrop from "../UI/Backdrop/Backdrop";
 
 const Layout = (props) => {
   const { isNavBtnClicked } = props;
+
   return (
     <Fragment>
       {isNavBtnClicked && <Backdrop />}

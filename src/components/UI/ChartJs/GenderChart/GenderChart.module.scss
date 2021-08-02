@@ -3,7 +3,6 @@
 .DoughnutWrapper {
     width: 30rem;
     max-width: 95%;
-    min-height: 25rem;
     height: fit-content;
     margin: 0 auto;
     padding: 1rem;
@@ -12,5 +11,11 @@
 
     h1 {
         text-align: center;
+    }
+}
+
+@media (min-width: 1023px) {
+    .DoughnutWrapper {
+        margin: 0;
     }
 }

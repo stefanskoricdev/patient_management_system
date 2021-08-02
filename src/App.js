@@ -11,13 +11,14 @@ import Individual from "./pages/Patients/Individual/Individual";
 import Groups from "./pages/Patients/Groups/Groups";
 import LayoutProvider from "./store/LayoutProvider";
 import Loader from "./components/UI/Loader/Loader";
+
 function App() {
   const appCtx = useContext(AppContext);
   const { isNavBtnClicked, isLoading } = appCtx;
   return (
     <div
       style={isLoading ? { height: "100vh", overflowY: "hidden" } : null}
-      className={styles.App}
+      className={styles.App} // When Loader is open prevents scrollX below Backdrop.
     >
       <LayoutProvider>
         <Layout isNavBtnClicked={isNavBtnClicked} className={styles.Layout}>

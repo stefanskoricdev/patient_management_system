@@ -7,8 +7,8 @@ import appContext from "../../store/appContext";
 
 const Home = () => {
   const currentTime = getTime();
-  const appCtx = useContext(appContext);
 
+  const appCtx = useContext(appContext);
   const { patients, isLoading } = appCtx;
 
   const patientsCount = patients.length;
@@ -19,6 +19,18 @@ const Home = () => {
     (patient) => patient.gender === "female"
   ).length;
 
+  const tableContent = patients.map((patient, i) => {
+    const tableContentEl = (
+      <tr key={i}>
+        <td>{patient.firstName}</td>
+        <td>{patient.lastName}</td>
+        <td>{patient.dateOfBirth}</td>
+        <td>{patient.physiotherapist}</td>
+      </tr>
+    );
+    return tableContentEl;
+  });
+
   return (
     <section className={styles.Home}>
       <header className={styles.Header}>
@@ -26,18 +38,36 @@ const Home = () => {
         <p>{currentTime}</p>
       </header>
       <main className={styles.Main}>
-        <section className={styles.CurrentPatients}>
-          <h1>Current Patients</h1>
-          <p>
-            {isLoading && 0}
-            <CountUp duration={0.5} end={patientsCount} />
-          </p>
+        <section className={styles.Stats}>
+          <div className={styles.CurrentPatients}>
+            <h1>Current Patients</h1>
+            <p>
+              {isLoading && 0}
+              <CountUp duration={0.5} end={patientsCount} />
+            </p>
+          </div>
+          <GenderChart
+            maleCount={malePatientsCount}
+            femaleCount={femalePatientsCount}
+            isLoading={isLoading}
+          />
         </section>
-        <GenderChart
-          maleCount={malePatientsCount}
-          femaleCount={femalePatientsCount}
-          isLoading={isLoading}
-        />
+        <section className={styles.PatientsListWrapper}>
+          <table className={styles.PatientsListTable}>
+            <caption>
+              <h1>Patients List</h1>
+            </caption>
+            <tbody>
+              <tr className={styles.BodyHeader}>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>DOB</th>
+                <th>Physiotherapist</th>
+              </tr>
+              {tableContent}
+            </tbody>
+          </table>
+        </section>
       </main>
     </section>
   );

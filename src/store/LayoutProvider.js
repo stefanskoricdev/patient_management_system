@@ -38,6 +38,7 @@ const LayoutProvider = (props) => {
     closePatientDetailsModal,
     closeAddPatientModal,
     setIsAddPatientModalOpen,
+    setIsPatientDetailsModalOpen,
   };
   return (
     <LayoutContext.Provider value={layoutContextValue}>

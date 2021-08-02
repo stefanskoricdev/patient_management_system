@@ -1,9 +1,11 @@
 import styles from "./MainHeader.module.scss";
 import { useContext } from "react";
 import AppContext from "../../store/appContext";
+
 const MainHeader = () => {
   const appCtx = useContext(AppContext);
   const { openNavHandler } = appCtx;
+
   return (
     <header className={styles.MainHeader}>
       <button
