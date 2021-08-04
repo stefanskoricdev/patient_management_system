@@ -69,16 +69,8 @@ body {
     color: inherit;
   }
 
+  // Sweet alert modal container
   .alert-modal button {
     background-color: rgb(101, 195, 157) !important;
-  }
-
-  // Sweet alert modal container
-}
-
-@media (min-width: 2000px) {
-  body {
-    width: 90%;
-    margin: 0 auto;
   }
 }

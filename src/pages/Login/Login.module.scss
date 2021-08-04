@@ -1,0 +1,180 @@
+@import "../../assets/colors/colors";
+
+.LoginWrapper {
+    position: relative;
+    height: 100vh;
+    min-height: 40rem;
+    max-height: 48rem;
+    background-color: $dark-blue;
+    overflow-x: hidden;
+
+    .Wave {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 150%;
+        height: 15rem;
+    }
+
+    .LoginImgWrapper {
+        position: relative;
+        width: 18rem;
+        margin: 0 auto;
+        z-index: 2;
+
+        .LoginImg {
+            width: 100%;
+        }
+    }
+
+    .FormWrapper {
+        width: 100%;
+        position: absolute;
+        top: 47%;
+        left: 0;
+        background-color: $dark-blue;
+        z-index: 3;
+
+        h2 {
+            text-align: center;
+        }
+
+        .LoginForm {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+
+            input,
+            button {
+                height: 2rem;
+                font-size: 1.2rem;
+                font-weight: 700;
+                border: none;
+                border-radius: .5rem;
+                background-color: $whiteish;
+            }
+
+            input {
+                width: 12rem;
+                max-width: 95%;
+                margin: 0 auto;
+                color: $dark-blue;
+            }
+
+            button {
+                width: 7rem;
+                height: 3rem;
+                display: block;
+                margin: 1rem auto;
+                font-size: 1rem;
+                font-weight: 700;
+                box-shadow: 0px 2px 14px -7px $dark-blue;
+                background: linear-gradient(to bottom, rgb(243, 243, 243) 5%, rgb(189, 189, 189) 100%);
+                border: none;
+                border-radius: 1rem;
+                color: $dark-blue;
+                text-shadow: 0px 1px 0px $dark-blue;
+                text-transform: uppercase;
+            }
+        }
+    }
+}
+
+@media (min-width: 1023px) {
+    .LoginWrapper {
+        display: flex;
+        max-height: none;
+
+        .Wave {
+            display: none;
+        }
+
+        .LoginImgWrapper {
+            width: 50%;
+            background-image: url('../../assets/img/logo.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            .LoginImg {
+                width: 30rem;
+                height: 32rem;
+                background-color: $light-blue;
+                position: absolute;
+                top: calc(50% - 16rem);
+                right: 0;
+                box-shadow: -5px 5px 32px $dark-blue;
+                border-radius: .5rem 0 0 .5rem;
+            }
+        }
+
+        .LoginImgWrapper::before {
+            display: block;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(95, 121, 169, .5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(10px);
+        }
+
+        .FormWrapper {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 50%;
+            background-image: url('../../assets/img/pattern.svg');
+            background-size: cover;
+            background-repeat: no-repeat;
+
+            .LoginForm {
+                width: 30rem;
+                height: 32rem;
+                padding: 3.5rem 0;
+                background-color: $dark-blue;
+                position: absolute;
+                top: calc(50% - 16rem);
+                left: 0;
+                box-shadow: 5px 5px 32px $light-blue;
+                border-radius: 0 .5rem .5rem 0;
+            }
+        }
+
+        .FormWrapper::before {
+            display: block;
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(32, 42, 58, .5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(10px);
+        }
+    }
+}
+
+@media (min-width: 2000px) {
+    .LoginWrapper {
+        .LoginImgWrapper {
+            .LoginImg {
+                width: 50rem;
+                height: 55rem;
+                top: calc(50% - 25rem);
+            }
+        }
+
+        .FormWrapper {
+            .LoginForm {
+                width: 50rem;
+                height: 55rem;
+                top: calc(50% - 25rem);
+                padding: 15rem 0;
+            }
+        }
+    }
+}

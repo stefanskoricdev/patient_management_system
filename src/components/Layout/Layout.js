@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import MainHeader from "../MainHeader/MainHeader";
 import Backdrop from "../UI/Backdrop/Backdrop";
+import styles from "./Layout.module.scss";
 
 const Layout = (props) => {
   const { isNavBtnClicked } = props;
@@ -9,7 +10,7 @@ const Layout = (props) => {
     <Fragment>
       {isNavBtnClicked && <Backdrop />}
       <MainHeader />
-      <main>{props.children}</main>
+      <main className={styles.Main}>{props.children}</main>
     </Fragment>
   );
 };
