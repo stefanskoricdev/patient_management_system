@@ -4,6 +4,7 @@ import GenderChart from "../../components/UI/ChartJs/GenderChart/GenderChart";
 import { useContext } from "react";
 import CountUp from "react-countup";
 import appContext from "../../store/appContext";
+import AverageAge from "../../components/UI/ChartJs/AverageAge/AverageAge";
 
 const Home = () => {
   const currentTime = getTime();
@@ -67,6 +68,7 @@ const Home = () => {
               {tableContent}
             </tbody>
           </table>
+          <AverageAge isLoading={isLoading} patients={patients} />
         </section>
       </main>
     </section>

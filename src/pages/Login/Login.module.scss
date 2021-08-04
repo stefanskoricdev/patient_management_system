@@ -44,21 +44,33 @@
             flex-flow: column;
             align-items: center;
 
+            p {
+                svg {
+                    margin-right: .5rem;
+                }
+            }
+
             input,
             button {
                 height: 2rem;
                 font-size: 1.2rem;
                 font-weight: 700;
-                border: none;
-                border-radius: .5rem;
-                background-color: $whiteish;
             }
 
             input {
                 width: 12rem;
                 max-width: 95%;
                 margin: 0 auto;
-                color: $dark-blue;
+                color: $whiteish;
+                background-color: inherit;
+                border: none;
+                border-bottom: 1px solid $whiteish;
+                font-family: FontAwesome, sans-serif;
+            }
+
+            input::placeholder {
+                color: rgba(243, 243, 243, 0.7);
+                font-size: 1rem;
             }
 
             button {

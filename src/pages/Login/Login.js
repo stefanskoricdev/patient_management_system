@@ -12,12 +12,24 @@ const Login = () => {
         <form className={styles.LoginForm}>
           <h2>Login to your account</h2>
           <label>
-            <p>Username</p>
-            <input type="text" name="username" />
+            <p>
+              <i class="fas fa-user"></i> Username
+            </p>
+            <input
+              type="text"
+              name="username"
+              placeholder="Type your username"
+            />
           </label>
           <label>
-            <p>Password</p>
-            <input type="password" name="password" />
+            <p>
+              <i class="fas fa-lock"></i> Password
+            </p>
+            <input
+              type="password"
+              name="password"
+              placeholder="Type your password"
+            />
           </label>
           <button type="submit">Login</button>
         </form>
