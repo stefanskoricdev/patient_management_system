@@ -18,7 +18,7 @@ const GenderChart = (props) => {
   };
   return (
     <section className={styles.DoughnutWrapper}>
-      <h1>Gender</h1>
+      <h1>Patient Visit By Gender</h1>
       <div>
         <Doughnut
           options={isLoading ? { animation: false } : null}

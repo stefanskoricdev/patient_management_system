@@ -1,11 +1,14 @@
 import styles from "./MainHeader.module.scss";
 import { useContext } from "react";
 import AppContext from "../../store/appContext";
+import AuthContext from "../../store/AuthProvider";
 
 const MainHeader = () => {
   const appCtx = useContext(AppContext);
   const { openNavHandler } = appCtx;
 
+  const authCtx = useContext(AuthContext);
+  const { displayName } = authCtx;
   return (
     <header className={styles.MainHeader}>
       <button
@@ -18,6 +21,7 @@ const MainHeader = () => {
         <div data-id="nav-btn"></div>
       </button>
       <div className={styles.UserAvatar}>
+        <p>{displayName}</p>
         <i className="fas fa-user"></i>
       </div>
     </header>

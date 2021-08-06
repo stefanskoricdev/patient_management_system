@@ -27,15 +27,21 @@
 
     .UserAvatar {
         height: 4rem;
-        width: 4rem;
         border-radius: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
 
+        p {
+            color: $whiteish;
+            font-weight: 600;
+            margin-right: .5rem;
+        }
+
         svg {
             width: 60%;
             height: 60%;
+            margin: 0 1rem;
         }
 
 

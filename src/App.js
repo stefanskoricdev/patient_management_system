@@ -12,12 +12,17 @@ import Groups from "./pages/Patients/Groups/Groups";
 import LayoutProvider from "./store/LayoutProvider";
 import Loader from "./components/UI/Loader/Loader";
 import Login from "./pages/Login/Login";
+import AuthContext from "./store/AuthProvider";
 
 function App() {
+  const authCtx = useContext(AuthContext);
+  const { isLoggedIn } = authCtx;
+
   const appCtx = useContext(AppContext);
   const { isNavBtnClicked, isLoading } = appCtx;
 
-  const isLoggedIn = true;
+  console.log("App component rendering");
+
   return (
     <div
       style={isLoading ? { height: "100vh", overflowY: "hidden" } : null}

@@ -3,10 +3,14 @@ import { NavLink } from "react-router-dom";
 import styles from "./MainNavigation.module.scss";
 import logo from "../../assets/img/logo.png";
 import AppContext from "../../store/appContext";
+import AuthContext from "../../store/AuthProvider";
 
 const MainNavigation = () => {
   const appCtx = useContext(AppContext);
   const { isNavBtnClicked } = appCtx;
+
+  const authCtx = useContext(AuthContext);
+  const { logout } = authCtx;
 
   return (
     <Fragment>
@@ -40,7 +44,7 @@ const MainNavigation = () => {
             </NavLink>
           </li>
 
-          <button className={styles.Logout}>
+          <button onClick={logout} className={styles.Logout}>
             <i className="fas fa-sign-out-alt"></i>
             <p>Logout</p>
           </button>
