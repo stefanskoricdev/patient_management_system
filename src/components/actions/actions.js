@@ -84,22 +84,34 @@ export const getData = (setLoading, setState) => {
   db.collection("individual-patients")
     .get()
     .then((patients) => {
-      patients.forEach((patient) => {
-        const singlePatient = {
-          id: patient.data().id,
-          firstName: patient.data().firstName,
-          lastName: patient.data().lastName,
-          address: patient.data().address,
-          gender: patient.data().gender,
-          phone: patient.data().phone,
-          dateOfBirth: patient.data().dateOfBirth,
-          observation: patient.data().observation,
-          physiotherapist: patient.data().physiotherapist,
-        };
-        patientsList.push(singlePatient);
+      if (patients.docs.length > 0) {
+        patients.forEach((patient) => {
+          const singlePatient = {
+            id: patient.data().id,
+            firstName: patient.data().firstName,
+            lastName: patient.data().lastName,
+            city: patient.data().city,
+            address: patient.data().address,
+            gender: patient.data().gender,
+            phone: patient.data().phone,
+            dateOfBirth: patient.data().dateOfBirth,
+            observation: patient.data().observation,
+            physiotherapist: patient.data().physiotherapist,
+          };
+          patientsList.push(singlePatient);
+          console.log("Hello");
+          setLoading(false);
+        });
+        setState(patientsList);
+      } else {
+        mySwal.fire({
+          title: "There is no stored patients",
+          text: "Please add patients to schedules",
+          icon: "error",
+          customClass: { container: "alert-modal" },
+        });
         setLoading(false);
-      });
-      setState(patientsList);
+      }
     })
     .catch((error) => {
       setLoading(false);

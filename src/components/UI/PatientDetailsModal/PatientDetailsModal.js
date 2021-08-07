@@ -106,8 +106,9 @@ const PatientDetailsModal = (props) => {
           <h2>{`${targetedPatient.firstName} ${targetedPatient.lastName}`}</h2>
           <p>
             {`${getAge(targetedPatient.dateOfBirth)} years`},{" "}
-            {targetedPatient.address}
+            {targetedPatient.city}
           </p>
+          <p>{targetedPatient.address}</p>
           <p>{targetedPatient.phone}</p>
         </section>
         <section className={styles.Observation}>

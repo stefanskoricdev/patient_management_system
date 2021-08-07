@@ -1,20 +1,14 @@
-import { useRef, useContext } from "react";
+import { useContext } from "react";
 import styles from "./Scheduler.module.scss";
 import AddPatientModal from "../UI/AddPatientModal/AddPatientModal";
 import Backdrop from "../UI/Backdrop/Backdrop";
 import PatientDetailsModal from "../UI/PatientDetailsModal/PatientDetailsModal";
 import Loader from "../UI/Loader/Loader";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import { createScheduleFields } from "../../helpers/createScheduleFields";
 import LayoutContext from "../../store/layoutContext";
 import AppContext from "../../store/appContext";
-import { sendData } from "../actions/actions";
-
-const mySwal = withReactContent(Swal);
 
 const COLLECTION = "individual-patients";
-//Firebase DB collection name!
 
 const Scheduler = (props) => {
   const layoutCtx = useContext(LayoutContext);
@@ -31,55 +25,7 @@ const Scheduler = (props) => {
   } = layoutCtx;
 
   const { patients, setPatients, isLoading, setIsLoading } = appCtx;
-
-  const firstNameInput = useRef();
-  const lastNameInput = useRef();
-  const genderInput = useRef();
-  const addressInput = useRef();
-  const phoneNumberInput = useRef();
-  const dateOfBirthInput = useRef();
-  const observationInput = useRef();
-  const physiotherapistInput = useRef();
-
   const { physiotherapist } = props;
-
-  const addPatientHandler = (e) => {
-    e.preventDefault();
-    const newPatient = {
-      id: patientId,
-      firstName: firstNameInput.current.value,
-      lastName: lastNameInput.current.value,
-      address: addressInput.current.value,
-      gender: genderInput.current.value,
-      phone: phoneNumberInput.current.value,
-      dateOfBirth: dateOfBirthInput.current.value,
-      observation: observationInput.current.value,
-      physiotherapist: physiotherapistInput.current.value,
-    };
-    if (
-      newPatient.id.trim() === "" ||
-      newPatient.firstName.trim() === "" ||
-      newPatient.lastName.trim() === "" ||
-      newPatient.address.trim() === "" ||
-      newPatient.gender.trim() === "" ||
-      newPatient.phone.trim() === "" ||
-      newPatient.dateOfBirth.trim() === "" ||
-      newPatient.observation.trim() === "" ||
-      newPatient.physiotherapist.trim() === ""
-    ) {
-      mySwal.fire({
-        icon: "warning",
-        title: <p>Please fill out all fields</p>,
-        customClass: {
-          container: "alert-modal",
-        },
-      });
-      return;
-    }
-    sendData(setIsLoading, COLLECTION, newPatient);
-    setPatients((prevState) => [...prevState, newPatient]);
-    setIsAddPatientModalOpen(false);
-  };
 
   const filteredPatients = patients.filter(
     (patient) => patient.physiotherapist === physiotherapist
@@ -113,15 +59,10 @@ const Scheduler = (props) => {
       {isAddPatientModalOpen && (
         <Backdrop closeModal={closeAddPatientModal}>
           <AddPatientModal
-            addPatient={addPatientHandler}
-            firstName={firstNameInput}
-            lastName={lastNameInput}
-            address={addressInput}
-            phoneNumber={phoneNumberInput}
-            gender={genderInput}
-            dateOfBirth={dateOfBirthInput}
-            observation={observationInput}
-            physiotherapist={physiotherapistInput}
+            setIsModalOpen={setIsAddPatientModalOpen}
+            patientId={patientId}
+            collection={COLLECTION}
+            physio={physiotherapist}
           />
         </Backdrop>
       )}

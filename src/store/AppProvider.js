@@ -1,5 +1,6 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import AppContext from "./appContext";
+import AuthContext from "./AuthProvider";
 import { getData } from "../components/actions/actions";
 
 const AppProvider = (props) => {
@@ -7,6 +8,9 @@ const AppProvider = (props) => {
   const [patients, setPatients] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const authCtx = useContext(AuthContext);
+  const { isLoggedIn } = authCtx;
 
   const openNavHandler = () => {
     setIsNavBtnClicked(true);
@@ -19,10 +23,13 @@ const AppProvider = (props) => {
   };
 
   useEffect(() => {
-    getData(setIsLoading, setPatients);
-    //Getting data here and then i can use it trough app without fetching again
-    //until user refreshes the page!
-  }, []);
+    if (isLoggedIn) {
+      //Dont get data until is logged in because if there is no patients in database
+      //It will shoot alert modal in Login page.
+      getData(setIsLoading, setPatients);
+    }
+    //Getting data here and send trough app via context
+  }, [isLoggedIn]);
 
   useEffect(() => {
     window.addEventListener("click", (e) => {

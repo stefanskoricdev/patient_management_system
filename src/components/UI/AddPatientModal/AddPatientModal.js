@@ -1,84 +1,87 @@
-import { useState } from "react";
+import { useState, useRef, useContext } from "react";
 import styles from "./AddPatientModal.module.scss";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { sendData } from "../../actions/actions";
+import AppContext from "../../../store/appContext";
+import AddPatientForm from "./AddPatientForm/AddPatientForm";
 
-const AddPatientModal = (props) => {
+const mySwal = withReactContent(Swal);
+
+const AddPatientModal = ({ setIsModalOpen, patientId, collection, physio }) => {
   const [isFormPageChanged, setIsFormPageChanged] = useState(false);
   const changeFormInfoHandler = () => {
     setIsFormPageChanged((prevValue) => !prevValue);
   };
 
+  const appCtx = useContext(AppContext);
+  const { setPatients, setIsLoading } = appCtx;
+
+  const firstNameInput = useRef();
+  const lastNameInput = useRef();
+  const genderInput = useRef();
+  const cityInput = useRef();
+  const addressInput = useRef();
+  const phoneNumberInput = useRef();
+  const dateOfBirthInput = useRef();
+  const observationInput = useRef();
+
+  const addPatientHandler = (e) => {
+    e.preventDefault();
+    const newPatient = {
+      id: patientId,
+      firstName: firstNameInput.current.value,
+      lastName: lastNameInput.current.value,
+      city: cityInput.current.value,
+      address: addressInput.current.value,
+      gender: genderInput.current.value,
+      phone: phoneNumberInput.current.value,
+      dateOfBirth: dateOfBirthInput.current.value,
+      observation: observationInput.current.value,
+      physiotherapist: physio,
+    };
+    if (
+      newPatient.id.trim() === "" ||
+      newPatient.firstName.trim() === "" ||
+      newPatient.lastName.trim() === "" ||
+      newPatient.city.trim() === "" ||
+      newPatient.address.trim() === "" ||
+      newPatient.gender.trim() === "" ||
+      newPatient.phone.trim() === "" ||
+      newPatient.dateOfBirth.trim() === "" ||
+      newPatient.observation.trim() === "" ||
+      newPatient.physiotherapist.trim() === ""
+    ) {
+      mySwal.fire({
+        icon: "warning",
+        title: <p>Please fill out all fields</p>,
+        customClass: {
+          container: "alert-modal",
+        },
+      });
+      return;
+    }
+    sendData(setIsLoading, collection, newPatient);
+    setPatients((prevState) => [...prevState, newPatient]);
+    setIsModalOpen(false);
+  };
+
   return (
     <section id="addPatientModalWrapper" className={styles.AddPatientModal}>
-      <form onSubmit={props.addPatient}>
-        <header>
-          <h2>Create New Patient</h2>
-        </header>
-        <main
-          className={
-            isFormPageChanged === true
-              ? [styles.Main, styles["active"]].join(" ")
-              : styles.Main
-          }
-        >
-          <section className={styles.MainInfo}>
-            <label>
-              First Name:
-              <input name="first-name" type="text" ref={props.firstName} />
-            </label>
-            <label>
-              Last Name:
-              <input name="last-name" type="text" ref={props.lastName} />
-            </label>
-            <section className={styles.GenderWrapper}>
-              <label>Select gender: </label>
-              <select name="gender" ref={props.gender}>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-            </section>
-            <label>
-              Address:
-              <input type="text" ref={props.address} />
-            </label>
-            <label>
-              Phone Number:
-              <input
-                name="phone-number"
-                type="tel"
-                pattern="[0-9]{3}[0-9]{3}[0-9]{3}"
-                ref={props.phoneNumber}
-              />
-            </label>
-            <label>
-              Date of Birth:
-              <input name="date-of-birth" type="date" ref={props.dateOfBirth} />
-            </label>
-          </section>
-          <section className={styles.AdditionalInfo}>
-            <label>
-              Observation:
-              <textarea
-                name="observation"
-                rows="8"
-                cols="80"
-                ref={props.observation}
-              />
-            </label>
-            <section className={styles.PhisioWrapper}>
-              <label>Select physiotherapist:</label>
-              <select name="physiotherapist-select" ref={props.physiotherapist}>
-                <option value="Marko">Marko</option>
-                <option value="Dijana">Dijana</option>
-                <option value="Stefan">Stefan</option>
-              </select>
-            </section>
-          </section>
-        </main>
-        <button onClick={changeFormInfoHandler} type="button">
-          {isFormPageChanged === false ? "NEXT" : "BACK"}
-        </button>
-        <button type="submit">ADD</button>
-      </form>
+      <AddPatientForm
+        submit={addPatientHandler}
+        firstName={firstNameInput}
+        lastName={lastNameInput}
+        gender={genderInput}
+        city={cityInput}
+        address={addressInput}
+        phoneNumber={phoneNumberInput}
+        dateOfBirth={dateOfBirthInput}
+        observation={observationInput}
+        isFormChanged={isFormPageChanged}
+        changeForm={changeFormInfoHandler}
+        physio={physio}
+      />
     </section>
   );
 };

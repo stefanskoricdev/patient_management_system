@@ -21,8 +21,6 @@ function App() {
   const appCtx = useContext(AppContext);
   const { isNavBtnClicked, isLoading } = appCtx;
 
-  console.log("App component rendering");
-
   return (
     <div
       style={isLoading ? { height: "100vh", overflowY: "hidden" } : null}
