@@ -1,18 +1,17 @@
 import { useContext } from "react";
-import styles from "./Scheduler.module.scss";
+import styles from "./IndividualScheduler.module.scss";
 import AddPatientModal from "../UI/AddPatientModal/AddPatientModal";
 import Backdrop from "../UI/Backdrop/Backdrop";
 import PatientDetailsModal from "../UI/PatientDetailsModal/PatientDetailsModal";
 import Loader from "../UI/Loader/Loader";
-import { createScheduleFields } from "../../helpers/createScheduleFields";
-import LayoutContext from "../../store/layoutContext";
-import AppContext from "../../store/appContext";
+import { createIndividualScheduleFields } from "../../helpers/createIndividualScheduleFields";
+import LayoutContext from "../../store/LayoutProvider";
+import AppContext from "../../store/AppProvider";
 
 const COLLECTION = "individual-patients";
 
-const Scheduler = (props) => {
+const IndividualScheduler = ({ physiotherapist }) => {
   const layoutCtx = useContext(LayoutContext);
-  const appCtx = useContext(AppContext);
   const {
     patientId,
     isAddPatientModalOpen,
@@ -24,10 +23,11 @@ const Scheduler = (props) => {
     setIsPatientDetailsModalOpen,
   } = layoutCtx;
 
-  const { patients, setPatients, isLoading, setIsLoading } = appCtx;
-  const { physiotherapist } = props;
+  const appCtx = useContext(AppContext);
+  const { individualPatients, setIndividualPatients, isLoading, setIsLoading } =
+    appCtx;
 
-  const filteredPatients = patients.filter(
+  const filteredPatients = individualPatients.filter(
     (patient) => patient.physiotherapist === physiotherapist
   );
   // getData() in App Provider fetches data from firebase and adds it to patients state
@@ -39,7 +39,11 @@ const Scheduler = (props) => {
     <section
       style={
         isAddPatientModalOpen || isPatientDetailsModalOpen
-          ? { minWidth: "100vw", overflowX: "hidden" }
+          ? {
+              minWidth: "100vw",
+              overflowX: "hidden",
+              maxHeight: "100vh",
+            }
           : null
       }
       className={styles.Scheduler}
@@ -49,8 +53,8 @@ const Scheduler = (props) => {
           <PatientDetailsModal
             setIsModalOpen={setIsPatientDetailsModalOpen}
             setLoading={setIsLoading}
-            setPatients={setPatients}
-            patients={patients}
+            setPatients={setIndividualPatients}
+            patients={individualPatients}
             patientId={patientId}
             collection={COLLECTION}
           />
@@ -59,6 +63,7 @@ const Scheduler = (props) => {
       {isAddPatientModalOpen && (
         <Backdrop closeModal={closeAddPatientModal}>
           <AddPatientModal
+            setPatients={setIndividualPatients}
             setIsModalOpen={setIsAddPatientModalOpen}
             patientId={patientId}
             collection={COLLECTION}
@@ -95,7 +100,7 @@ const Scheduler = (props) => {
           </ul>
         </div>
         <section id="schedule" className={styles.Schedule}>
-          {createScheduleFields(
+          {createIndividualScheduleFields(
             filteredPatients,
             patientModalHandler,
             physiotherapist
@@ -106,4 +111,4 @@ const Scheduler = (props) => {
   );
 };
 
-export default Scheduler;
+export default IndividualScheduler;

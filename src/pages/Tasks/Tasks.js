@@ -3,6 +3,7 @@ import getTime from "../../helpers/getTime";
 
 const Tasks = () => {
   const currentTime = getTime();
+
   return (
     <section className={styles.Tasks}>
       <header className={styles.Header}>

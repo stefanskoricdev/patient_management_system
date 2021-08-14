@@ -1,6 +1,6 @@
 import styles from "./MainHeader.module.scss";
 import { useContext } from "react";
-import AppContext from "../../store/appContext";
+import AppContext from "../../store/AppProvider";
 import AuthContext from "../../store/AuthProvider";
 
 const MainHeader = () => {
@@ -9,6 +9,7 @@ const MainHeader = () => {
 
   const authCtx = useContext(AuthContext);
   const { displayName } = authCtx;
+
   return (
     <header className={styles.MainHeader}>
       <button

@@ -1,20 +1,19 @@
-import { useState } from "react";
 import styles from "./PatientDetailsModal.module.scss";
+import { useState } from "react";
+import { getAge } from "../../../helpers/getAge";
+import { deleteData } from "../../actions/actions";
 import maleAvatar from "../../../assets/img/male_avatar.svg";
 import femaleAvatar from "../../../assets/img/female_avatar.svg";
 import dotsIcon from "../../../assets/img/dots_icon.png";
-import { getAge } from "../../../helpers/getAge";
-import { deleteData } from "../../actions/actions";
 
-const PatientDetailsModal = (props) => {
-  const {
-    patients,
-    patientId,
-    setLoading,
-    setPatients,
-    setIsModalOpen,
-    collection,
-  } = props;
+const PatientDetailsModal = ({
+  patients,
+  patientId,
+  setLoading,
+  setPatients,
+  setIsModalOpen,
+  collection,
+}) => {
   const targetedPatientIndex = patients.findIndex(
     (patient) => patient.id === patientId
   );

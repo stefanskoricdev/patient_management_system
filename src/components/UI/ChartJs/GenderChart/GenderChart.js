@@ -1,9 +1,7 @@
-import { Doughnut } from "react-chartjs-2";
 import styles from "./GenderChart.module.scss";
+import { Doughnut } from "react-chartjs-2";
 
-const GenderChart = (props) => {
-  const { isLoading, maleCount, femaleCount } = props;
-
+const GenderChart = ({ isLoading, maleCount, femaleCount }) => {
   const data = {
     labels: [`Male(${maleCount})`, `Female(${femaleCount})`],
     datasets: [
@@ -16,6 +14,7 @@ const GenderChart = (props) => {
       },
     ],
   };
+
   return (
     <section className={styles.DoughnutWrapper}>
       <h1>Patient Visit By Gender</h1>

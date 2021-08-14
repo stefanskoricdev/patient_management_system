@@ -2,13 +2,13 @@ import styles from "./AverageAge.module.scss";
 import { getAge } from "../../../../helpers/getAge";
 import CountUp from "react-countup";
 
-const AverageAge = (props) => {
-  const { patients, isLoading } = props;
+const AverageAge = ({ patients, isLoading }) => {
   const patientsAge = patients.map((patient) => getAge(patient.dateOfBirth));
   const patientsTotalAge = patientsAge.reduce((prevValue, currValue) => {
     return prevValue + currValue;
   }, 0);
   const patientsAvgAge = patientsTotalAge / patients.length;
+
   return (
     <div className={styles.AverageAge}>
       <h1>Average Age</h1>

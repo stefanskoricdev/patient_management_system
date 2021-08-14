@@ -1,8 +1,8 @@
+import styles from "./Login.module.scss";
 import { Fragment, useContext } from "react";
 import logo from "../../assets/img/logo.png";
 import wave from "../../assets/img/wave.png";
-import styles from "./Login.module.scss";
-import AppContext from "../../store/appContext";
+import AppContext from "../../store/AppProvider";
 import Loader from "../../components/UI/Loader/Loader";
 import LoginForm from "./LoginForm/LoginForm";
 

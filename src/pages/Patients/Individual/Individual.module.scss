@@ -1,8 +1,7 @@
 @import "../../../assets/colors/colors";
 
 .IndividualWrapper {
-    margin: 2rem auto;
-    padding: 1rem 0;
+    margin: 2rem auto 0;
     background-color: $light-blue;
     border-radius: 1rem;
     border: 1px solid $light-blue;
@@ -38,7 +37,6 @@
         }
 
     }
-
 
     .Main {
         overflow-x: scroll;

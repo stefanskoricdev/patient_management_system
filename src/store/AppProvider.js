@@ -1,11 +1,16 @@
-import { React, useState, useEffect, useContext } from "react";
-import AppContext from "./appContext";
-import AuthContext from "./AuthProvider";
+import React, { useState, useEffect, useContext } from "react";
 import { getData } from "../components/actions/actions";
+import AuthContext from "./AuthProvider";
 
-const AppProvider = (props) => {
+const AppContext = React.createContext();
+
+const INDIVIDUAL_COLLECTION = "individual-patients";
+const GROUPS_COLLECTION = "group-patients";
+
+export const AppProvider = ({ children }) => {
   const [isNavBtnClicked, setIsNavBtnClicked] = useState(false);
-  const [patients, setPatients] = useState([]);
+  const [individualPatients, setIndividualPatients] = useState([]);
+  const [groupPatients, setGroupPatients] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,7 +31,8 @@ const AppProvider = (props) => {
     if (isLoggedIn) {
       //Dont get data until is logged in because if there is no patients in database
       //It will shoot alert modal in Login page.
-      getData(setIsLoading, setPatients);
+      getData(setIsLoading, setIndividualPatients, INDIVIDUAL_COLLECTION);
+      getData(setIsLoading, setGroupPatients, GROUPS_COLLECTION);
     }
     //Getting data here and send trough app via context
   }, [isLoggedIn]);
@@ -43,16 +49,18 @@ const AppProvider = (props) => {
     isNavBtnClicked,
     openNavHandler,
     closeNavHandler,
-    patients,
-    setPatients,
+    individualPatients,
+    setIndividualPatients,
+    groupPatients,
+    setGroupPatients,
     isLoading,
     setIsLoading,
   };
   return (
     <AppContext.Provider value={appContextValue}>
-      {props.children}
+      {children}
     </AppContext.Provider>
   );
 };
 
-export default AppProvider;
+export default AppContext;

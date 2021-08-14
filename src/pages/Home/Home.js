@@ -3,24 +3,25 @@ import getTime from "../../helpers/getTime";
 import GenderChart from "../../components/UI/ChartJs/GenderChart/GenderChart";
 import { useContext } from "react";
 import CountUp from "react-countup";
-import appContext from "../../store/appContext";
+import AppContext from "../../store/AppProvider";
 import AverageAge from "../../components/UI/ChartJs/AverageAge/AverageAge";
 
 const Home = () => {
   const currentTime = getTime();
 
-  const appCtx = useContext(appContext);
-  const { patients, isLoading } = appCtx;
+  const appCtx = useContext(AppContext);
+  const { individualPatients, groupPatients, isLoading } = appCtx;
 
-  const patientsCount = patients.length;
-  const malePatientsCount = patients.filter(
+  const allPatients = individualPatients.concat(groupPatients);
+  const patientsCount = allPatients.length;
+  const malePatientsCount = allPatients.filter(
     (patient) => patient.gender === "male"
   ).length;
-  const femalePatientsCount = patients.filter(
+  const femalePatientsCount = allPatients.filter(
     (patient) => patient.gender === "female"
   ).length;
 
-  const tableContent = patients.map((patient, i) => {
+  const tableContent = allPatients.map((patient, i) => {
     const tableContentEl = (
       <tr key={i}>
         <td>{patient.firstName}</td>
@@ -68,7 +69,7 @@ const Home = () => {
               {tableContent}
             </tbody>
           </table>
-          <AverageAge isLoading={isLoading} patients={patients} />
+          <AverageAge isLoading={isLoading} patients={allPatients} />
         </section>
       </main>
     </section>

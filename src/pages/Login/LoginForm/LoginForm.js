@@ -8,7 +8,7 @@ const mySwal = withReactContent(Swal);
 
 const LoginForm = ({ setLoading }) => {
   const authCtx = useContext(AuthContext);
-  const { login, setDisplayName } = authCtx;
+  const { login } = authCtx;
 
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
@@ -55,8 +55,7 @@ const LoginForm = ({ setLoading }) => {
         }
       })
       .then((data) => {
-        setDisplayName(data.email);
-        login(data.idToken);
+        login(data.idToken, data.email);
       })
       .catch((error) => {
         resetInput();

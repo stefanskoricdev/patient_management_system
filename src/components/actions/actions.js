@@ -4,9 +4,9 @@ import withReactContent from "sweetalert2-react-content";
 
 const mySwal = withReactContent(Swal);
 
-export const sendData = (setLoading, collectionValue, newPatient) => {
+export const sendData = (setLoading, colection, newPatient) => {
   setLoading(true);
-  db.collection(collectionValue)
+  db.collection(colection)
     .doc(newPatient.id)
     .set(newPatient)
     .then(() => {
@@ -78,10 +78,10 @@ export const deleteData = (
     });
 };
 
-export const getData = (setLoading, setState) => {
+export const getData = (setLoading, setState, collection) => {
   let patientsList = [];
   setLoading(true);
-  db.collection("individual-patients")
+  db.collection(collection)
     .get()
     .then((patients) => {
       if (patients.docs.length > 0) {
@@ -99,13 +99,12 @@ export const getData = (setLoading, setState) => {
             physiotherapist: patient.data().physiotherapist,
           };
           patientsList.push(singlePatient);
-          console.log("Hello");
           setLoading(false);
         });
         setState(patientsList);
       } else {
         mySwal.fire({
-          title: "There is no stored patients",
+          title: `There is no stored patients`,
           text: "Please add patients to schedules",
           icon: "error",
           customClass: { container: "alert-modal" },

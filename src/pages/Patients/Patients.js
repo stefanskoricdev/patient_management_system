@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
 import styles from "./Patients.module.scss";
+import { Link } from "react-router-dom";
 import getTime from "../../helpers/getTime";
 
 const Patients = () => {
   const currentTime = getTime();
+
   return (
     <section className={styles.Patients}>
       <header className={styles.Header}>

@@ -1,8 +1,8 @@
+import styles from "./MainNavigation.module.scss";
 import { Fragment, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./MainNavigation.module.scss";
 import logo from "../../assets/img/logo.png";
-import AppContext from "../../store/appContext";
+import AppContext from "../../store/AppProvider";
 import AuthContext from "../../store/AuthProvider";
 
 const MainNavigation = () => {

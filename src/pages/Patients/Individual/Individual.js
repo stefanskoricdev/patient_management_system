@@ -1,10 +1,11 @@
 import styles from "./Individual.module.scss";
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
-import Scheduler from "../../../components/Scheduler/Scheduler";
-
+import IndividualScheduler from "../../../components/IndividualScheduler/IndividualScheduler";
 import getTime from "../../../helpers/getTime";
+
 const Individual = () => {
   const currentTime = getTime();
+
   return (
     <section className={styles.IndividualWrapper}>
       <header className={styles.Header}>
@@ -37,13 +38,13 @@ const Individual = () => {
             <Redirect to="/patients/individual/dijana" />
           </Route>
           <Route path="/patients/individual/dijana">
-            <Scheduler physiotherapist={"Dijana"} />
+            <IndividualScheduler physiotherapist={"Dijana"} />
           </Route>
           <Route path="/patients/individual/marko">
-            <Scheduler physiotherapist={"Marko"} />
+            <IndividualScheduler physiotherapist={"Marko"} />
           </Route>
           <Route path="/patients/individual/stefan">
-            <Scheduler physiotherapist={"Stefan"} />
+            <IndividualScheduler physiotherapist={"Stefan"} />
           </Route>
           <Route path="*">
             <Redirect to="/patients/individual/dijana" />

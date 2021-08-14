@@ -1,7 +1,8 @@
-import { React, useState } from "react";
-import LayoutContext from "./layoutContext";
+import React, { useState } from "react";
 
-const LayoutProvider = (props) => {
+const LayoutContext = React.createContext();
+
+export const LayoutProvider = ({ children }) => {
   const [patientId, setPatientId] = useState();
   const [isAddPatientModalOpen, setIsAddPatientModalOpen] = useState(false);
   const [isPatientDetailsModalOpen, setIsPatientDetailsModalOpen] =
@@ -42,9 +43,9 @@ const LayoutProvider = (props) => {
   };
   return (
     <LayoutContext.Provider value={layoutContextValue}>
-      {props.children}
+      {children}
     </LayoutContext.Provider>
   );
 };
 
-export default LayoutProvider;
+export default LayoutContext;

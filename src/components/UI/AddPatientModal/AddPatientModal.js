@@ -3,19 +3,25 @@ import styles from "./AddPatientModal.module.scss";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { sendData } from "../../actions/actions";
-import AppContext from "../../../store/appContext";
+import AppContext from "../../../store/AppProvider";
 import AddPatientForm from "./AddPatientForm/AddPatientForm";
 
 const mySwal = withReactContent(Swal);
 
-const AddPatientModal = ({ setIsModalOpen, patientId, collection, physio }) => {
+const AddPatientModal = ({
+  setIsModalOpen,
+  patientId,
+  collection,
+  physio,
+  setPatients,
+}) => {
   const [isFormPageChanged, setIsFormPageChanged] = useState(false);
   const changeFormInfoHandler = () => {
     setIsFormPageChanged((prevValue) => !prevValue);
   };
 
   const appCtx = useContext(AppContext);
-  const { setPatients, setIsLoading } = appCtx;
+  const { setIsLoading } = appCtx;
 
   const firstNameInput = useRef();
   const lastNameInput = useRef();

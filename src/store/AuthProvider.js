@@ -9,27 +9,27 @@ const AuthContext = React.createContext({
   setDisplayName: (user) => {},
 });
 
-export const AuthProvider = (props) => {
+export const AuthProvider = ({ children }) => {
   const initialToken = localStorage.getItem("token");
   const [token, setToken] = useState(initialToken);
 
-  const [displayName, setDisplayName] = useState("");
+  const initialDisplayName = localStorage.getItem("displayName");
+  const [displayName, setDisplayName] = useState(initialDisplayName);
   //Stores user email so it can be stored and rendered on MainHeader component!
 
   const userIsLoggedIn = !!token;
 
-  const loginHandler = (token) => {
+  const loginHandler = (token, email) => {
     setToken(token);
     localStorage.setItem("token", token);
+    setDisplayName(email);
+    localStorage.setItem("displayName", email);
   };
 
   const logoutHandler = () => {
     setToken(null);
     localStorage.removeItem("token");
-  };
-
-  const userNameHandler = (user) => {
-    setDisplayName(user);
+    localStorage.removeItem("displayName");
   };
 
   const authCtxValue = {
@@ -37,14 +37,11 @@ export const AuthProvider = (props) => {
     isLoggedIn: userIsLoggedIn,
     login: loginHandler,
     logout: logoutHandler,
-    setDisplayName: userNameHandler,
     displayName,
   };
 
   return (
-    <AuthContext.Provider value={authCtxValue}>
-      {props.children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={authCtxValue}>{children}</AuthContext.Provider>
   );
 };
 

@@ -1,4 +1,4 @@
-export const createScheduleFields = (
+export const createIndividualScheduleFields = (
   dataContainer,
   patientModalHandler,
   physio

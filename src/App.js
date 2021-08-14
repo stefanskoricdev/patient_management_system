@@ -1,15 +1,15 @@
+import styles from "./App.module.scss";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { useContext } from "react";
+import { LayoutProvider } from "./store/LayoutProvider";
 import Layout from "./components/Layout/Layout";
-import styles from "./App.module.scss";
 import MainNavigation from "./components/MainNavigation/MainNavigation";
 import Home from "./pages/Home/Home";
 import Patients from "./pages/Patients/Patients";
 import Tasks from "./pages/Tasks/Tasks";
-import AppContext from "./store/appContext";
+import AppContext from "./store/AppProvider";
 import Individual from "./pages/Patients/Individual/Individual";
 import Groups from "./pages/Patients/Groups/Groups";
-import LayoutProvider from "./store/LayoutProvider";
 import Loader from "./components/UI/Loader/Loader";
 import Login from "./pages/Login/Login";
 import AuthContext from "./store/AuthProvider";
@@ -24,7 +24,8 @@ function App() {
   return (
     <div
       style={isLoading ? { height: "100vh", overflowY: "hidden" } : null}
-      className={styles.App} // When Loader is open prevents scrollX below Backdrop.
+      // When Loader is open prevents scrollX below Backdrop.
+      className={styles.App}
     >
       {!isLoggedIn && (
         <Switch>

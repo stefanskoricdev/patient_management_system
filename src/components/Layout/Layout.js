@@ -1,16 +1,13 @@
 import { Fragment } from "react";
 import MainHeader from "../MainHeader/MainHeader";
 import Backdrop from "../UI/Backdrop/Backdrop";
-import styles from "./Layout.module.scss";
 
-const Layout = (props) => {
-  const { isNavBtnClicked } = props;
-
+const Layout = ({ isNavBtnClicked, children }) => {
   return (
     <Fragment>
       {isNavBtnClicked && <Backdrop />}
       <MainHeader />
-      <main className={styles.Main}>{props.children}</main>
+      <main>{children}</main>
     </Fragment>
   );
 };
