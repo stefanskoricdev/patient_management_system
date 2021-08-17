@@ -11,6 +11,7 @@ export const AppProvider = ({ children }) => {
   const [isNavBtnClicked, setIsNavBtnClicked] = useState(false);
   const [individualPatients, setIndividualPatients] = useState([]);
   const [groupPatients, setGroupPatients] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -53,6 +54,8 @@ export const AppProvider = ({ children }) => {
     setIndividualPatients,
     groupPatients,
     setGroupPatients,
+    tasks,
+    setTasks,
     isLoading,
     setIsLoading,
   };

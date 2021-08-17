@@ -4,16 +4,16 @@ import withReactContent from "sweetalert2-react-content";
 
 const mySwal = withReactContent(Swal);
 
-export const sendData = (setLoading, colection, newPatient) => {
+export const sendData = (setLoading, collection, newData) => {
   setLoading(true);
-  db.collection(colection)
-    .doc(newPatient.id)
-    .set(newPatient)
+  db.collection(collection)
+    .doc(newData.id)
+    .set(newData)
     .then(() => {
       setLoading(false);
       mySwal.fire({
         title: "Success!",
-        text: "New patient has been created",
+        text: `New ${collection} have been created`,
         icon: "success",
         customClass: { container: "alert-modal" },
       });
@@ -28,16 +28,10 @@ export const sendData = (setLoading, colection, newPatient) => {
     });
 };
 
-export const deleteData = (
-  setLoading,
-  setIsModalOpen,
-  setState,
-  collection,
-  targetId
-) => {
+export const deleteData = (setLoading, setState, collection, targetId) => {
   mySwal
     .fire({
-      title: "Are you sure you want to delete patient?",
+      title: `Are you sure you want to delete ${collection}?`,
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
@@ -52,7 +46,6 @@ export const deleteData = (
           .doc(targetId)
           .delete()
           .then(() => {
-            setIsModalOpen(false);
             setState((prevState) =>
               prevState.filter((patient) => patient.id !== targetId)
             );
@@ -110,6 +103,61 @@ export const getData = (setLoading, setState, collection) => {
           customClass: { container: "alert-modal" },
         });
         setLoading(false);
+      }
+    })
+    .catch((error) => {
+      setLoading(false);
+      mySwal.fire({
+        title: "Something went wrong!!",
+        text: `${error}`,
+        icon: "error",
+        customClass: { container: "alert-modal" },
+      });
+    });
+};
+
+export const getTasks = (setLoading, setState, collection) => {
+  setLoading(true);
+  db.collection(collection)
+    .get()
+    .then((tasks) => {
+      let tasksList = [];
+      if (tasks.docs.length > 0) {
+        tasks.forEach((task) => {
+          const singleTask = {
+            id: task.data().id,
+            title: task.data().title,
+            isChecked: task.data().isChecked,
+            author: task.data().author,
+          };
+          tasksList.push(singleTask);
+        });
+      }
+      setState(tasksList);
+      setLoading(false);
+    })
+    .catch((error) => {
+      setLoading(false);
+      mySwal.fire({
+        title: "Something went wrong!!",
+        text: `${error}`,
+        icon: "error",
+        customClass: { container: "alert-modal" },
+      });
+    });
+};
+
+export const updateTask = (setLoading, collection, targetId) => {
+  setLoading(true);
+  db.collection(collection)
+    .doc(targetId)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        setLoading(false);
+        return doc.ref.update({ isChecked: !doc.data().isChecked });
+      } else {
+        throw new Error("Task does not exist");
       }
     })
     .catch((error) => {

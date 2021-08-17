@@ -1,5 +1,6 @@
 import styles from "./Tasks.module.scss";
 import getTime from "../../helpers/getTime";
+import TaskBuilder from "../../components/TasksBuilder/TasksBuilder";
 
 const Tasks = () => {
   const currentTime = getTime();
@@ -11,7 +12,7 @@ const Tasks = () => {
         <p>{currentTime}</p>
       </header>
       <main className={styles.Main}>
-        <h1>Some main stuff here!</h1>
+        <TaskBuilder />
       </main>
     </section>
   );

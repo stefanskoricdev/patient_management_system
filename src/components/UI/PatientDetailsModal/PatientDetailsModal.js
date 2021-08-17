@@ -48,11 +48,11 @@ const PatientDetailsModal = ({
                 onClick={() => {
                   deleteData(
                     setLoading,
-                    setIsModalOpen,
                     setPatients,
                     collection,
                     targetedPatient.id
                   );
+                  setIsModalOpen(false);
                 }}
               >
                 Delete

@@ -10,7 +10,7 @@ const Home = () => {
   const currentTime = getTime();
 
   const appCtx = useContext(AppContext);
-  const { individualPatients, groupPatients, isLoading } = appCtx;
+  const { individualPatients, groupPatients, isLoading, tasks } = appCtx;
 
   const allPatients = individualPatients.concat(groupPatients);
   const patientsCount = allPatients.length;
@@ -20,6 +20,15 @@ const Home = () => {
   const femalePatientsCount = allPatients.filter(
     (patient) => patient.gender === "female"
   ).length;
+
+  const tasksList = tasks.map((task, i) => {
+    return (
+      <li className={task.isChecked ? styles.Checked : null} key={i}>
+        <p>{task.title}</p>
+        <span>{task.author}</span>
+      </li>
+    );
+  });
 
   const tableContent = allPatients.map((patient, i) => {
     const tableContentEl = (
@@ -69,6 +78,12 @@ const Home = () => {
               {tableContent}
             </tbody>
           </table>
+          <section className={styles.TasksList}>
+            <ul>
+              <h1>Tasks</h1>
+              {tasks.length <= 0 && <h2>NO NEW TASKS</h2>} {tasksList}
+            </ul>
+          </section>
           <AverageAge isLoading={isLoading} patients={allPatients} />
         </section>
       </main>
