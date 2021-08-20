@@ -6,7 +6,7 @@ import Layout from "./components/Layout/Layout";
 import MainNavigation from "./components/MainNavigation/MainNavigation";
 import Home from "./pages/Home/Home";
 import Patients from "./pages/Patients/Patients";
-import Tasks from "./pages/Tasks/Tasks";
+import Notes from "./pages/Notes/Notes";
 import AppContext from "./store/AppProvider";
 import Individual from "./pages/Patients/Individual/Individual";
 import Groups from "./pages/Patients/Groups/Groups";
@@ -61,8 +61,8 @@ function App() {
               <Route path="/patients/groups">
                 <Groups />
               </Route>
-              <Route path="/tasks">
-                <Tasks />
+              <Route path="/notes">
+                <Notes />
               </Route>
               <Route path="*">
                 <Redirect to="/home" />

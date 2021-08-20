@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
-import { getData } from "../components/actions/actions";
+import { getData, getNotes } from "../components/actions/actions";
 import AuthContext from "./AuthProvider";
 
 const AppContext = React.createContext();
 
 const INDIVIDUAL_COLLECTION = "individual-patients";
 const GROUPS_COLLECTION = "group-patients";
+const NOTES_COLLECTION = "notes";
 
 export const AppProvider = ({ children }) => {
   const [isNavBtnClicked, setIsNavBtnClicked] = useState(false);
   const [individualPatients, setIndividualPatients] = useState([]);
   const [groupPatients, setGroupPatients] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  const [notes, setNotes] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,6 +35,7 @@ export const AppProvider = ({ children }) => {
       //It will shoot alert modal in Login page.
       getData(setIsLoading, setIndividualPatients, INDIVIDUAL_COLLECTION);
       getData(setIsLoading, setGroupPatients, GROUPS_COLLECTION);
+      getNotes(setIsLoading, setNotes, NOTES_COLLECTION);
     }
     //Getting data here and send trough app via context
   }, [isLoggedIn]);
@@ -54,8 +56,8 @@ export const AppProvider = ({ children }) => {
     setIndividualPatients,
     groupPatients,
     setGroupPatients,
-    tasks,
-    setTasks,
+    notes,
+    setNotes,
     isLoading,
     setIsLoading,
   };

@@ -109,6 +109,7 @@ const PatientDetailsModal = ({
           </p>
           <p>{targetedPatient.address}</p>
           <p>{targetedPatient.phone}</p>
+          <p>{`Date acquired: ${targetedPatient.date}`}</p>
         </section>
         <section className={styles.Observation}>
           <h3>Observation:</h3>

@@ -1,6 +1,6 @@
 @import "../../assets/colors/colors";
 
-.Tasks {
+.Notes {
     max-width: 95%;
     margin: 2rem auto;
     padding: 1rem;
@@ -15,7 +15,7 @@
 }
 
 @media (min-width: 1023px) {
-    .Tasks {
+    .Notes {
         margin-left: calc(5rem + 2.5%);
         margin-right: 2.5%;
     }

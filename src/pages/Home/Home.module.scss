@@ -78,9 +78,9 @@
                 }
             }
 
-            .TasksList {
+            .NotesList {
                 width: 100%;
-                max-height: 15rem;
+                max-height: 20rem;
                 overflow-y: scroll;
                 margin: 1rem auto 0;
                 padding: 1rem;
@@ -110,10 +110,15 @@
                         cursor: pointer;
                     }
 
-                    span {
-                        margin: .5rem 0;
-                        text-align: right;
-                        color: rgb(211, 211, 211);
+                    footer {
+                        display: flex;
+                        justify-content: space-between;
+
+                        span {
+                            margin: .5rem 0;
+                            text-align: right;
+                            color: rgb(211, 211, 211);
+                        }
                     }
                 }
 

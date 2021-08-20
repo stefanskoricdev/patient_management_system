@@ -38,9 +38,9 @@ const MainNavigation = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink activeClassName={styles.active} to="/tasks">
+            <NavLink activeClassName={styles.active} to="/notes">
               <i className="fas fa-tasks"></i>
-              <p>Tasks</p>
+              <p>Notes</p>
             </NavLink>
           </li>
 

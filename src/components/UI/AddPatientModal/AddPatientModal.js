@@ -1,10 +1,13 @@
 import { useState, useRef, useContext } from "react";
+import getTime from "../../../helpers/getTime";
 import styles from "./AddPatientModal.module.scss";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { sendData } from "../../actions/actions";
 import AppContext from "../../../store/AppProvider";
 import AddPatientForm from "./AddPatientForm/AddPatientForm";
+import firebase from "firebase/app";
+import "firebase/firestore";
 
 const mySwal = withReactContent(Swal);
 
@@ -34,6 +37,7 @@ const AddPatientModal = ({
 
   const addPatientHandler = (e) => {
     e.preventDefault();
+    const currentTime = getTime();
     const newPatient = {
       id: patientId,
       firstName: firstNameInput.current.value,
@@ -45,6 +49,8 @@ const AddPatientModal = ({
       dateOfBirth: dateOfBirthInput.current.value,
       observation: observationInput.current.value,
       physiotherapist: physio,
+      date: currentTime,
+      dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
     if (
       newPatient.id.trim() === "" ||

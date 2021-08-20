@@ -1,8 +1,8 @@
 @import "../../assets/colors/colors";
 
-.TasksBuilder {
+.NotesBuilder {
     width: 30rem;
-    max-width: 95%;
+    max-width: 98%;
     height: 30rem;
     margin: 0 auto;
     display: flex;
@@ -10,9 +10,11 @@
     align-items: center;
     border-radius: 1rem;
 
-    .CreateTask {
+    .CreateNote {
         width: 100%;
         height: 3rem;
+        display: flex;
+        align-items: center;
         background-color: $dark-blue;
         border-radius: 1rem;
 
@@ -23,18 +25,22 @@
         }
 
         input {
-            margin: .25rem 0 0 1rem;
+            margin-left: .5rem;
             height: 2.5rem;
-            width: calc(100% - 5.5rem);
+            width: calc(100% - 4.5rem);
             background-color: inherit;
             color: $whiteish;
             font-size: 1rem;
         }
 
+        input::placeholder {
+            color: $whiteish;
+        }
+
         button {
             width: 4rem;
             height: 2rem;
-            margin: .5rem .5rem 0 0;
+            margin-right: .5rem;
             padding: 0;
             float: right;
             background-color: $light-blue;
@@ -47,12 +53,14 @@
         }
     }
 
-    .TasksList {
+    .NotesList {
         width: 100%;
-        padding: 1rem;
+        max-height: 30rem;
+        padding: 1rem .5rem;
         margin-top: 1rem;
         background-color: $dark-blue;
         border-radius: 1rem;
+        overflow-y: scroll;
 
         h2 {
             text-align: center;
@@ -67,7 +75,7 @@
             font-size: 1rem;
             border-bottom: 1px solid rgba(180, 178, 178, 0.651);
 
-            .Task {
+            .Note {
                 width: 100%;
                 display: flex;
                 align-items: center;
@@ -98,12 +106,6 @@
                 color: rgba(180, 178, 178, 1);
             }
         }
-
-        li:hover {
-            img {
-                display: block;
-            }
-        }
     }
 
     footer {
@@ -121,6 +123,26 @@
 
         p:hover {
             color: $light-blue;
+        }
+    }
+}
+
+@media (min-width: 1024px) {
+    .NotesBuilder {
+        .NotesList {
+            li {
+                .Note {
+                    img {
+                        display: none;
+                    }
+                }
+            }
+
+            li:hover {
+                img {
+                    display: block;
+                }
+            }
         }
     }
 }

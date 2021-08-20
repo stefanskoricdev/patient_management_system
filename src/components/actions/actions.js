@@ -13,7 +13,6 @@ export const sendData = (setLoading, collection, newData) => {
       setLoading(false);
       mySwal.fire({
         title: "Success!",
-        text: `New ${collection} have been created`,
         icon: "success",
         customClass: { container: "alert-modal" },
       });
@@ -31,7 +30,7 @@ export const sendData = (setLoading, collection, newData) => {
 export const deleteData = (setLoading, setState, collection, targetId) => {
   mySwal
     .fire({
-      title: `Are you sure you want to delete ${collection}?`,
+      title: `Are you sure you want to delete data?`,
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
@@ -52,7 +51,7 @@ export const deleteData = (setLoading, setState, collection, targetId) => {
             setLoading(false);
             mySwal.fire({
               title: "Deleted!",
-              text: "Your file has been deleted",
+              text: "Data has been deleted",
               icon: "success",
               customClass: { container: "alert-modal" },
             });
@@ -90,19 +89,12 @@ export const getData = (setLoading, setState, collection) => {
             dateOfBirth: patient.data().dateOfBirth,
             observation: patient.data().observation,
             physiotherapist: patient.data().physiotherapist,
+            date: patient.data().date,
           };
           patientsList.push(singlePatient);
           setLoading(false);
         });
         setState(patientsList);
-      } else {
-        mySwal.fire({
-          title: `There is no stored patients`,
-          text: "Please add patients to schedules",
-          icon: "error",
-          customClass: { container: "alert-modal" },
-        });
-        setLoading(false);
       }
     })
     .catch((error) => {
@@ -116,24 +108,26 @@ export const getData = (setLoading, setState, collection) => {
     });
 };
 
-export const getTasks = (setLoading, setState, collection) => {
+export const getNotes = (setLoading, setState, collection) => {
   setLoading(true);
   db.collection(collection)
+    .orderBy("dateCreated", "asc")
     .get()
-    .then((tasks) => {
-      let tasksList = [];
-      if (tasks.docs.length > 0) {
-        tasks.forEach((task) => {
-          const singleTask = {
-            id: task.data().id,
-            title: task.data().title,
-            isChecked: task.data().isChecked,
-            author: task.data().author,
+    .then((notes) => {
+      let notesList = [];
+      if (notes.docs.length > 0) {
+        notes.forEach((note) => {
+          const singleNote = {
+            id: note.data().id,
+            title: note.data().title,
+            isChecked: note.data().isChecked,
+            author: note.data().author,
+            date: note.data().date,
           };
-          tasksList.push(singleTask);
+          notesList.push(singleNote);
         });
       }
-      setState(tasksList);
+      setState(notesList);
       setLoading(false);
     })
     .catch((error) => {
@@ -147,7 +141,7 @@ export const getTasks = (setLoading, setState, collection) => {
     });
 };
 
-export const updateTask = (setLoading, collection, targetId) => {
+export const updateNote = (setLoading, collection, targetId) => {
   setLoading(true);
   db.collection(collection)
     .doc(targetId)
@@ -157,7 +151,7 @@ export const updateTask = (setLoading, collection, targetId) => {
         setLoading(false);
         return doc.ref.update({ isChecked: !doc.data().isChecked });
       } else {
-        throw new Error("Task does not exist");
+        throw new Error("Note does not exist");
       }
     })
     .catch((error) => {

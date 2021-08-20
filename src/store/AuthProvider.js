@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { createDisplayName } from "../helpers/createDisplayName";
 
 const AuthContext = React.createContext({
   token: "",
@@ -22,8 +23,8 @@ export const AuthProvider = ({ children }) => {
   const loginHandler = (token, email) => {
     setToken(token);
     localStorage.setItem("token", token);
-    setDisplayName(email);
-    localStorage.setItem("displayName", email);
+    setDisplayName(createDisplayName(email));
+    localStorage.setItem("displayName", createDisplayName(email));
   };
 
   const logoutHandler = () => {
