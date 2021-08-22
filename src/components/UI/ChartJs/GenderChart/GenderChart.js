@@ -7,7 +7,7 @@ const GenderChart = ({ isLoading, maleCount, femaleCount }) => {
     datasets: [
       {
         data: [maleCount, femaleCount],
-        backgroundColor: ["rgba(95, 121, 169, 1)", "rgba(243, 243, 243, 1)"],
+        backgroundColor: ["rgba(95, 121, 169, 1)", "rgba(101, 195, 157, 1)"],
         borderColor: ["rgba(243, 243, 243, 1)", "rgba(95, 121, 169, 1)"],
         borderWidth: 1,
         spacing: 2,
@@ -17,7 +17,7 @@ const GenderChart = ({ isLoading, maleCount, femaleCount }) => {
 
   return (
     <section className={styles.DoughnutWrapper}>
-      <h1>Patient Visit By Gender</h1>
+      <h1>Patients Visit By Gender</h1>
       <div>
         <Doughnut
           options={isLoading ? { animation: false } : null}
