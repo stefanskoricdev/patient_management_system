@@ -10,7 +10,7 @@ import LayoutContext from "../../store/LayoutProvider";
 
 const COLLECTION = "group-patients";
 
-const GroupsScheduler = (props) => {
+const GroupsScheduler = ({ physiotherapist, config }) => {
   const appCtx = useContext(AppContext);
   const { groupPatients, setGroupPatients, isLoading, setIsLoading } = appCtx;
 
@@ -26,8 +26,6 @@ const GroupsScheduler = (props) => {
     setIsPatientDetailsModalOpen,
   } = layoutCtx;
 
-  const { physiotherapist, config } = props;
-
   const { days, time } = config;
   const daysValue = config.days.map((day, i) => <li key={i}>{day}</li>);
   const timeValue = config.time.map((time, i) => <li key={i}>{time}</li>);
@@ -39,7 +37,7 @@ const GroupsScheduler = (props) => {
           ? {
               minWidth: "100vw",
               overflowX: "hidden",
-              maxHeight: "100vh",
+              maxHeight: "100%",
             }
           : null
       }

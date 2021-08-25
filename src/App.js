@@ -3,7 +3,6 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { useContext } from "react";
 import { LayoutProvider } from "./store/LayoutProvider";
 import Layout from "./components/Layout/Layout";
-import MainNavigation from "./components/MainNavigation/MainNavigation";
 import Home from "./pages/Home/Home";
 import Patients from "./pages/Patients/Patients";
 import Notes from "./pages/Notes/Notes";
@@ -19,7 +18,7 @@ function App() {
   const { isLoggedIn } = authCtx;
 
   const appCtx = useContext(AppContext);
-  const { isNavBtnClicked, isLoading } = appCtx;
+  const { isLoading } = appCtx;
 
   return (
     <div
@@ -42,8 +41,7 @@ function App() {
       )}
       {isLoggedIn && (
         <LayoutProvider>
-          <Layout isNavBtnClicked={isNavBtnClicked} className={styles.Layout}>
-            <MainNavigation navBtnClicked={isNavBtnClicked} />
+          <Layout className={styles.Layout}>
             {isLoading && <Loader />}
             <Switch>
               <Route path="/" exact>

@@ -1,10 +1,10 @@
-import { useContext } from "react";
 import styles from "./IndividualScheduler.module.scss";
+import { useContext } from "react";
+import { createIndividualScheduleFields } from "../../helpers/createIndividualScheduleFields";
 import AddPatientModal from "../UI/AddPatientModal/AddPatientModal";
 import Backdrop from "../UI/Backdrop/Backdrop";
 import PatientDetailsModal from "../UI/PatientDetailsModal/PatientDetailsModal";
 import Loader from "../UI/Loader/Loader";
-import { createIndividualScheduleFields } from "../../helpers/createIndividualScheduleFields";
 import LayoutContext from "../../store/LayoutProvider";
 import AppContext from "../../store/AppProvider";
 
@@ -42,7 +42,7 @@ const IndividualScheduler = ({ physiotherapist }) => {
           ? {
               minWidth: "100vw",
               overflowX: "hidden",
-              maxHeight: "100vh",
+              maxHeight: "100%",
             }
           : null
       }

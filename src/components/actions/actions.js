@@ -4,13 +4,14 @@ import withReactContent from "sweetalert2-react-content";
 
 const mySwal = withReactContent(Swal);
 
-export const sendData = (setLoading, collection, newData) => {
+export const sendData = (setLoading, collection, newData, setState) => {
   setLoading(true);
   db.collection(collection)
     .doc(newData.id)
     .set(newData)
     .then(() => {
       setLoading(false);
+      setState((prevState) => [...prevState, newData]);
       mySwal.fire({
         title: "Success!",
         icon: "success",
@@ -18,6 +19,7 @@ export const sendData = (setLoading, collection, newData) => {
       });
     })
     .catch((error) => {
+      setLoading(false);
       mySwal.fire({
         title: "Something went wrong!",
         text: `${error}`,

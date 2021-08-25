@@ -1,7 +1,7 @@
 import styles from "./Home.module.scss";
+import { useContext } from "react";
 import getTime from "../../helpers/getTime";
 import GenderChart from "../../components/UI/ChartJs/GenderChart/GenderChart";
-import { useContext } from "react";
 import CountUp from "react-countup";
 import AppContext from "../../store/AppProvider";
 import TypeChart from "../../components/UI/ChartJs/TypeChart/TypeChart";

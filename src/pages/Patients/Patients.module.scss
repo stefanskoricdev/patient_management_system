@@ -13,38 +13,45 @@
         align-items: center;
     }
 
-    .PatientsLink {
-        width: 30rem;
-        max-width: 95%;
+    .Main {
         display: flex;
         flex-flow: column;
         justify-content: center;
-        align-items: center;
-        padding: 3rem 0;
-        margin: 1rem auto;
-        background-color: $dark-blue;
-        border-radius: 1rem;
+        min-height: 75vh;
 
-        svg {
-            font-size: 3rem;
+        .PatientsLink {
+            width: 30rem;
+            max-width: 95%;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 0;
+            margin: 1rem auto;
+            background-color: $dark-blue;
+            border-radius: 1rem;
+
+            svg {
+                font-size: 3rem;
+            }
+
+            p {
+                font-size: 1.5rem;
+                margin-bottom: 0;
+            }
+
+            svg,
+            p {
+                transition: color 200ms linear;
+            }
         }
 
-        p {
-            font-size: 1.5rem;
-            margin-bottom: 0;
-        }
+        .PatientsLink:hover {
 
-        svg,
-        p {
-            transition: color 200ms linear;
-        }
-    }
-
-    .PatientsLink:hover {
-
-        svg,
-        p {
-            color: $light-blue;
+            svg,
+            p {
+                color: $light-blue;
+            }
         }
     }
 

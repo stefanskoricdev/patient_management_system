@@ -35,8 +35,7 @@ const NotesBuilder = ({ currentTime }) => {
         date: currentTime,
         dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
       };
-      sendData(setIsLoading, COLLECTION, newNote);
-      setNotes((prevState) => [...prevState, newNote]);
+      sendData(setIsLoading, COLLECTION, newNote, setNotes);
       noteInputRef.current.value = "";
     } else {
       mySwal.fire({

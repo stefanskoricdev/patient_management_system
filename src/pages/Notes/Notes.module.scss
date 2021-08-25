@@ -12,6 +12,12 @@
         justify-content: space-between;
         align-items: center;
     }
+
+    .Main {
+        min-height: 75vh;
+        display: flex;
+        align-items: center;
+    }
 }
 
 @media (min-width: 1023px) {

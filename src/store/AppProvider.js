@@ -9,7 +9,6 @@ const GROUPS_COLLECTION = "group-patients";
 const NOTES_COLLECTION = "notes";
 
 export const AppProvider = ({ children }) => {
-  const [isNavBtnClicked, setIsNavBtnClicked] = useState(false);
   const [individualPatients, setIndividualPatients] = useState([]);
   const [groupPatients, setGroupPatients] = useState([]);
   const [notes, setNotes] = useState([]);
@@ -19,20 +18,8 @@ export const AppProvider = ({ children }) => {
   const authCtx = useContext(AuthContext);
   const { isLoggedIn } = authCtx;
 
-  const openNavHandler = () => {
-    setIsNavBtnClicked(true);
-  };
-
-  const closeNavHandler = (e) => {
-    if (e.target.getAttribute("data-id") !== "nav-btn") {
-      setIsNavBtnClicked(false);
-    }
-  };
-
   useEffect(() => {
     if (isLoggedIn) {
-      //Dont get data until is logged in because if there is no patients in database
-      //It will shoot alert modal in Login page.
       getData(setIsLoading, setIndividualPatients, INDIVIDUAL_COLLECTION);
       getData(setIsLoading, setGroupPatients, GROUPS_COLLECTION);
       getNotes(setIsLoading, setNotes, NOTES_COLLECTION);
@@ -40,18 +27,7 @@ export const AppProvider = ({ children }) => {
     //Getting data here and send trough app via context
   }, [isLoggedIn]);
 
-  useEffect(() => {
-    window.addEventListener("click", (e) => {
-      if (e.target.getAttribute("data-id") !== "nav-btn") {
-        setIsNavBtnClicked(false);
-      }
-    });
-  }, []);
-
   const appContextValue = {
-    isNavBtnClicked,
-    openNavHandler,
-    closeNavHandler,
     individualPatients,
     setIndividualPatients,
     groupPatients,

@@ -1,9 +1,9 @@
 import { useState, useRef, useContext } from "react";
+import { sendData } from "../../actions/actions";
 import getTime from "../../../helpers/getTime";
 import styles from "./AddPatientModal.module.scss";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { sendData } from "../../actions/actions";
 import AppContext from "../../../store/AppProvider";
 import AddPatientForm from "./AddPatientForm/AddPatientForm";
 import firebase from "firebase/app";
@@ -73,8 +73,7 @@ const AddPatientModal = ({
       });
       return;
     }
-    sendData(setIsLoading, collection, newPatient);
-    setPatients((prevState) => [...prevState, newPatient]);
+    sendData(setIsLoading, collection, newPatient, setPatients);
     setIsModalOpen(false);
   };
 

@@ -2,16 +2,11 @@ import styles from "./MainNavigation.module.scss";
 import { Fragment, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/img/logo.png";
-import AppContext from "../../store/AppProvider";
 import AuthContext from "../../store/AuthProvider";
 
-const MainNavigation = () => {
-  const appCtx = useContext(AppContext);
-  const { isNavBtnClicked } = appCtx;
-
+const MainNavigation = ({ isNavBtnClicked }) => {
   const authCtx = useContext(AuthContext);
   const { logout } = authCtx;
-
   return (
     <Fragment>
       <nav

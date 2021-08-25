@@ -1,12 +1,8 @@
 import styles from "./MainHeader.module.scss";
 import { useContext } from "react";
-import AppContext from "../../store/AppProvider";
 import AuthContext from "../../store/AuthProvider";
 
-const MainHeader = () => {
-  const appCtx = useContext(AppContext);
-  const { openNavHandler } = appCtx;
-
+const MainHeader = ({ openNavHandler }) => {
   const authCtx = useContext(AuthContext);
   const { displayName } = authCtx;
 

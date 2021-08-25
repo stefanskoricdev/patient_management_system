@@ -4,7 +4,6 @@ import { Bar } from "react-chartjs-2";
 const TypeChart = ({ individual, group, isLoading }) => {
   const individualsCount = individual.length;
   const groupsCount = group.length;
-  console.log(individualsCount, groupsCount);
   const data = {
     labels: ["Individual", "Groups"],
     datasets: [
