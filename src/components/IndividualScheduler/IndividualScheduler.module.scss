@@ -96,3 +96,15 @@
         }
     }
 }
+
+.Scheduler.ModalOpen {
+    min-width: 100vw;
+    overflow-x: hidden;
+    max-height: 800px;
+}
+
+@media (min-height: 1081px) {
+    .Scheduler.ModalOpen {
+        max-height: 100vh;
+    }
+}

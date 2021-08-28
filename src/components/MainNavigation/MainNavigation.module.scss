@@ -27,6 +27,7 @@
 
     .NavList {
         padding: 1rem 0 1rem 1rem;
+        height: fit-content;
 
         svg {
             width: 1.5rem;
@@ -75,23 +76,15 @@
     box-shadow: 15px 15px 20px $dark-blue;
 }
 
-@media (min-height: 450px) {
-    .MainNav {
-        position: fixed;
-
-        .Logout {
-            position: absolute;
-            left: 1rem;
-            bottom: 1rem;
-            margin-left: 0;
-        }
-    }
-}
-
-
 @media (max-width: 320px) {
     .MainNav {
         width: 80%;
+    }
+}
+
+@media (min-height: 500px) {
+    .MainNav {
+        position: fixed;
     }
 }
 

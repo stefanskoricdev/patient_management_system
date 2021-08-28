@@ -37,16 +37,11 @@ const IndividualScheduler = ({ physiotherapist }) => {
 
   return (
     <section
-      style={
+      className={
         isAddPatientModalOpen || isPatientDetailsModalOpen
-          ? {
-              minWidth: "100vw",
-              overflowX: "hidden",
-              maxHeight: "100%",
-            }
-          : null
+          ? [styles.Scheduler, styles["ModalOpen"]].join(" ")
+          : styles.Scheduler
       }
-      className={styles.Scheduler}
     >
       {isPatientDetailsModalOpen && (
         <Backdrop closeModal={closePatientDetailsModal}>

@@ -32,16 +32,11 @@ const GroupsScheduler = ({ physiotherapist, config }) => {
 
   return (
     <section
-      style={
+      className={
         isAddPatientModalOpen || isPatientDetailsModalOpen
-          ? {
-              minWidth: "100vw",
-              overflowX: "hidden",
-              maxHeight: "100%",
-            }
-          : null
+          ? [styles.SchedulerWrapper, styles["ModalOpen"]].join(" ")
+          : styles.SchedulerWrapper
       }
-      className={styles.SchedulerWrapper}
     >
       {isPatientDetailsModalOpen && (
         <Backdrop closeModal={closePatientDetailsModal}>

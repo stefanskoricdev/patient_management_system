@@ -38,11 +38,12 @@ const MainNavigation = ({ isNavBtnClicked }) => {
               <p>Notes</p>
             </NavLink>
           </li>
-
-          <button onClick={logout} className={styles.Logout}>
-            <i className="fas fa-sign-out-alt"></i>
-            <p>Logout</p>
-          </button>
+          <li>
+            <button onClick={logout} className={styles.Logout}>
+              <i className="fas fa-sign-out-alt"></i>
+              <p>Logout</p>
+            </button>
+          </li>
         </ul>
       </nav>
     </Fragment>

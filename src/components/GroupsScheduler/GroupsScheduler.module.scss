@@ -100,3 +100,23 @@
         }
     }
 }
+
+.SchedulerWrapper.ModalOpen {
+    min-width: 100vw;
+    overflow-x: hidden;
+    max-height: 800px;
+}
+
+@media (min-height: 1081px) {
+    .SchedulerWrapper.ModalOpen {
+        max-height: 100vh;
+    }
+}
+
+@media (min-width: 1023px) {
+    .SchedulerWrapper {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+}

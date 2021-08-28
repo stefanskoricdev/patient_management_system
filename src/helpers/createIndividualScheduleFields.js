@@ -48,12 +48,11 @@ export const createIndividualScheduleFields = (
   } else {
     for (let i = 0; i < 70; i++) {
       scheduleFields.push(
-        <li
-          data-id={`${physio}-patient${i}`}
-          onClick={patientModalHandler}
-          key={i}
-        >
-          <p data-id={`${physio}-patient${i}`}></p>
+        <li data-id={`${physio}-patient${i}`} key={i}>
+          <p
+            onClick={patientModalHandler}
+            data-id={`${physio}-patient${i}`}
+          ></p>
         </li>
       );
     }

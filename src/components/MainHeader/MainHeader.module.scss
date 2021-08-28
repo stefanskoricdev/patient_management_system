@@ -48,15 +48,9 @@
     }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1023px) {
     .MainHeader {
         width: calc(100% - 5rem);
         margin-left: 5rem;
-    }
-}
-
-@media (min-width: 2000px) {
-    .MainHeader {
-        margin: 0 auto;
     }
 }
