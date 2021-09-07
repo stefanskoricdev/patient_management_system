@@ -1,12 +1,13 @@
 @import "../../../assets/colors/colors";
 
 .PatientDetailModal {
+    position: relative;
     height: fit-content;
-    width: 35rem;
+    width: 30rem;
     max-width: 90%;
     margin: 2rem auto;
     overflow: hidden;
-    border-radius: 4rem 0 4rem 0;
+    border-radius: .5rem;
     color: $whiteish;
     background-color: $light-blue;
     box-shadow: 5px 5px 10px $dark-blue;
@@ -40,7 +41,7 @@
                 right: 0;
                 width: 0;
                 height: 0;
-                border-radius: 1rem;
+                border-radius: .5rem;
                 background-color: $light-blue;
 
                 ul {
@@ -48,18 +49,23 @@
                     margin: 0;
 
                     li {
-                        width: fit-content;
-                        margin: 0 auto;
-                        font-size: 1.2rem;
-                        font-weight: 700;
-                        text-align: center;
-                        color: $whiteish;
-                        cursor: pointer;
+                        button {
+                            display: block;
+                            width: fit-content;
+                            margin: 0 auto;
+                            font-size: 1.2rem;
+                            font-weight: 700;
+                            text-align: center;
+                            color: $whiteish;
+                            cursor: pointer;
+                        }
+
+                        button:hover {
+                            border-bottom: 1px solid $whiteish;
+                        }
                     }
 
-                    li:hover {
-                        border-bottom: 1px solid $whiteish;
-                    }
+
                 }
             }
 
@@ -75,13 +81,13 @@
     }
 
     .Main {
-        padding-bottom: 3rem;
+        padding-bottom: 1rem;
         position: relative;
 
         .Avatar {
             position: absolute;
             left: calc(50% - 7.5rem);
-            top: -25%;
+            top: -10rem;
 
             img {
                 width: 15rem;
@@ -100,36 +106,38 @@
         }
 
         .MainInfo {
-            padding-top: 9rem;
+            padding-top: 6rem;
         }
 
         .Observation {
-            max-height: 15rem;
-            overflow-y: scroll;
+
+            p {
+                white-space: pre-wrap;
+                max-height: 15rem;
+                padding: .5rem;
+                overflow-y: scroll;
+                overflow-x: hidden;
+            }
         }
     }
 }
 
 @keyframes optionsOpen {
-    from {
+    0% {
         width: 0;
         height: 0;
         opacity: 0;
     }
 
-    to {
+    50% {
+        width: 8rem;
+        height: fit-content;
+        opacity: .5;
+    }
+
+    100% {
         width: 8rem;
         height: fit-content;
         opacity: 1;
-    }
-}
-
-@keyframes showOptionsBtn {
-    from {
-        opacity: 0
-    }
-
-    to {
-        opacity: 1
     }
 }

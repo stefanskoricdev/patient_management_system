@@ -12,7 +12,8 @@
     transition: transform 200ms ease-in-out;
     border-radius: 0 1rem 1rem 0;
     background-color: $dark-blue;
-    z-index: 200;
+    z-index: 90; // lower z-index then Backdrop when we activate Patient Add Modal
+    //and Patient Details Modal
 
     .Logo {
         width: 5rem;
@@ -73,6 +74,7 @@
 
 .MainNav.active {
     transform: translateX(0);
+    z-index: 200;
     box-shadow: 15px 15px 20px $dark-blue;
 }
 
@@ -97,7 +99,7 @@
 @media (min-width: 1023px) {
     .MainNav {
         width: 5rem;
-        overflow-x: hidden;
+        overflow: hidden;
         transform: translateX(0);
         animation: navClose 200ms linear;
 
@@ -116,7 +118,6 @@
     }
 
     .MainNav.active {
-        transform: translateX(0);
         width: 15rem;
         animation: navOpen 200ms linear;
 

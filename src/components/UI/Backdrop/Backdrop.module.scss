@@ -3,6 +3,7 @@
     top: 0;
     left: 0;
     width: 100vw;
+    min-height: 100vh;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -12,4 +13,12 @@
     backdrop-filter: blur(17.5px);
     -webkit-backdrop-filter: blur(17.5px);
     z-index: 100;
+}
+
+@media (min-width: 1439px) {
+
+    //Did this to awoid overflow x scroll on bigger screens
+    .Backdrop {
+        left: -13%;
+    }
 }

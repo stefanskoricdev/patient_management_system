@@ -21,12 +21,14 @@ export const LayoutProvider = ({ children }) => {
   };
 
   const closePatientDetailsModal = (e) => {
-    if (e.target.id === "backdrop") {
+    console.log(e.currentTarget.id === "close-modal");
+    if (e.target.id === "backdrop" || e.currentTarget.id === "close-modal") {
       setIsPatientDetailsModalOpen(false);
     }
   };
   const closeAddPatientModal = (e) => {
-    if (e.target.id === "backdrop") {
+    console.log(e.currentTarget.id === "close-modal");
+    if (e.target.id === "backdrop" || e.currentTarget.id === "close-modal") {
       setIsAddPatientModalOpen(false);
     }
   };

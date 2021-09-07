@@ -41,6 +41,7 @@ const GroupsScheduler = ({ physiotherapist, config }) => {
       {isPatientDetailsModalOpen && (
         <Backdrop closeModal={closePatientDetailsModal}>
           <PatientDetailsModal
+            closeModal={closePatientDetailsModal}
             setIsModalOpen={setIsPatientDetailsModalOpen}
             setLoading={setIsLoading}
             setPatients={setGroupPatients}
@@ -53,6 +54,7 @@ const GroupsScheduler = ({ physiotherapist, config }) => {
       {isAddPatientModalOpen && (
         <Backdrop closeModal={closeAddPatientModal}>
           <AddPatientModal
+            closeModal={closeAddPatientModal}
             setPatients={setGroupPatients}
             setIsModalOpen={setIsAddPatientModalOpen}
             patientId={patientId}

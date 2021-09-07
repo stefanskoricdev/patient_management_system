@@ -5,6 +5,13 @@
     color: $whiteish;
 }
 
+@media (min-width: 1440px) {
+    .App {
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
 @media (min-width: 2500px) {
     .App {
         width: 2500px;

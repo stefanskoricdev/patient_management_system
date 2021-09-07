@@ -1,0 +1,17 @@
+@import "../../../assets/colors/colors";
+
+.CloseBtn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2rem;
+    height: 2rem;
+    background-color: transparent;
+    border: none;
+    color: $whiteish;
+    z-index: 10;
+
+    svg {
+        font-size: 1rem;
+    }
+}

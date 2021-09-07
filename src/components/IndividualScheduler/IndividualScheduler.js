@@ -46,6 +46,7 @@ const IndividualScheduler = ({ physiotherapist }) => {
       {isPatientDetailsModalOpen && (
         <Backdrop closeModal={closePatientDetailsModal}>
           <PatientDetailsModal
+            closeModal={closePatientDetailsModal}
             setIsModalOpen={setIsPatientDetailsModalOpen}
             setLoading={setIsLoading}
             setPatients={setIndividualPatients}
@@ -58,6 +59,7 @@ const IndividualScheduler = ({ physiotherapist }) => {
       {isAddPatientModalOpen && (
         <Backdrop closeModal={closeAddPatientModal}>
           <AddPatientModal
+            closeModal={closeAddPatientModal}
             setPatients={setIndividualPatients}
             setIsModalOpen={setIsAddPatientModalOpen}
             patientId={patientId}

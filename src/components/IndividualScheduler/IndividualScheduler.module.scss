@@ -65,7 +65,7 @@
             grid-template-rows: repeat(14, 10rem [row-start]);
             background-color: $whiteish;
 
-            li {
+            div {
                 height: 10rem;
                 display: flex;
                 justify-content: center;
@@ -75,15 +75,15 @@
                 cursor: pointer;
 
                 p {
-                    width: 90%;
-                    height: 80%;
+                    width: 98%;
+                    height: 98%;
                     margin: 0 auto;
                     padding: 0 2%;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     text-align: center;
-                    border-radius: 0 2rem 0 2rem;
+                    border-radius: .5rem;
                     color: rgb(54, 54, 58);
                     font-size: 1.4rem;
                     font-weight: 700;
@@ -100,10 +100,10 @@
 .Scheduler.ModalOpen {
     min-width: 100vw;
     overflow-x: hidden;
-    max-height: 800px;
+    max-height: 550px;
 }
 
-@media (min-height: 1081px) {
+@media (min-height: 550px) {
     .Scheduler.ModalOpen {
         max-height: 100vh;
     }

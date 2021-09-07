@@ -23,7 +23,8 @@ html {
 }
 
 *::-webkit-scrollbar-track {
-  background-color: rgb(159, 186, 176);
+  background-color: inherit;
+  margin: .5rem 0;
 }
 
 body {

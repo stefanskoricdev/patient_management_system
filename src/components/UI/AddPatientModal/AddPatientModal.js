@@ -6,12 +6,14 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import AppContext from "../../../store/AppProvider";
 import AddPatientForm from "./AddPatientForm/AddPatientForm";
+import CloseModalBtn from "../Buttons/CloseModalBtn";
 import firebase from "firebase/app";
 import "firebase/firestore";
 
 const mySwal = withReactContent(Swal);
 
 const AddPatientModal = ({
+  closeModal,
   setIsModalOpen,
   patientId,
   collection,
@@ -79,6 +81,7 @@ const AddPatientModal = ({
 
   return (
     <section id="addPatientModalWrapper" className={styles.AddPatientModal}>
+      <CloseModalBtn closeModal={closeModal} />
       <AddPatientForm
         submit={addPatientHandler}
         firstName={firstNameInput}

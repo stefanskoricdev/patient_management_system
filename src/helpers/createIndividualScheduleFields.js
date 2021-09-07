@@ -18,7 +18,7 @@ export const createIndividualScheduleFields = (
         data.id === `${physio}-patient${i}` ? data : null
       );
       scheduleFields.push(
-        <li
+        <div
           data-id={`${physio}-patient${i}`}
           onClick={patientModalHandler}
           key={i}
@@ -42,18 +42,19 @@ export const createIndividualScheduleFields = (
               ? `${dataContainer[existingData].firstName} ${dataContainer[existingData].lastName}`
               : null}
           </p>
-        </li>
+        </div>
       );
     }
   } else {
     for (let i = 0; i < 70; i++) {
       scheduleFields.push(
-        <li data-id={`${physio}-patient${i}`} key={i}>
-          <p
-            onClick={patientModalHandler}
-            data-id={`${physio}-patient${i}`}
-          ></p>
-        </li>
+        <div
+          onClick={patientModalHandler}
+          data-id={`${physio}-patient${i}`}
+          key={i}
+        >
+          <p data-id={`${physio}-patient${i}`}></p>
+        </div>
       );
     }
   }

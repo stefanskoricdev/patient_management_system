@@ -5,8 +5,10 @@ import { deleteData } from "../../actions/actions";
 import maleAvatar from "../../../assets/img/male_avatar.svg";
 import femaleAvatar from "../../../assets/img/female_avatar.svg";
 import dotsIcon from "../../../assets/img/dots_icon.png";
+import CloseModalBtn from "../Buttons/CloseModalBtn";
 
 const PatientDetailsModal = ({
+  closeModal,
   patients,
   patientId,
   setLoading,
@@ -31,6 +33,7 @@ const PatientDetailsModal = ({
 
   return (
     <section onClick={openOptionsHandler} className={styles.PatientDetailModal}>
+      <CloseModalBtn closeModal={closeModal} />
       <header className={styles.Header}>
         <div className={styles.Options}>
           <button>
@@ -44,18 +47,20 @@ const PatientDetailsModal = ({
             }
           >
             <ul>
-              <li
-                onClick={() => {
-                  deleteData(
-                    setLoading,
-                    setPatients,
-                    collection,
-                    targetedPatient.id
-                  );
-                  setIsModalOpen(false);
-                }}
-              >
-                Delete
+              <li>
+                <button
+                  onClick={() => {
+                    deleteData(
+                      setLoading,
+                      setPatients,
+                      collection,
+                      targetedPatient.id
+                    );
+                    setIsModalOpen(false);
+                  }}
+                >
+                  Delete
+                </button>
               </li>
             </ul>
           </div>
