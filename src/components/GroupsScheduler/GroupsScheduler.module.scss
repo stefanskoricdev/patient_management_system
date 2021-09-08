@@ -1,4 +1,5 @@
 @import "../../assets/colors/colors";
+@import "../../assets/mixins/schedule";
 
 .SchedulerWrapper {
     min-width: 55rem;
@@ -6,41 +7,14 @@
     padding: 1rem 0;
     border-radius: 1rem;
 
-    li {
-        list-style: none;
-        color: $whiteish;
-    }
-
-    .Header {
-        margin-left: 5rem;
-        max-width: fit-content;
-        display: flex;
-        align-items: center;
-        background-color: $dark-blue;
-        height: 3rem;
-        border-radius: 1rem 1rem 0 0;
-
-        li {
-            width: 15rem;
-            height: 100%;
-            border-right: 1px solid $whiteish;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 700;
-            font-size: 1.5rem;
-        }
-
-        li:last-child {
-            border-right: none;
-        }
-    }
+    @include scheduleHeader;
 
     .Main {
         display: flex;
 
         .Time {
-            width: 5rem;
+            min-width: 5rem;
+            max-width: 5rem;
             background-color: $dark-blue;
             border-radius: 1rem 0 0 1rem;
 
@@ -64,16 +38,17 @@
         }
 
         .Schedule {
+            width: 100%;
             display: grid;
-            background-color: $whiteish;
+            background-color: $dark-blue;
 
-            li {
+            div {
                 height: 20rem;
-                width: 15rem;
                 display: flex;
                 flex-flow: column;
                 justify-content: center;
                 align-items: center;
+                background-color: $whiteish;
                 border-right: .1rem solid $dark-blue;
                 cursor: pointer;
 
@@ -104,19 +79,12 @@
 .SchedulerWrapper.ModalOpen {
     min-width: 100vw;
     overflow-x: hidden;
-    max-height: 800px;
+    min-height: 35rem;
+    max-height: 550px;
 }
 
-@media (min-height: 1081px) {
+@media (min-height: 550px) {
     .SchedulerWrapper.ModalOpen {
         max-height: 100vh;
-    }
-}
-
-@media (min-width: 1023px) {
-    .SchedulerWrapper {
-        display: flex;
-        flex-flow: column;
-        align-items: center;
     }
 }

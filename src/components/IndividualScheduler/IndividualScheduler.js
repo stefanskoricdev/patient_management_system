@@ -10,7 +10,7 @@ import AppContext from "../../store/AppProvider";
 
 const COLLECTION = "individual-patients";
 
-const IndividualScheduler = ({ physiotherapist }) => {
+const IndividualScheduler = ({ config, physiotherapist }) => {
   const layoutCtx = useContext(LayoutContext);
   const {
     patientId,
@@ -34,6 +34,13 @@ const IndividualScheduler = ({ physiotherapist }) => {
   // which is sent in this component through appContext and then filtered according
   //to which physio this component belongs to (we get that trough props).
   //This way we avoid data being fetched every time we click physio tab!
+  const workingDays = config[0].workingDays.map((days, i) => (
+    <li key={i}>{days}</li>
+  ));
+  const workingHours = config[0].workingHours.map((hours, i) => (
+    <li key={i}>{hours}</li>
+  ));
+  console.log(workingDays.length);
 
   return (
     <section
@@ -70,37 +77,25 @@ const IndividualScheduler = ({ physiotherapist }) => {
       )}
       {isLoading && <Loader />}
 
-      <header className={styles.Header}>
-        <li>MON</li>
-        <li>TUE</li>
-        <li>WED</li>
-        <li>THU</li>
-        <li>FRI</li>
-      </header>
+      <header className={styles.Header}>{workingDays}</header>
       <main className={styles.Main}>
         <div className={styles.Time}>
-          <ul>
-            <li>08:00</li>
-            <li>09:00</li>
-            <li>10:00</li>
-            <li>11:00</li>
-            <li>12:00</li>
-            <li>13:00</li>
-            <li>14:00</li>
-            <li>15:00</li>
-            <li>16:00</li>
-            <li>17:00</li>
-            <li>18:00</li>
-            <li>19:00</li>
-            <li>20:00</li>
-            <li>21:00</li>
-          </ul>
+          <ul>{workingHours}</ul>
         </div>
-        <section id="schedule" className={styles.Schedule}>
+        <section
+          id="schedule"
+          className={styles.Schedule}
+          style={{
+            gridTemplateColumns: `repeat(${workingDays.length}, 20% [col-start])`,
+            gridTemplateRows: `repeat(${workingHours.length}, 10rem [row-start])`,
+          }}
+        >
           {createIndividualScheduleFields(
             filteredPatients,
             patientModalHandler,
-            physiotherapist
+            physiotherapist,
+            workingDays,
+            workingHours
           )}
         </section>
       </main>

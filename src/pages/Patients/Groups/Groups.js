@@ -3,14 +3,20 @@ import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import GroupsScheduler from "../../../components/GroupsScheduler/GroupsScheduler";
 import getTime from "../../../helpers/getTime";
 
-const stefanConfig = {
-  days: ["MON/THU", "TUE/FRI"],
-  time: ["19:00", "20:00"],
-};
-const saraConfig = {
-  days: ["MON/WED"],
-  time: ["21:00/ 19:00"],
-};
+const physioConfig = [
+  {
+    id: "p1",
+    name: "Stefan",
+    workingHours: ["19:00", "20:00"],
+    workingDays: ["MON/THU", "TUE/FRI"],
+  },
+  {
+    id: "p2",
+    name: "Sara",
+    workingHours: ["21:00/ 19:00"],
+    workingDays: ["MON/WED"],
+  },
+];
 
 const Groups = () => {
   const currentTime = getTime();
@@ -21,26 +27,45 @@ const Groups = () => {
         <p>{currentTime}</p>
       </header>
       <nav className={styles.Nav}>
-        <NavLink activeClassName={styles.active} to="/patients/groups/stefan">
-          Stefan
-        </NavLink>
-        <NavLink activeClassName={styles.active} to="/patients/groups/sara">
-          Sara
-        </NavLink>
+        {physioConfig.map((physio) => {
+          return (
+            <NavLink
+              key={physio.id}
+              activeClassName={styles.active}
+              to={`/patients/groups/${physio.name.toLowerCase()}`}
+            >
+              {physio.name}
+            </NavLink>
+          );
+        })}
       </nav>
       <main className={styles.Main}>
         <Switch>
           <Route path="/patients/groups/" exact>
-            <Redirect to="/patients/groups/stefan" />
+            <Redirect
+              to={`/patients/groups/${physioConfig[0].name.toLowerCase()}`}
+            />
           </Route>
-          <Route path="/patients/groups/stefan">
-            <GroupsScheduler physiotherapist={"Stefan"} config={stefanConfig} />
-          </Route>
-          <Route path="/patients/groups/sara">
-            <GroupsScheduler physiotherapist={"Sara"} config={saraConfig} />
-          </Route>
+          {physioConfig.map((physio) => {
+            return (
+              <Route
+                key={physio.id}
+                path={`/patients/groups/${physio.name.toLowerCase()}`}
+              >
+                <GroupsScheduler
+                  key={physio.id}
+                  physiotherapist={physio.name}
+                  config={physioConfig.filter(
+                    (config) => config.id === physio.id
+                  )}
+                />
+              </Route>
+            );
+          })}
           <Route path="*">
-            <Redirect to="/patients/groups/stefan" />
+            <Redirect
+              to={`/patients/groups/${physioConfig[0].name.toLowerCase()}`}
+            />
           </Route>
         </Switch>
       </main>

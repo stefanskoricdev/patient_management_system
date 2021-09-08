@@ -1,0 +1,30 @@
+@mixin scheduleHeader {
+    .Header {
+        margin-left: 5rem;
+        width: calc(100% - 5rem);
+        display: flex;
+        align-items: center;
+        background-color: $dark-blue;
+        height: 3rem;
+        border-radius: 1rem 1rem 0 0;
+
+        li {
+            width: 20%;
+            height: 100%;
+            border-right: 1px solid $whiteish;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        li:last-child {
+            width: calc(20% - 1px);
+        }
+
+        li:nth-child(5) {
+            border-right: none;
+        }
+    }
+}

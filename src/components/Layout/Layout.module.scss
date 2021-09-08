@@ -1,3 +1,9 @@
 .Layout {
     position: relative;
+
+    .Main {
+        .PageWrapper {
+            display: none;
+        }
+    }
 }

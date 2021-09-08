@@ -27,6 +27,7 @@
 
     .UserAvatar {
         height: 4rem;
+        margin-right: 1rem;
         border-radius: 100%;
         display: flex;
         justify-content: center;
@@ -35,13 +36,12 @@
         p {
             color: $whiteish;
             font-weight: 600;
-            margin-right: .5rem;
+            margin-right: 1.5rem;
         }
 
         svg {
             width: 60%;
             height: 60%;
-            margin: 0 1rem;
         }
 
 
@@ -50,7 +50,15 @@
 
 @media (min-width: 1023px) {
     .MainHeader {
-        width: calc(100% - 5rem);
-        margin-left: 5rem;
+        width: 95%;
+
+        .BurgerBtn {
+            //This is width of navigation (5rem)
+            margin-left: 5rem;
+        }
+
+        .UserAvatar {
+            margin-right: 0;
+        }
     }
 }

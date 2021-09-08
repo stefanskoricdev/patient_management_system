@@ -1,11 +1,8 @@
 @import "../../assets/colors/colors";
+@import "../../assets/mixins/mixins";
 
 .Home {
-    max-width: 95%;
-    margin: 2rem auto 0;
-    padding: 1rem;
-    background-color: $light-blue;
-    border-radius: 1rem;
+    @include pageWrapper;
 
     .Header {
         display: flex;
@@ -136,8 +133,7 @@
 
 @media (min-width: 1023px) {
     .Home {
-        margin-left: calc(5rem + 2.5%);
-        margin-right: 2.5%;
+        @include pageWrapper1023;
 
         .Main {
             display: flex;

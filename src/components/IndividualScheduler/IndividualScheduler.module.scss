@@ -1,47 +1,20 @@
 @import "../../assets/colors/colors";
+@import "../../assets/mixins/schedule";
 
 .Scheduler {
     min-width: 55rem;
     margin-top: 1rem;
+    padding: 1rem 0;
     border-radius: 1rem;
 
-    li {
-        list-style: none;
-        color: $whiteish;
-    }
-
-    .Header {
-        margin-left: 4rem;
-        width: calc(100% - 4rem);
-        min-width: 50rem;
-        display: flex;
-        align-items: center;
-        background-color: $dark-blue;
-        height: 3rem;
-        border-radius: 1rem 1rem 0 0;
-
-        li {
-            width: 20%;
-            height: 100%;
-            border-right: 1px solid $whiteish;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 700;
-            font-size: 1.5rem;
-        }
-
-        li:nth-child(5) {
-            border-right: none;
-        }
-    }
-
+    @include scheduleHeader;
 
     .Main {
         display: flex;
 
         .Time {
-            width: 4rem;
+            min-width: 5rem;
+            max-width: 5rem;
             background-color: $dark-blue;
             border-radius: 1rem 0 0 1rem;
 
@@ -59,17 +32,17 @@
         }
 
         .Schedule {
-            width: calc(100% - 4rem);
+            position: relative;
+            width: 100%;
             display: grid;
-            grid-template-columns: repeat(5, 20% [col-start]);
-            grid-template-rows: repeat(14, 10rem [row-start]);
-            background-color: $whiteish;
+            background-color: $dark-blue;
 
             div {
                 height: 10rem;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                background-color: $whiteish;
                 border-bottom: .1rem solid $dark-blue;
                 border-right: .1rem solid $dark-blue;
                 cursor: pointer;
@@ -100,6 +73,7 @@
 .Scheduler.ModalOpen {
     min-width: 100vw;
     overflow-x: hidden;
+    min-height: 35rem;
     max-height: 550px;
 }
 

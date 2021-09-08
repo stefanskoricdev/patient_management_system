@@ -1,9 +1,12 @@
 export const createIndividualScheduleFields = (
   dataContainer,
   patientModalHandler,
-  physio
+  physio,
+  workingDays,
+  workingHours
 ) => {
   let scheduleFields = [];
+  const indexValue = workingDays.length * workingHours.length;
   const colorPallete = [
     "FFE194",
     "6D97C9",
@@ -13,7 +16,7 @@ export const createIndividualScheduleFields = (
     "D17484",
   ];
   if (dataContainer.length > 0) {
-    for (let i = 0; i < 70; i++) {
+    for (let i = 0; i < indexValue; i++) {
       const existingData = dataContainer.findIndex((data) =>
         data.id === `${physio}-patient${i}` ? data : null
       );
@@ -46,7 +49,7 @@ export const createIndividualScheduleFields = (
       );
     }
   } else {
-    for (let i = 0; i < 70; i++) {
+    for (let i = 0; i < indexValue; i++) {
       scheduleFields.push(
         <div
           onClick={patientModalHandler}

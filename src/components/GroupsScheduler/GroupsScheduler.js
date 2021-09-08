@@ -25,10 +25,15 @@ const GroupsScheduler = ({ physiotherapist, config }) => {
     setIsAddPatientModalOpen,
     setIsPatientDetailsModalOpen,
   } = layoutCtx;
+  /* const workingDays = config[0].workingDays;
+  const workingHours = config[0].workingHours; */
 
-  const { days, time } = config;
-  const daysValue = config.days.map((day, i) => <li key={i}>{day}</li>);
-  const timeValue = config.time.map((time, i) => <li key={i}>{time}</li>);
+  const workingDays = config[0].workingDays.map((day, i) => (
+    <li key={i}>{day}</li>
+  ));
+  const workingHours = config[0].workingHours.map((hour, i) => (
+    <li key={i}>{hour}</li>
+  ));
 
   return (
     <section
@@ -65,26 +70,24 @@ const GroupsScheduler = ({ physiotherapist, config }) => {
       )}
       {isLoading && <Loader />}
 
-      <header className={styles.Header}>{daysValue}</header>
+      <header className={styles.Header}>{workingDays}</header>
       <main className={styles.Main}>
         <div className={styles.Time}>
-          <ul>{timeValue}</ul>
+          <ul>{workingHours}</ul>
         </div>
         <section
           id="schedule"
           className={styles.Schedule}
           style={{
-            gridTemplateColumns: `repeat(${daysValue.length}, ${
-              100 / daysValue.length
-            }% [col-start])`,
-            gridTemplateRows: `repeat(${timeValue.length}, 20rem [row-start])`,
+            gridTemplateColumns: `repeat(${workingDays.length}, 20% [col-start])`,
+            gridTemplateRows: `repeat(${workingHours.length}, 20rem [row-start])`,
           }}
         >
           {createGroupsScheduleFields(
             groupPatients,
             physiotherapist,
-            days,
-            time,
+            workingDays,
+            workingHours,
             patientModalHandler,
             patientId
           )}
