@@ -1,9 +1,17 @@
 .Layout {
     position: relative;
+    min-height: 100vh;
+    padding: .5rem 0;
+}
 
-    .Main {
-        .PageWrapper {
-            display: none;
-        }
+@media (min-width: 1440px) {
+    .Layout {
+        padding: .5rem 10rem;
+    }
+}
+
+@media (min-width: 2500px) {
+    .Layout {
+        padding: .5rem 20rem;
     }
 }

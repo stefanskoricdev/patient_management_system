@@ -1,0 +1,18 @@
+@import "../../assets/colors/colors";
+@import "../../assets/mixins/mixins";
+
+.Settings {
+    @include pageWrapper;
+
+    .Header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+@media (min-width: 1023px) {
+    .Settings {
+        @include pageWrapper1023;
+    }
+}

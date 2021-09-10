@@ -12,10 +12,11 @@ import Groups from "./pages/Patients/Groups/Groups";
 import Loader from "./components/UI/Loader/Loader";
 import Login from "./pages/Login/Login";
 import AuthContext from "./store/AuthProvider";
+import Settings from "./pages/Settings/Settings";
 
 function App() {
   const authCtx = useContext(AuthContext);
-  const { isLoggedIn } = authCtx;
+  const { isLoggedIn, isAdmin } = authCtx;
 
   const appCtx = useContext(AppContext);
   const { isLoading } = appCtx;
@@ -62,6 +63,11 @@ function App() {
               <Route path="/notes">
                 <Notes />
               </Route>
+              {isAdmin && (
+                <Route path="/admin">
+                  <Settings />
+                </Route>
+              )}
               <Route path="*">
                 <Redirect to="/home" />
               </Route>

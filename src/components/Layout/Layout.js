@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
       {isNavBtnClicked && <Backdrop />}
       <MainHeader openNavHandler={openNavHandler} />
       <MainNavigation isNavBtnClicked={isNavBtnClicked} />
-      <main className={styles.Main}>{children}</main>
+      <main>{children}</main>
     </section>
   );
 };

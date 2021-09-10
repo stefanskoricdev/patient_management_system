@@ -6,7 +6,7 @@ import AuthContext from "../../store/AuthProvider";
 
 const MainNavigation = ({ isNavBtnClicked }) => {
   const authCtx = useContext(AuthContext);
-  const { logout } = authCtx;
+  const { logout, isAdmin } = authCtx;
   return (
     <Fragment>
       <nav
@@ -38,6 +38,14 @@ const MainNavigation = ({ isNavBtnClicked }) => {
               <p>Notes</p>
             </NavLink>
           </li>
+          {isAdmin && (
+            <li>
+              <NavLink activeClassName={styles.active} to="/admin">
+                <i className="fas fa-cog"></i>
+                <p>Settings</p>
+              </NavLink>
+            </li>
+          )}
           <li>
             <button onClick={logout} className={styles.Logout}>
               <i className="fas fa-sign-out-alt"></i>

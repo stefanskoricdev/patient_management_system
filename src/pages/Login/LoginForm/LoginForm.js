@@ -6,6 +6,8 @@ import AuthContext from "../../../store/AuthProvider";
 
 const mySwal = withReactContent(Swal);
 
+const ADMIN_ID = process.env.REACT_APP_ADMIN_ID;
+
 const LoginForm = ({ setLoading }) => {
   const authCtx = useContext(AuthContext);
   const { login } = authCtx;
@@ -55,7 +57,11 @@ const LoginForm = ({ setLoading }) => {
         }
       })
       .then((data) => {
-        login(data.idToken, data.email);
+        let admin = false;
+        if (data.localId === ADMIN_ID) {
+          admin = true;
+        }
+        login(data.idToken, data.email, admin);
       })
       .catch((error) => {
         resetInput();
