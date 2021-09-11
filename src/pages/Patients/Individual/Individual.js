@@ -65,6 +65,7 @@ const Individual = () => {
               to={`/patients/individual/${physio.name.toLowerCase()}`}
             >
               {physio.name}
+              <i className="fas fa-caret-up"></i>
             </NavLink>
           );
         })}

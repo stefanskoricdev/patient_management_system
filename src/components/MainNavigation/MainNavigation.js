@@ -40,7 +40,7 @@ const MainNavigation = ({ isNavBtnClicked }) => {
           </li>
           {isAdmin && (
             <li>
-              <NavLink activeClassName={styles.active} to="/admin">
+              <NavLink activeClassName={styles.active} to="/settings">
                 <i className="fas fa-cog"></i>
                 <p>Settings</p>
               </NavLink>

@@ -9,12 +9,12 @@ html {
 *:before,
 *:after {
   box-sizing: inherit;
-  scrollbar-width: .5rem;
   scrollbar-color: rgb(159, 186, 176);
 }
 
 *::-webkit-scrollbar {
-  width: .5rem;
+  width: 5px;
+  height: 5px;
 }
 
 *::-webkit-scrollbar-thumb {

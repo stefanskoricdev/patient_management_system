@@ -166,3 +166,35 @@ export const updateNote = (setLoading, collection, targetId) => {
       });
     });
 };
+
+export const getUsers = (setLoading, setState, collection) => {
+  setLoading(true);
+  db.collection(collection)
+    .get()
+    .then((users) => {
+      let usersList = [];
+      if (users.docs.length > 0) {
+        users.forEach((user) => {
+          const singleUser = {
+            id: user.data().id,
+            firstName: user.data().firstName,
+            lastName: user.data().lastName,
+            email: user.data().email,
+          };
+          console.log(singleUser);
+          usersList.push(singleUser);
+        });
+      }
+      setState(usersList);
+      setLoading(false);
+    })
+    .catch((error) => {
+      setLoading(false);
+      mySwal.fire({
+        title: "Something went wrong!!",
+        text: `${error}`,
+        icon: "error",
+        customClass: { container: "alert-modal" },
+      });
+    });
+};

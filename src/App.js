@@ -64,7 +64,7 @@ function App() {
                 <Notes />
               </Route>
               {isAdmin && (
-                <Route path="/admin">
+                <Route path="/settings">
                   <Settings />
                 </Route>
               )}

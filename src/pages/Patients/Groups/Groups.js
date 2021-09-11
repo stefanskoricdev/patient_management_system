@@ -35,6 +35,7 @@ const Groups = () => {
               to={`/patients/groups/${physio.name.toLowerCase()}`}
             >
               {physio.name}
+              <i className="fas fa-caret-up"></i>
             </NavLink>
           );
         })}

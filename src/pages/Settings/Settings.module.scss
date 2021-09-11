@@ -5,9 +5,47 @@
     @include pageWrapper;
 
     .Header {
-        display: flex;
+
+        /*  display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: center; */
+        .Title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav {
+            width: 100%;
+            padding: .5rem 0;
+
+            ul {
+                padding: 0;
+                display: flex;
+                justify-content: right;
+                overflow-x: scroll;
+                overflow-y: hidden;
+
+                li {
+                    min-width: fit-content;
+                    height: 2rem;
+                    display: flex;
+                    align-items: center;
+
+                    a {
+                        padding: .5rem;
+                        border-radius: .5rem;
+                        background-color: inherit;
+                        color: $whiteish;
+
+                        svg {
+                            font-weight: 700;
+                            font-size: 1.5rem;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
