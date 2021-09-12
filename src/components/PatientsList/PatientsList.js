@@ -1,38 +1,33 @@
-import styles from "./UsersList.module.scss";
+import styles from "./PatientsList.module.scss";
 import { useContext, useEffect, useRef, useState } from "react";
-import AppContext from "../../../store/AppProvider";
+import AppContext from "../../store/AppProvider";
 
-const UsersList = () => {
+const PatientsList = () => {
   const appCtx = useContext(AppContext);
-  const { users } = appCtx;
+  const { groupPatients, individualPatients } = appCtx;
 
-  const [usersList, setUsersList] = useState(users);
+  const allPatientsList = groupPatients.concat(individualPatients);
+
+  const [patientsList, setPatientsList] = useState(allPatientsList);
 
   const firstNameRef = useRef();
   const lastNameRef = useRef();
-  const emailRef = useRef();
-  const idRef = useRef();
 
   const filterListHandler = (e) => {
     e.preventDefault();
     let filterValue = {};
     const firstName = firstNameRef.current.value.trim();
     const lastName = lastNameRef.current.value.trim();
-    const email = emailRef.current.value.trim();
-    const id = idRef.current.value.trim();
     if (firstName) {
       filterValue["firstName"] = firstName;
     }
     if (lastName) {
       filterValue["lastName"] = lastName;
     }
-    if (email) {
-      filterValue["email"] = email;
-    }
-    if (id) {
-      filterValue["id"] = id;
-    }
-    let filteredList = users.filter((user) => {
+
+    console.log(filterValue);
+
+    let filteredList = allPatientsList.filter((user) => {
       for (let key in filterValue) {
         if (
           user[key] === undefined ||
@@ -42,15 +37,17 @@ const UsersList = () => {
       }
       return true;
     });
-    setUsersList(filteredList);
+    firstNameRef.current.value = "";
+    lastNameRef.current.value = "";
+    setPatientsList(filteredList);
   };
 
   useEffect(() => {
-    setUsersList(users);
-  }, [users]);
+    setPatientsList(groupPatients.concat(individualPatients));
+  }, [individualPatients, groupPatients]);
 
   return (
-    <section className={styles.UsersWrapper}>
+    <section className={styles.PatientsListWrapper}>
       <section className={styles.Filters}>
         <header>
           <i className="fas fa-filter"></i>
@@ -65,39 +62,41 @@ const UsersList = () => {
             Last Name
             <input name="last-name" type="text" ref={lastNameRef}></input>
           </label>
-          <label>
-            Email
-            <input name="email" type="text" ref={emailRef}></input>
-          </label>
-          <label>
-            Id
-            <input name="id" type="text" ref={idRef}></input>
-          </label>
           <button>
             <i className="fas fa-filter"></i> Filter
           </button>
         </form>
       </section>
-      <section className={styles.UsersList}>
+      <section className={styles.PatientsList}>
         <header>
           <i className="fas fa-list-ul"></i>
-          <h3>Users List</h3>
+          <h3>Patients List</h3>
         </header>
         <table>
           <tbody>
-            <tr className={styles.BodyHeader}>
+            <tr>
               <th>First Name</th>
               <th>Last Name</th>
-              <th>Email</th>
+              <th>Date of Birth</th>
+              <th>Gender</th>
+              <th>City</th>
+              <th>Address</th>
+              <th>Phone Number</th>
+              <th>Physiotherapist</th>
               <th>Id</th>
             </tr>
-            {usersList.map((user) => {
+            {patientsList.map((patient) => {
               return (
-                <tr key={user.id}>
-                  <td>{user.firstName}</td>
-                  <td>{user.lastName}</td>
-                  <td>{user.email}</td>
-                  <td>{user.id}</td>
+                <tr key={patient.id}>
+                  <td>{patient.firstName}</td>
+                  <td>{patient.lastName}</td>
+                  <td>{patient.dateOfBirth}</td>
+                  <td>{patient.gender}</td>
+                  <td>{patient.city}</td>
+                  <td>{patient.address}</td>
+                  <td>{patient.phone}</td>
+                  <td>{patient.physiotherapist}</td>
+                  <td>{patient.id}</td>
                 </tr>
               );
             })}
@@ -108,4 +107,4 @@ const UsersList = () => {
   );
 };
 
-export default UsersList;
+export default PatientsList;

@@ -1,7 +1,8 @@
 @import "../../../assets/colors/colors";
 
 .GroupsWrapper {
-    margin: 2rem auto 0;
+    width: 100%;
+    margin: 0 auto;
     background-color: $light-blue;
     border-radius: 1rem;
     border: 1px solid $light-blue;
@@ -10,8 +11,6 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 .5rem;
-        border-bottom: 1px solid $dark-blue;
     }
 
     .Nav {
@@ -59,17 +58,10 @@
     }
 }
 
-
-@media (min-width: 750px) {
-    .GroupsWrapper {
-        width: 95%;
-    }
-}
-
 @media (min-width: 1023px) {
     .GroupsWrapper {
-        width: calc(100% - 5.5rem);
-        margin-left: 5rem;
-        //Avoiding shadow with additional 20px;
+        .Nav {
+            overflow-x: auto;
+        }
     }
 }

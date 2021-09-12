@@ -1,7 +1,8 @@
 @import "../../../assets/colors/colors";
 
 .IndividualWrapper {
-    margin: 2rem auto 0;
+    width: 100%;
+    margin: 0 auto;
     background-color: $light-blue;
     border-radius: 1rem;
     border: 1px solid $light-blue;
@@ -10,7 +11,6 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 .5rem;
     }
 
     .Nav {
@@ -23,8 +23,6 @@
 
         a {
             position: relative;
-            width: 30%;
-            max-width: 10rem;
             height: 100%;
             margin: 0;
             padding: 1rem;
@@ -58,17 +56,10 @@
     }
 }
 
-
-@media (min-width: 750px) {
-    .IndividualWrapper {
-        width: 95%;
-    }
-}
-
 @media (min-width: 1023px) {
     .IndividualWrapper {
-        width: calc(100% - 5.5rem);
-        margin-left: 5rem;
-        //Avoiding shadow with additional 20px;
+        .Nav {
+            overflow-x: auto;
+        }
     }
 }

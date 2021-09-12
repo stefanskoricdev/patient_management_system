@@ -1,6 +1,8 @@
-@import "../../../assets/colors/colors";
+@import "../../assets/colors/colors";
 
-.UsersWrapper {
+.PatientsListWrapper {
+    margin-top: 1rem;
+
     .Filters {
         border: 2px solid $dark-blue;
         padding: .5rem;
@@ -42,7 +44,7 @@
         }
     }
 
-    .UsersList {
+    .PatientsList {
         border: 2px solid $dark-blue;
         padding: .5rem;
 
@@ -84,7 +86,7 @@
 }
 
 @media (min-width: 1023px) {
-    .UsersWrapper {
+    .PatientsListWrapper {
         display: flex;
         flex-direction: row-reverse;
 
@@ -93,7 +95,7 @@
             margin: 0 1rem;
         }
 
-        .UsersList {
+        .PatientsList {
             width: calc(100% - 27rem);
 
             table {

@@ -1,10 +1,8 @@
 import styles from "./Individual.module.scss";
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import IndividualScheduler from "../../../components/IndividualScheduler/IndividualScheduler";
-import getTime from "../../../helpers/getTime";
 
 const Individual = () => {
-  const currentTime = getTime();
   const physioConfig = [
     {
       id: "p1",
@@ -53,8 +51,7 @@ const Individual = () => {
   return (
     <section className={styles.IndividualWrapper}>
       <header className={styles.Header}>
-        <h2>Individual</h2>
-        <p>{currentTime}</p>
+        <h1>Individual</h1>
       </header>
       <nav className={styles.Nav}>
         {physioConfig.map((physio, i) => {

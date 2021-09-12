@@ -7,8 +7,6 @@ import Home from "./pages/Home/Home";
 import Patients from "./pages/Patients/Patients";
 import Notes from "./pages/Notes/Notes";
 import AppContext from "./store/AppProvider";
-import Individual from "./pages/Patients/Individual/Individual";
-import Groups from "./pages/Patients/Groups/Groups";
 import Loader from "./components/UI/Loader/Loader";
 import Login from "./pages/Login/Login";
 import AuthContext from "./store/AuthProvider";
@@ -51,14 +49,8 @@ function App() {
               <Route path="/home">
                 <Home />
               </Route>
-              <Route path="/patients" exact>
+              <Route path="/patients">
                 <Patients />
-              </Route>
-              <Route path="/patients/individual">
-                <Individual />
-              </Route>
-              <Route path="/patients/groups">
-                <Groups />
               </Route>
               <Route path="/notes">
                 <Notes />

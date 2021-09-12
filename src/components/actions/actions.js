@@ -181,7 +181,6 @@ export const getUsers = (setLoading, setState, collection) => {
             lastName: user.data().lastName,
             email: user.data().email,
           };
-          console.log(singleUser);
           usersList.push(singleUser);
         });
       }

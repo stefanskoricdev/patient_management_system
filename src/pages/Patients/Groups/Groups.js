@@ -1,8 +1,6 @@
 import styles from "./Groups.module.scss";
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import GroupsScheduler from "../../../components/GroupsScheduler/GroupsScheduler";
-import getTime from "../../../helpers/getTime";
-
 const physioConfig = [
   {
     id: "p1",
@@ -19,12 +17,10 @@ const physioConfig = [
 ];
 
 const Groups = () => {
-  const currentTime = getTime();
   return (
     <section className={styles.GroupsWrapper}>
       <header className={styles.Header}>
-        <h2>Groups</h2>
-        <p>{currentTime}</p>
+        <h1>Groups</h1>
       </header>
       <nav className={styles.Nav}>
         {physioConfig.map((physio) => {
