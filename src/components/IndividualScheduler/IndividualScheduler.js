@@ -8,8 +8,6 @@ import Loader from "../UI/Loader/Loader";
 import LayoutContext from "../../store/LayoutProvider";
 import AppContext from "../../store/AppProvider";
 
-const COLLECTION = "individual-patients";
-
 const IndividualScheduler = ({ config, physiotherapist }) => {
   const layoutCtx = useContext(LayoutContext);
   const {
@@ -24,8 +22,13 @@ const IndividualScheduler = ({ config, physiotherapist }) => {
   } = layoutCtx;
 
   const appCtx = useContext(AppContext);
-  const { individualPatients, setIndividualPatients, isLoading, setIsLoading } =
-    appCtx;
+  const {
+    individualPatients,
+    individualCollection,
+    setIndividualPatients,
+    isLoading,
+    setIsLoading,
+  } = appCtx;
 
   const filteredPatients = individualPatients.filter(
     (patient) => patient.physiotherapist === physiotherapist
@@ -59,7 +62,7 @@ const IndividualScheduler = ({ config, physiotherapist }) => {
             setPatients={setIndividualPatients}
             patients={individualPatients}
             patientId={patientId}
-            collection={COLLECTION}
+            collection={individualCollection}
           />
         </Backdrop>
       )}
@@ -70,7 +73,7 @@ const IndividualScheduler = ({ config, physiotherapist }) => {
             setPatients={setIndividualPatients}
             setIsModalOpen={setIsAddPatientModalOpen}
             patientId={patientId}
-            collection={COLLECTION}
+            collection={individualCollection}
             physio={physiotherapist}
           />
         </Backdrop>

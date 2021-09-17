@@ -1,56 +1,29 @@
 @import "../../assets/colors/colors";
-@import "../../assets/mixins/mixins";
+@import "../../assets/mixins/pages";
 
 .Settings {
     @include pageWrapper;
 
     .Header {
-
-        /*  display: flex;
-        justify-content: space-between;
-        align-items: center; */
         .Title {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
-        nav {
-            width: 100%;
-            padding: .5rem 0;
-
-            ul {
-                padding: 0;
-                display: flex;
-                justify-content: right;
-                overflow-x: scroll;
-                overflow-y: hidden;
-
-                li {
-                    min-width: fit-content;
-                    height: 2rem;
-                    display: flex;
-                    align-items: center;
-
-                    a {
-                        padding: .5rem;
-                        border-radius: .5rem;
-                        background-color: inherit;
-                        color: $whiteish;
-
-                        svg {
-                            font-weight: 700;
-                            font-size: 1.5rem;
-                        }
-                    }
-                }
-            }
-        }
     }
+
+    @include pageNav;
 }
 
 @media (min-width: 1023px) {
     .Settings {
         @include pageWrapper1023;
+
+        .Header {
+            .SettingsNav {
+                overflow-x: auto;
+            }
+        }
+
     }
 }

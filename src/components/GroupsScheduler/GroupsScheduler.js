@@ -8,11 +8,15 @@ import Loader from "../UI/Loader/Loader";
 import AppContext from "../../store/AppProvider";
 import LayoutContext from "../../store/LayoutProvider";
 
-const COLLECTION = "group-patients";
-
 const GroupsScheduler = ({ physiotherapist, config }) => {
   const appCtx = useContext(AppContext);
-  const { groupPatients, setGroupPatients, isLoading, setIsLoading } = appCtx;
+  const {
+    groupPatients,
+    groupsCollection,
+    setGroupPatients,
+    isLoading,
+    setIsLoading,
+  } = appCtx;
 
   const layoutCtx = useContext(LayoutContext);
   const {
@@ -25,8 +29,6 @@ const GroupsScheduler = ({ physiotherapist, config }) => {
     setIsAddPatientModalOpen,
     setIsPatientDetailsModalOpen,
   } = layoutCtx;
-  /* const workingDays = config[0].workingDays;
-  const workingHours = config[0].workingHours; */
 
   const workingDays = config[0].workingDays.map((day, i) => (
     <li key={i}>{day}</li>
@@ -52,7 +54,7 @@ const GroupsScheduler = ({ physiotherapist, config }) => {
             setPatients={setGroupPatients}
             patients={groupPatients}
             patientId={patientId}
-            collection={COLLECTION}
+            collection={groupsCollection}
           />
         </Backdrop>
       )}
@@ -63,7 +65,7 @@ const GroupsScheduler = ({ physiotherapist, config }) => {
             setPatients={setGroupPatients}
             setIsModalOpen={setIsAddPatientModalOpen}
             patientId={patientId}
-            collection={COLLECTION}
+            collection={groupsCollection}
             physio={physiotherapist}
           />
         </Backdrop>

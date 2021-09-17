@@ -72,36 +72,39 @@ const PatientsList = () => {
           <i className="fas fa-list-ul"></i>
           <h3>Patients List</h3>
         </header>
-        <table>
-          <tbody>
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Date of Birth</th>
-              <th>Gender</th>
-              <th>City</th>
-              <th>Address</th>
-              <th>Phone Number</th>
-              <th>Physiotherapist</th>
-              <th>Id</th>
-            </tr>
-            {patientsList.map((patient) => {
-              return (
-                <tr key={patient.id}>
-                  <td>{patient.firstName}</td>
-                  <td>{patient.lastName}</td>
-                  <td>{patient.dateOfBirth}</td>
-                  <td>{patient.gender}</td>
-                  <td>{patient.city}</td>
-                  <td>{patient.address}</td>
-                  <td>{patient.phone}</td>
-                  <td>{patient.physiotherapist}</td>
-                  <td>{patient.id}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        {patientsList.length < 1 && <h2>No patients available</h2>}
+        {patientsList.length > 0 && (
+          <table>
+            <tbody>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Physiotherapist</th>
+                <th>Id</th>
+              </tr>
+              {patientsList.map((patient) => {
+                return (
+                  <tr key={patient.id}>
+                    <td>{patient.firstName}</td>
+                    <td>{patient.lastName}</td>
+                    <td>{patient.dateOfBirth}</td>
+                    <td>{patient.gender}</td>
+                    <td>{patient.city}</td>
+                    <td>{patient.address}</td>
+                    <td>{patient.phone}</td>
+                    <td>{patient.physiotherapist}</td>
+                    <td>{patient.id}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
       </section>
     </section>
   );

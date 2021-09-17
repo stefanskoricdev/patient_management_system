@@ -8,18 +8,15 @@ import crossIcon from "../../assets/img/icon-cross.svg";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import firebase from "firebase/app";
-import "firebase/firestore";
 
 const mySwal = withReactContent(Swal);
-
-const COLLECTION = "notes";
 
 const NotesBuilder = ({ currentTime }) => {
   const [filter, setFilter] = useState("all");
   const noteInputRef = useRef();
 
   const appCtx = useContext(AppContext);
-  const { setIsLoading, notes, setNotes } = appCtx;
+  const { setIsLoading, notes, setNotes, notesCollection } = appCtx;
 
   const authCtx = useContext(AuthContext);
   const { displayName } = authCtx;
@@ -35,7 +32,7 @@ const NotesBuilder = ({ currentTime }) => {
         date: currentTime,
         dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
       };
-      sendData(setIsLoading, COLLECTION, newNote, setNotes);
+      sendData(setIsLoading, notesCollection, newNote, setNotes);
       noteInputRef.current.value = "";
     } else {
       mySwal.fire({
@@ -48,7 +45,7 @@ const NotesBuilder = ({ currentTime }) => {
 
   const isCheckedHandler = (e) => {
     const noteId = e.target.getAttribute("data-id");
-    updateNote(setIsLoading, COLLECTION, noteId);
+    updateNote(setIsLoading, notesCollection, noteId);
     setNotes((prevState) =>
       prevState.map((note) =>
         note.id === noteId ? { ...note, isChecked: !note.isChecked } : note
@@ -58,7 +55,7 @@ const NotesBuilder = ({ currentTime }) => {
 
   const deleteNoteHandler = (e) => {
     const noteId = e.target.getAttribute("data-id");
-    deleteData(setIsLoading, setNotes, COLLECTION, noteId);
+    deleteData(setIsLoading, setNotes, notesCollection, noteId);
   };
 
   const filterChangeHandler = (e) => {

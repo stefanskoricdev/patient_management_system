@@ -1,9 +1,8 @@
 import styles from "./Settings.module.scss";
-import getTime from "../../helpers/getTime";
 import { NavLink, Route, Switch, Redirect } from "react-router-dom";
-import AddUserModal from "../../components/UI/AddUserModal/AddUserModal";
-import UsersList from "../../components/Users/UsersList/UsersList";
+import getTime from "../../helpers/getTime";
 
+import Users from "../../components/Users/Users";
 const Settings = () => {
   const currentTime = getTime();
 
@@ -14,31 +13,27 @@ const Settings = () => {
           <h1>Settings</h1>
           <p>{currentTime}</p>
         </div>
-        <nav>
-          <ul>
-            <li>
-              <NavLink activeClassName={styles.active} to="/settings/">
-                <i className="fas fa-long-arrow-alt-left"></i>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink activeClassName={styles.active} to="/settings/add-user">
-                <i className="fas fa-user-plus"></i>
-              </NavLink>
-            </li>
-          </ul>
-        </nav>
       </header>
+      <nav className={styles.Nav}>
+        <NavLink activeClassName={styles.active} to="/settings/users">
+          Users
+          <i className="fas fa-caret-up"></i>
+        </NavLink>
+        <NavLink activeClassName={styles.active} to="/settings/physios">
+          Physios
+          <i className="fas fa-caret-up"></i>
+        </NavLink>
+      </nav>
       <main className={styles.Main}>
         <Switch>
-          <Route path="/settings/" exact>
-            <Redirect to="/settings/users-list" />
+          <Route path="/settings" exact>
+            <Redirect to="/settings/users" />
           </Route>
-          <Route path="/settings/users-list">
-            <UsersList />
+          <Route path="/settings/users">
+            <Users />
           </Route>
-          <Route path="/settings/add-user">
-            <AddUserModal />
+          <Route path="/settings/physios">
+            <h1>Physios page</h1>
           </Route>
         </Switch>
       </main>

@@ -8,7 +8,6 @@ import AppContext from "../../../store/AppProvider";
 import AddPatientForm from "./AddPatientForm/AddPatientForm";
 import CloseModalBtn from "../Buttons/CloseModalBtn";
 import firebase from "firebase/app";
-import "firebase/firestore";
 
 const mySwal = withReactContent(Swal);
 

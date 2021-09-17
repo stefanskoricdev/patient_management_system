@@ -56,6 +56,11 @@
             }
         }
 
+        h2 {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
         table {
             display: block;
             width: 100%;
@@ -87,23 +92,15 @@
     .UsersWrapper {
         display: flex;
         flex-direction: row-reverse;
+        justify-content: space-between;
 
         .Filters {
             width: 25rem;
-            margin: 0 1rem;
+            margin: 0;
         }
 
         .UsersList {
-            width: calc(100% - 27rem);
-
-            table {
-                width: 100%;
-
-                tbody {
-                    width: 100%;
-                    display: table;
-                }
-            }
+            width: calc(100% - 26rem);
         }
     }
 }

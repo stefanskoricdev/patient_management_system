@@ -1,0 +1,20 @@
+@import "../../assets/colors/colors";
+@import "../../assets/mixins/pages";
+
+.Users {
+    padding: 0.5rem 0;
+
+    @include pageNav;
+
+    main {
+        padding: .5rem 0;
+    }
+}
+
+@media (min-width: 1023px) {
+    .Users {
+        .UsersNav {
+            overflow-x: auto;
+        }
+    }
+}

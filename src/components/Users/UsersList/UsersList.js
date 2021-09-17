@@ -15,11 +15,14 @@ const UsersList = () => {
 
   const filterListHandler = (e) => {
     e.preventDefault();
+
     let filterValue = {};
+
     const firstName = firstNameRef.current.value.trim();
     const lastName = lastNameRef.current.value.trim();
     const email = emailRef.current.value.trim();
     const id = idRef.current.value.trim();
+
     if (firstName) {
       filterValue["firstName"] = firstName;
     }
@@ -83,26 +86,29 @@ const UsersList = () => {
           <i className="fas fa-list-ul"></i>
           <h3>Users List</h3>
         </header>
-        <table>
-          <tbody>
-            <tr className={styles.BodyHeader}>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>Id</th>
-            </tr>
-            {usersList.map((user) => {
-              return (
-                <tr key={user.id}>
-                  <td>{user.firstName}</td>
-                  <td>{user.lastName}</td>
-                  <td>{user.email}</td>
-                  <td>{user.id}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        {usersList.length < 1 && <h2>No users available</h2>}
+        {usersList.length > 0 && (
+          <table>
+            <tbody>
+              <tr className={styles.BodyHeader}>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Id</th>
+              </tr>
+              {usersList.map((user) => {
+                return (
+                  <tr key={user.id}>
+                    <td>{user.firstName}</td>
+                    <td>{user.lastName}</td>
+                    <td>{user.email}</td>
+                    <td>{user.id}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
       </section>
     </section>
   );
