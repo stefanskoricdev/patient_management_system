@@ -1,9 +1,8 @@
 @import "../../assets/colors/colors";
 @import "../../assets/mixins/pages";
 
-.Users {
+.Physios {
     padding: 0.5rem 0;
-
     @include pageNav;
 
     main {
@@ -12,7 +11,7 @@
 }
 
 @media (min-width: 1023px) {
-    .Users {
+    .Physios {
         .Nav {
             overflow-x: auto;
         }

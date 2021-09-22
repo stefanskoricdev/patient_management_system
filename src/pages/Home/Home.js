@@ -84,8 +84,8 @@ const Home = () => {
             </tbody>
           </table>
           <section className={styles.NotesList}>
+            <h1>Notes</h1>
             <ul>
-              <h1>Notes</h1>
               {notes.length <= 0 && <h2>NO NEW NOTES</h2>} {notesList}
             </ul>
           </section>

@@ -1,52 +1,11 @@
 import styles from "./Individual.module.scss";
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
+import { useContext } from "react";
 import IndividualScheduler from "../../../components/IndividualScheduler/IndividualScheduler";
-
+import AppContext from "../../../store/AppProvider";
 const Individual = () => {
-  const physioConfig = [
-    {
-      id: "p1",
-      name: "Dijana",
-      workingHours: ["16:00", "17:00", "18:00", "19:00"],
-      workingDays: ["MON", "TUE", "WED", "THU", "FRI"],
-    },
-    {
-      id: "p2",
-      name: "Marko",
-      workingHours: [
-        "10:00",
-        "11:00",
-        "12:00",
-        "13:00",
-        "14:00",
-        "15:00",
-        "16:00",
-        "17:00",
-        "18:00",
-        "19:00",
-        "20:00",
-      ],
-      workingDays: ["MON", "TUE", "WED", "THU", "FRI"],
-    },
-    {
-      id: "p3",
-      name: "Stefan",
-      workingHours: [
-        "10:00",
-        "11:00",
-        "12:00",
-        "13:00",
-        "14:00",
-        "15:00",
-        "16:00",
-        "17:00",
-        "18:00",
-        "19:00",
-        "20:00",
-      ],
-      workingDays: ["MON", "TUE", "WED", "THU", "FRI"],
-    },
-  ];
+  const appCtx = useContext(AppContext);
+  const { physios } = appCtx;
 
   return (
     <section className={styles.IndividualWrapper}>
@@ -54,48 +13,54 @@ const Individual = () => {
         <h1>Individual</h1>
       </header>
       <nav className={styles.Nav}>
-        {physioConfig.map((physio, i) => {
+        {physios.map((physio, i) => {
           return (
             <NavLink
               key={physio.id}
               activeClassName={styles.active}
-              to={`/patients/individual/${physio.name.toLowerCase()}`}
+              to={`/patients/individual/${physio.firstName.toLowerCase()}`}
             >
-              {physio.name}
+              {physio.firstName}
               <i className="fas fa-caret-up"></i>
             </NavLink>
           );
         })}
       </nav>
       <main className={styles.Main}>
-        <Switch>
-          <Route path="/patients/individual/" exact>
-            <Redirect
-              to={`/patients/individual/${physioConfig[0].name.toLowerCase()}`}
-            />
-          </Route>
-          {physioConfig.map((physio) => {
-            return (
-              <Route
-                key={physio.id}
-                path={`/patients/individual/${physio.name.toLowerCase()}`}
-              >
-                <IndividualScheduler
+        {physios.length > 0 && (
+          <Switch>
+            <Route path="/patients/individual/" exact>
+              <Redirect
+                to={`/patients/individual/${physios[0].firstName.toLowerCase()}`}
+              />
+            </Route>
+            {physios.map((physio) => {
+              return (
+                <Route
                   key={physio.id}
-                  physiotherapist={physio.name}
-                  config={physioConfig.filter(
-                    (config) => config.id === physio.id
-                  )}
-                />
-              </Route>
-            );
-          })}
-          <Route path="*">
-            <Redirect
-              to={`/patients/individual/${physioConfig[0].name.toLowerCase()}`}
-            />
-          </Route>
-        </Switch>
+                  path={`/patients/individual/${physio.firstName.toLowerCase()}`}
+                >
+                  <IndividualScheduler
+                    key={physio.id}
+                    physiotherapist={physio.firstName}
+                    config={physios.filter((config) => config.id === physio.id)}
+                  />
+                </Route>
+              );
+            })}
+            <Route path="*">
+              <Redirect
+                to={`/patients/individual/${physios[0].firstName.toLowerCase()}`}
+              />
+            </Route>
+          </Switch>
+        )}
+        {physios.length < 1 && (
+          <section className={styles.Message}>
+            <p>No available physios!</p>
+            <p>Please create your first physio.</p>
+          </section>
+        )}
       </main>
     </section>
   );

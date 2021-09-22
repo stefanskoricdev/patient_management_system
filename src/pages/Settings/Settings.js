@@ -3,6 +3,7 @@ import { NavLink, Route, Switch, Redirect } from "react-router-dom";
 import getTime from "../../helpers/getTime";
 
 import Users from "../../components/Users/Users";
+import Physios from "../../components/Physios/Physios";
 const Settings = () => {
   const currentTime = getTime();
 
@@ -33,7 +34,7 @@ const Settings = () => {
             <Users />
           </Route>
           <Route path="/settings/physios">
-            <h1>Physios page</h1>
+            <Physios />
           </Route>
         </Switch>
       </main>

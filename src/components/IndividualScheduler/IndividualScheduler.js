@@ -38,7 +38,7 @@ const IndividualScheduler = ({ config, physiotherapist }) => {
   //to which physio this component belongs to (we get that trough props).
   //This way we avoid data being fetched every time we click physio tab!
   const workingDays = config[0].workingDays.map((days, i) => (
-    <li key={i}>{days}</li>
+    <li key={i}>{days.substr(2)}</li>
   ));
   const workingHours = config[0].workingHours.map((hours, i) => (
     <li key={i}>{hours}</li>

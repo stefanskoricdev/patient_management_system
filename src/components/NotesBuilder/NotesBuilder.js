@@ -32,6 +32,7 @@ const NotesBuilder = ({ currentTime }) => {
         date: currentTime,
         dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
       };
+      console.log(newNote);
       sendData(setIsLoading, notesCollection, newNote, setNotes);
       noteInputRef.current.value = "";
     } else {

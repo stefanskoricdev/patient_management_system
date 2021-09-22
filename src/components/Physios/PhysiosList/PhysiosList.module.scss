@@ -1,8 +1,6 @@
-@import "../../assets/colors/colors";
+@import "../../../assets/colors/colors";
 
-.PatientsListWrapper {
-    margin-top: 1rem;
-
+.PhysiosWrapper {
     .Filters {
         border: 2px solid $dark-blue;
         padding: .5rem;
@@ -44,7 +42,7 @@
         }
     }
 
-    .PatientsList {
+    .PhysiosList {
         border: 2px solid $dark-blue;
         padding: .5rem;
 
@@ -92,7 +90,7 @@
 }
 
 @media (min-width: 1023px) {
-    .PatientsListWrapper {
+    .PhysiosWrapper {
         display: flex;
         flex-direction: row-reverse;
         justify-content: space-between;
@@ -102,17 +100,8 @@
             margin: 0;
         }
 
-        .PatientsList {
-            width: calc(100% - 27rem);
-
-            table {
-                width: 100%;
-
-                tbody {
-                    width: 100%;
-                    display: table;
-                }
-            }
+        .PhysiosList {
+            width: calc(100% - 26rem);
         }
     }
 }

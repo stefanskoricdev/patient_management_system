@@ -72,7 +72,7 @@ const PatientsList = () => {
           <i className="fas fa-list-ul"></i>
           <h3>Patients List</h3>
         </header>
-        {patientsList.length < 1 && <h2>No patients available</h2>}
+        {patientsList.length < 1 && <p>No patients available</p>}
         {patientsList.length > 0 && (
           <table>
             <tbody>

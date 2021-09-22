@@ -2,6 +2,18 @@
     position: relative;
     min-height: 100vh;
     padding: .5rem 0;
+
+    .Main {
+        padding-top: 4rem;
+    }
+}
+
+@media (min-width: 1023px) {
+    .Layout {
+        .Main {
+            padding-top: 0;
+        }
+    }
 }
 
 @media (min-width: 1440px) {

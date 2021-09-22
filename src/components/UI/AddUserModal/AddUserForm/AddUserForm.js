@@ -6,6 +6,7 @@ import AppContext from "../../../../store/AppProvider";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useHistory } from "react-router-dom";
+import firebase from "firebase/app";
 
 const mySwal = withReactContent(Swal);
 
@@ -54,6 +55,7 @@ const AddUserForm = () => {
           firstName: firstNameRef.current.value,
           lastName: lastNameRef.current.value,
           email: emailRef.current.value,
+          dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
         };
         resetInputs();
         sendData(setIsLoading, usersCollection, newUser, setUsers);

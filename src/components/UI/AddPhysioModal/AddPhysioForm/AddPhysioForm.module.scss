@@ -1,0 +1,72 @@
+@import "../../../../assets/colors/colors";
+
+.AddPhysioForm {
+    max-width: 25rem;
+    margin: 1rem auto;
+    padding: .5rem;
+    border-radius: .5rem;
+    background-color: $dark-blue;
+
+    h2 {
+        text-align: center;
+    }
+
+    input {
+        background-color: $whiteish;
+        border-radius: .2rem;
+        border: none;
+    }
+
+    .BasicInfo {
+        label {
+            display: flex;
+            flex-flow: column;
+            margin: .5rem 0;
+
+            input {
+                height: 2rem;
+                padding: .2rem;
+                margin: .5rem 0;
+            }
+        }
+    }
+
+    .WorkingDays,
+    .WorkingHours {
+        main {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            label {
+                display: flex;
+                flex-direction: column;
+                margin: 0 .5rem;
+
+                input {
+                    margin: 0 auto;
+                }
+            }
+        }
+    }
+
+    .WorkingHours {
+        main {
+            justify-content: flex-start;
+        }
+    }
+
+    .AddPhysioBtn {
+        display: block;
+        width: 6rem;
+        height: 2rem;
+        margin: 2rem auto 1rem;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: $dark-blue;
+        border-radius: .5rem;
+        border: none;
+    }
+}
