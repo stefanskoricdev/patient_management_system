@@ -10,8 +10,11 @@ const AddPatientForm = ({
   phoneNumber,
   dateOfBirth,
   observation,
+  day,
+  hour,
   isFormChanged,
   changeForm,
+  physiotherapist,
 }) => {
   return (
     <form className={styles.AddPatientForm} onSubmit={submit}>
@@ -68,6 +71,34 @@ const AddPatientForm = ({
             Observation:
             <textarea name="observation" rows="8" cols="80" ref={observation} />
           </label>
+          <div className={styles.WorkingDays}>
+            <label>
+              <h3>Select day of visit:</h3>
+              <select name="days" ref={day}>
+                {physiotherapist.workingDays.map((day, i) => {
+                  return (
+                    <option key={i} value={i}>
+                      {day.substr(2)}
+                    </option>
+                  );
+                })}
+              </select>
+            </label>
+          </div>
+          <div className={styles.WorkingHours}>
+            <label>
+              <h3>Select time of visit:</h3>
+              <select name="hours" ref={hour}>
+                {physiotherapist.workingHours.map((hour, i) => {
+                  return (
+                    <option key={i} value={i}>
+                      {hour}
+                    </option>
+                  );
+                })}
+              </select>
+            </label>
+          </div>
         </section>
       </main>
       <button onClick={changeForm} type="button">

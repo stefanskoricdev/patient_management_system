@@ -1,5 +1,5 @@
 import styles from "./Layout.module.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import MainHeader from "../MainHeader/MainHeader";
 import MainNavigation from "../MainNavigation/MainNavigation";
 import Backdrop from "../UI/Backdrop/Backdrop";
@@ -10,13 +10,18 @@ const Layout = ({ children }) => {
     setIsNavBtnClicked(true);
   };
 
-  useEffect(() => {
-    window.addEventListener("click", (e) => {
-      if (e.target.getAttribute("data-id") !== "nav-btn") {
-        setIsNavBtnClicked(false);
-      }
-    });
+  const handleClick = useCallback((e) => {
+    if (e.target.getAttribute("data-id") !== "nav-btn") {
+      setIsNavBtnClicked(false);
+    }
   }, []);
+
+  useEffect(() => {
+    window.addEventListener("click", handleClick);
+    return () => {
+      window.removeEventListener("click", handleClick);
+    };
+  }, [handleClick]);
 
   return (
     <section className={styles.Layout}>

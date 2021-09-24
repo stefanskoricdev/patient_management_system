@@ -21,9 +21,6 @@
 
         li:last-child {
             width: calc(20% - 1px);
-        }
-
-        li:nth-child(5) {
             border-right: none;
         }
     }

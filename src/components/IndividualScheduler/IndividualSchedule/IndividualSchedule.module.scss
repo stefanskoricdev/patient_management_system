@@ -1,0 +1,59 @@
+@import "../../../assets/colors/colors";
+@import "../../../assets/mixins/schedule";
+
+.IndividualScheduleWrapper {
+    min-width: 55rem;
+    @include scheduleHeader;
+
+    .Main {
+        display: flex;
+
+        .Time {
+            min-width: 5rem;
+            max-width: 5rem;
+            background-color: $dark-blue;
+            border-radius: 1rem 0 0 1rem;
+
+            ul {
+                li {
+                    height: 12rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    color: $whiteish;
+                }
+            }
+        }
+    }
+
+    .IndividualSchedule {
+        position: relative;
+        display: grid;
+        width: 100%;
+        background-color: $dark-blue;
+
+        div {
+            height: 12rem;
+            background-color: $whiteish;
+            border-bottom: .1rem solid $dark-blue;
+            border-right: .1rem solid $dark-blue;
+        }
+
+        p {
+            position: absolute;
+            width: 20%;
+            height: 12rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            background-color: $dark-blue;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: $whiteish;
+        }
+    }
+
+}

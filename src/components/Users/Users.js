@@ -33,6 +33,9 @@ const Users = () => {
           <Route path={`${path}/add-user`}>
             <AddUserModal />
           </Route>
+          <Route path="*">
+            <Redirect to={`${path}/users-list`} />
+          </Route>
         </Switch>
       </main>
     </section>

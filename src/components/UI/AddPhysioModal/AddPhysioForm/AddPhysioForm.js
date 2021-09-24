@@ -4,8 +4,12 @@ import { useState, useContext, useRef } from "react";
 import { sendData } from "../../../actions/actions";
 import AppContext from "../../../../store/AppProvider";
 import firebase from "firebase/app";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
-const workingDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const mySwal = withReactContent(Swal);
+
+const workingDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const workingHours = [
   "08:00",
   "09:00",
@@ -70,8 +74,33 @@ const AddPhysioForm = () => {
     }
   };
 
+  const resetInputs = () => {
+    firstNameRef.current.value = "";
+    lastNameRef.current.value = "";
+    emailRef.current.value = "";
+    phoneNumberRef.current.value = "";
+    setDaysCheckedState(initialDaysCheckValue);
+    setHoursCheckedState(initialHoursCheckValue);
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
+    if (
+      firstNameRef.current.value.trim() === "" ||
+      lastNameRef.current.value.trim() === "" ||
+      emailRef.current.value.trim() === "" ||
+      !hoursCheckedState.includes(true) ||
+      !daysCheckedState.includes(true)
+    ) {
+      mySwal.fire({
+        icon: "warning",
+        title: <p>Please fill out all fields</p>,
+        customClass: {
+          container: "alert-modal",
+        },
+      });
+      return;
+    }
     const newPhysio = {
       id: uuid(),
       firstName: firstNameRef.current.value,
@@ -83,12 +112,9 @@ const AddPhysioForm = () => {
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
     sendData(setIsLoading, physiosCollection, newPhysio, setPhysios);
+    resetInputs();
   };
 
-  /* useEffect(() => {
-    console.log(daysInputValue.sort());
-    console.log(hoursInputValue.sort());
-  }, [daysInputValue, hoursInputValue]); */
   return (
     <form onSubmit={submitHandler} className={styles.AddPhysioForm}>
       <h2>Add Physiotherapist</h2>

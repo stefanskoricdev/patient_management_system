@@ -1,5 +1,11 @@
 import styles from "./Patients.module.scss";
-import { Route, Switch, NavLink, Redirect } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  NavLink,
+  Redirect,
+  useRouteMatch,
+} from "react-router-dom";
 import getTime from "../../helpers/getTime";
 import Individual from "./Individual/Individual";
 import Groups from "./Groups/Groups";
@@ -7,6 +13,8 @@ import PatientsList from "../../components/PatientsList/PatientsList";
 
 const Patients = () => {
   const currentTime = getTime();
+
+  const { path } = useRouteMatch();
 
   return (
     <section className={styles.Patients}>
@@ -18,7 +26,7 @@ const Patients = () => {
         <NavLink
           activeClassName={styles.active}
           className={styles.PatientsLink}
-          to="/patients/patients-list"
+          to={`${path}/patients-list`}
         >
           Patients List
           <i className="fas fa-caret-up"></i>
@@ -26,7 +34,7 @@ const Patients = () => {
         <NavLink
           activeClassName={styles.active}
           className={styles.PatientsLink}
-          to="/patients/individual"
+          to={`${path}/individual`}
         >
           Individual
           <i className="fas fa-caret-up"></i>
@@ -34,7 +42,7 @@ const Patients = () => {
         <NavLink
           activeClassName={styles.active}
           className={styles.PatientsLink}
-          to="/patients/groups"
+          to={`${path}/groups`}
         >
           Groups
           <i className="fas fa-caret-up"></i>
@@ -42,17 +50,20 @@ const Patients = () => {
       </nav>
       <main className={styles.Main}>
         <Switch>
-          <Route path="/patients/" exact>
-            <Redirect to="/patients/patients-list" />
+          <Route path={`${path}`} exact>
+            <Redirect to={`${path}/patients-list`} />
           </Route>
-          <Route path="/patients/patients-list">
+          <Route path={`${path}/patients-list`}>
             <PatientsList />
           </Route>
-          <Route path="/patients/individual">
+          <Route path={`${path}/individual`}>
             <Individual />
           </Route>
-          <Route path="/patients/groups">
+          <Route path={`${path}/groups`}>
             <Groups />
+          </Route>
+          <Route path="*">
+            <Redirect to={`${path}`} />
           </Route>
         </Switch>
       </main>

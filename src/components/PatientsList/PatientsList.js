@@ -25,8 +25,6 @@ const PatientsList = () => {
       filterValue["lastName"] = lastName;
     }
 
-    console.log(filterValue);
-
     let filteredList = allPatientsList.filter((user) => {
       for (let key in filterValue) {
         if (

@@ -1,14 +1,13 @@
 @import "../../../assets/colors/colors";
 
 .AddPatientModal {
-    position: relative;
     height: fit-content;
     width: 30rem;
     max-width: 95%;
-    margin-top: 2rem;
+    margin: 2rem auto;
     overflow: hidden;
     border-radius: .5rem;
     color: $whiteish;
-    background-color: $light-blue;
+    background-color: $dark-blue;
     box-shadow: 5px 5px 10px $dark-blue;
 }

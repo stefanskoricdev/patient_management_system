@@ -3,6 +3,7 @@ import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import { useContext } from "react";
 import IndividualScheduler from "../../../components/IndividualScheduler/IndividualScheduler";
 import AppContext from "../../../store/AppProvider";
+
 const Individual = () => {
   const appCtx = useContext(AppContext);
   const { physios } = appCtx;
@@ -42,7 +43,7 @@ const Individual = () => {
                 >
                   <IndividualScheduler
                     key={physio.id}
-                    physiotherapist={physio.firstName}
+                    physiotherapist={physio}
                     config={physios.filter((config) => config.id === physio.id)}
                   />
                 </Route>

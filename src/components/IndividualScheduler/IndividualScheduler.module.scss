@@ -1,84 +1,30 @@
 @import "../../assets/colors/colors";
 @import "../../assets/mixins/schedule";
 
+@import "../../assets/colors/colors";
+
 .Scheduler {
-    min-width: 55rem;
-    margin-top: 1rem;
+    position: relative;
+    width: 100%;
     padding: 1rem 0;
     border-radius: 1rem;
 
-    @include scheduleHeader;
+    .Nav {
+        margin: 1rem 0;
+
+        .Link {
+            margin-right: 1rem;
+            font-size: 2rem;
+            color: $dark-blue;
+        }
+
+        a.active,
+        a:hover {
+            color: $whiteish;
+        }
+    }
 
     .Main {
         display: flex;
-
-        .Time {
-            min-width: 5rem;
-            max-width: 5rem;
-            background-color: $dark-blue;
-            border-radius: 1rem 0 0 1rem;
-
-            ul {
-                li {
-                    height: 10rem;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 1.2rem;
-                    font-weight: 700;
-                    color: $whiteish;
-                }
-            }
-        }
-
-        .Schedule {
-            position: relative;
-            width: 100%;
-            display: grid;
-            background-color: $dark-blue;
-
-            div {
-                height: 10rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background-color: $whiteish;
-                border-bottom: .1rem solid $dark-blue;
-                border-right: .1rem solid $dark-blue;
-                cursor: pointer;
-
-                p {
-                    width: 98%;
-                    height: 98%;
-                    margin: 0 auto;
-                    padding: 0 2%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    text-align: center;
-                    border-radius: .5rem;
-                    color: rgb(54, 54, 58);
-                    font-size: 1.4rem;
-                    font-weight: 700;
-                }
-            }
-
-            li:hover {
-                background-color: rgb(230, 230, 230);
-            }
-        }
-    }
-}
-
-.Scheduler.ModalOpen {
-    min-width: 100vw;
-    overflow-x: hidden;
-    min-height: 35rem;
-    max-height: 550px;
-}
-
-@media (min-height: 550px) {
-    .Scheduler.ModalOpen {
-        max-height: 100vh;
     }
 }

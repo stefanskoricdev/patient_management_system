@@ -30,16 +30,16 @@
     }
 
     button {
-        width: 10rem;
-        height: 3rem;
         display: block;
-        margin: 1rem auto;
-        font-size: 1.5rem;
+        width: 6rem;
+        height: 2rem;
+        margin: 2rem auto 1rem;
+        font-size: 1rem;
         font-weight: 700;
-        box-shadow: 0px 10px 14px -7px $dark-blue;
-        background: linear-gradient(to bottom, rgb(255, 254, 254) 5%, rgb(192, 192, 192) 100%);
-        color: $btnFont;
-        text-shadow: 0px 1px 0px $dark-blue;
+        text-transform: uppercase;
+        color: $dark-blue;
+        border-radius: .5rem;
+        border: none;
     }
 
     label {
@@ -52,6 +52,7 @@
 
     select {
         width: 10rem;
+        margin: 0 auto;
         font-size: 1rem;
     }
 
@@ -70,6 +71,27 @@
         display: flex;
         transform: translateX(0);
         transition: transform 100ms linear;
+
+
+        .WorkingDays,
+        .WorkingHours {
+            h3 {
+                padding-left: .5rem;
+            }
+
+            main {
+                display: flex;
+                justify-content: center;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+        }
+
+        .WorkingHours {
+            main {
+                justify-content: flex-start;
+            }
+        }
     }
 
     .Main.active {

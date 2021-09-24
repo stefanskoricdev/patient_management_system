@@ -36,6 +36,9 @@ const Settings = () => {
           <Route path="/settings/physios">
             <Physios />
           </Route>
+          <Route path="*">
+            <Redirect to="/settings/users" />
+          </Route>
         </Switch>
       </main>
     </section>

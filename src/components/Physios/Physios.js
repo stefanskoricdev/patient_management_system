@@ -34,6 +34,9 @@ const Physios = () => {
           <Route path={`${path}/add-physio`}>
             <AddPhysioModal />
           </Route>
+          <Route path="*">
+            <Redirect to={`${path}/physios-list`} />
+          </Route>
         </Switch>
       </main>
     </section>

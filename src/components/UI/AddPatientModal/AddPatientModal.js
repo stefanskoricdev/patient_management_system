@@ -6,26 +6,19 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import AppContext from "../../../store/AppProvider";
 import AddPatientForm from "./AddPatientForm/AddPatientForm";
-import CloseModalBtn from "../Buttons/CloseModalBtn";
 import firebase from "firebase/app";
+import uuid from "react-uuid";
 
 const mySwal = withReactContent(Swal);
 
-const AddPatientModal = ({
-  closeModal,
-  setIsModalOpen,
-  patientId,
-  collection,
-  physio,
-  setPatients,
-}) => {
+const AddPatientModal = ({ physiotherapist }) => {
   const [isFormPageChanged, setIsFormPageChanged] = useState(false);
   const changeFormInfoHandler = () => {
     setIsFormPageChanged((prevValue) => !prevValue);
   };
 
   const appCtx = useContext(AppContext);
-  const { setIsLoading } = appCtx;
+  const { setIsLoading, individualCollection, setIndividualPatients } = appCtx;
 
   const firstNameInput = useRef();
   const lastNameInput = useRef();
@@ -35,12 +28,14 @@ const AddPatientModal = ({
   const phoneNumberInput = useRef();
   const dateOfBirthInput = useRef();
   const observationInput = useRef();
+  const dayInputValue = useRef();
+  const hourInputValue = useRef();
 
   const addPatientHandler = (e) => {
     e.preventDefault();
     const currentTime = getTime();
     const newPatient = {
-      id: patientId,
+      id: uuid(),
       firstName: firstNameInput.current.value,
       lastName: lastNameInput.current.value,
       city: cityInput.current.value,
@@ -49,7 +44,11 @@ const AddPatientModal = ({
       phone: phoneNumberInput.current.value,
       dateOfBirth: dateOfBirthInput.current.value,
       observation: observationInput.current.value,
-      physiotherapist: physio,
+      physiotherapist: physiotherapist.firstName,
+      position: {
+        top: hourInputValue.current.value,
+        left: dayInputValue.current.value,
+      },
       date: currentTime,
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
@@ -63,7 +62,9 @@ const AddPatientModal = ({
       newPatient.phone.trim() === "" ||
       newPatient.dateOfBirth.trim() === "" ||
       newPatient.observation.trim() === "" ||
-      newPatient.physiotherapist.trim() === ""
+      newPatient.physiotherapist.trim() === "" ||
+      newPatient.position.top === "" ||
+      newPatient.position.left === ""
     ) {
       mySwal.fire({
         icon: "warning",
@@ -74,13 +75,16 @@ const AddPatientModal = ({
       });
       return;
     }
-    sendData(setIsLoading, collection, newPatient, setPatients);
-    setIsModalOpen(false);
+    sendData(
+      setIsLoading,
+      individualCollection,
+      newPatient,
+      setIndividualPatients
+    );
   };
 
   return (
     <section id="addPatientModalWrapper" className={styles.AddPatientModal}>
-      <CloseModalBtn closeModal={closeModal} />
       <AddPatientForm
         submit={addPatientHandler}
         firstName={firstNameInput}
@@ -91,9 +95,11 @@ const AddPatientModal = ({
         phoneNumber={phoneNumberInput}
         dateOfBirth={dateOfBirthInput}
         observation={observationInput}
+        day={dayInputValue}
+        hour={hourInputValue}
         isFormChanged={isFormPageChanged}
         changeForm={changeFormInfoHandler}
-        physio={physio}
+        physiotherapist={physiotherapist}
       />
     </section>
   );
