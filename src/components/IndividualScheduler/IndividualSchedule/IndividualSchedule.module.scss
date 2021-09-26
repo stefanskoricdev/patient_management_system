@@ -23,6 +23,11 @@
                     font-size: 1.2rem;
                     font-weight: 700;
                     color: $whiteish;
+                    border-bottom: 1px solid $whiteish;
+                }
+
+                li:last-child {
+                    border-bottom: none;
                 }
             }
         }
@@ -43,16 +48,17 @@
 
         p {
             position: absolute;
-            width: 20%;
-            height: 12rem;
+            width: 19%;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            text-align: center;
             margin: 0;
-            background-color: $dark-blue;
             font-size: 1.5rem;
             font-weight: 700;
-            color: $whiteish;
+            color: $dark-blue;
+            border-radius: .5rem;
+            box-shadow: 2px 2px 10px $dark-blue;
         }
     }
 

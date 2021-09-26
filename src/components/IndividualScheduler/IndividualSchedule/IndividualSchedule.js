@@ -1,5 +1,14 @@
 import styles from "./IndividualSchedule.module.scss";
 
+const colorPallete = [
+  "FFE194",
+  "6D97C9",
+  "8CC3A0",
+  "E9DA90",
+  "F29D72",
+  "D17484",
+];
+
 const IndividualSchedule = ({ patients, workingDays, workingHours }) => {
   const indexValue = workingDays.length * workingHours.length;
   const createScheduleBackground = () => {
@@ -37,25 +46,43 @@ const IndividualSchedule = ({ patients, workingDays, workingHours }) => {
           {createScheduleBackground()}
           {patients.length > 0
             ? patients.map((patient, i) => {
+                const topPositionValue =
+                  patient.position.topHours * 12 +
+                  patient.position.topMinutes * 0.2;
                 return (
                   <p
                     key={i}
                     style={
                       workingDays.length > 5
                         ? {
-                            top: `${patient.position.top * 12}rem`,
+                            top: `${topPositionValue}rem`,
                             left: `${
-                              (patient.position.left * 100) / workingDays.length
+                              (patient.position.left * 100) /
+                                workingDays.length +
+                              0.5
                             }%`,
                             width: `${100 / workingDays.length}%`,
+                            height: `${patient.position.height * 0.2}rem`,
+                            backgroundColor: `#${
+                              colorPallete[
+                                Math.floor(Math.random() * colorPallete.length)
+                              ]
+                            }`,
                           }
                         : {
-                            top: `${patient.position.top * 12}rem`,
-                            left: `${patient.position.left * 20}%`,
+                            top: `${topPositionValue}rem`,
+                            left: `${patient.position.left * 20 + 0.5}%`,
+                            height: `${patient.position.height * 0.2}rem`,
+                            //This fixes issues with layout if there are less then 6 working days
+                            backgroundColor: `#${
+                              colorPallete[
+                                Math.floor(Math.random() * colorPallete.length)
+                              ]
+                            }`,
                           }
                     }
                   >
-                    {`${patient.firstName} ${patient.lastName}`}
+                    {`${patient.firstName + " " + patient.lastName}`}
                   </p>
                 );
               })

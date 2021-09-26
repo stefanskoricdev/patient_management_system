@@ -32,8 +32,7 @@
     button {
         display: block;
         width: 6rem;
-        height: 2rem;
-        margin: 2rem auto 1rem;
+        margin: 1rem auto;
         font-size: 1rem;
         font-weight: 700;
         text-transform: uppercase;
@@ -43,11 +42,17 @@
     }
 
     label {
+        display: flex;
+        flex-flow: column;
+    }
+
+
+
+    label,
+    h3 {
         width: 20rem;
         max-width: 90%;
         margin: .5rem auto;
-        display: flex;
-        flex-flow: column;
     }
 
     select {
@@ -72,24 +77,11 @@
         transform: translateX(0);
         transition: transform 100ms linear;
 
-
-        .WorkingDays,
         .WorkingHours {
-            h3 {
-                padding-left: .5rem;
-            }
-
-            main {
+            label {
                 display: flex;
-                justify-content: center;
-                overflow-x: auto;
-                overflow-y: hidden;
-            }
-        }
-
-        .WorkingHours {
-            main {
-                justify-content: flex-start;
+                flex-flow: row;
+                align-items: center;
             }
         }
     }

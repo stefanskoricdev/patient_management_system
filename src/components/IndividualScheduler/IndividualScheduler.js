@@ -43,7 +43,11 @@ const IndividualScheduler = ({ config, physiotherapist }) => {
         >
           <i className="fas fa-calendar-alt"></i>
         </NavLink>
-        <NavLink to={`${path}/add-patient`} className={styles.Link}>
+        <NavLink
+          activeClassName={styles.active}
+          to={`${path}/add-patient`}
+          className={styles.Link}
+        >
           <i className="fas fa-calendar-plus"></i>
         </NavLink>
       </nav>

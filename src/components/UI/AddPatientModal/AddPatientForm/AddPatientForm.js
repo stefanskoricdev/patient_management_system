@@ -12,10 +12,13 @@ const AddPatientForm = ({
   observation,
   day,
   hour,
+  minutes,
+  duration,
   isFormChanged,
   changeForm,
   physiotherapist,
 }) => {
+  const { workingDays, workingHours } = physiotherapist;
   return (
     <form className={styles.AddPatientForm} onSubmit={submit}>
       <header>
@@ -71,11 +74,11 @@ const AddPatientForm = ({
             Observation:
             <textarea name="observation" rows="8" cols="80" ref={observation} />
           </label>
-          <div className={styles.WorkingDays}>
+          <section className={styles.WorkingDays}>
+            <h3>Select day of visit:</h3>
             <label>
-              <h3>Select day of visit:</h3>
               <select name="days" ref={day}>
-                {physiotherapist.workingDays.map((day, i) => {
+                {workingDays.map((day, i) => {
                   return (
                     <option key={i} value={i}>
                       {day.substr(2)}
@@ -84,21 +87,43 @@ const AddPatientForm = ({
                 })}
               </select>
             </label>
-          </div>
-          <div className={styles.WorkingHours}>
+          </section>
+          <section className={styles.WorkingHours}>
+            <h3>Select time of visit:</h3>
             <label>
-              <h3>Select time of visit:</h3>
+              <p>Hours:</p>
               <select name="hours" ref={hour}>
-                {physiotherapist.workingHours.map((hour, i) => {
+                {workingHours.map((hour, i) => {
                   return (
                     <option key={i} value={i}>
-                      {hour}
+                      {hour.substr(0, hour.length - 3)}
                     </option>
                   );
                 })}
               </select>
             </label>
-          </div>
+            <label>
+              <p>Minutes:</p>
+              <select name="minutes" ref={minutes}>
+                <option value={0}>0</option>
+                <option value={15}>15</option>
+                <option value={30}>30</option>
+                <option value={45}>45</option>
+              </select>
+            </label>
+            <h3>Treatment duration:</h3>
+            <label>
+              <p>Minutes: </p>
+              <input
+                type="number"
+                name="duration"
+                min="30"
+                max={workingHours.length * 60}
+                placeholder="30"
+                ref={duration}
+              />
+            </label>
+          </section>
         </section>
       </main>
       <button onClick={changeForm} type="button">

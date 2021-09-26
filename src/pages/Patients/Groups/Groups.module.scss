@@ -19,6 +19,12 @@
     .Main {
         overflow-x: scroll;
     }
+
+    img {
+        display: block;
+        margin: 2rem auto;
+        max-width: 100%;
+    }
 }
 
 @media (min-width: 1023px) {
