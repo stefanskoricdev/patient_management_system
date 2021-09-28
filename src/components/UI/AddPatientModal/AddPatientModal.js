@@ -14,9 +14,6 @@ const mySwal = withReactContent(Swal);
 
 const AddPatientModal = ({ physiotherapist }) => {
   const [isFormPageChanged, setIsFormPageChanged] = useState(false);
-  const changeFormInfoHandler = () => {
-    setIsFormPageChanged((prevValue) => !prevValue);
-  };
 
   const appCtx = useContext(AppContext);
   const { setIsLoading, individualCollection, setIndividualPatients } = appCtx;
@@ -36,6 +33,10 @@ const AddPatientModal = ({ physiotherapist }) => {
   const minutesInputValue = useRef();
   const durationInputValue = useRef();
 
+  const changeFormInfoHandler = () => {
+    setIsFormPageChanged((prevValue) => !prevValue);
+  };
+
   const resetForm = (inputs) => {
     inputs.map((input) => (input.current.value = ""));
   };
@@ -43,6 +44,30 @@ const AddPatientModal = ({ physiotherapist }) => {
   const addPatientHandler = (e) => {
     e.preventDefault();
     const currentTime = getTime();
+    if (
+      firstNameInput.current.value.trim() === "" ||
+      lastNameInput.current.value.trim() === "" ||
+      cityInput.current.value.trim() === "" ||
+      addressInput.current.value.trim() === "" ||
+      genderInput.current.value.trim() === "" ||
+      phoneNumberInput.current.value.trim() === "" ||
+      dateOfBirthInput.current.value.trim() === "" ||
+      observationInput.current.value.trim() === "" ||
+      physiotherapist.firstName.trim() === "" ||
+      hourInputValue.current.value.topHours === "" ||
+      minutesInputValue.current.value.topMinutes === "" ||
+      dayInputValue.current.value.left === "" ||
+      durationInputValue.current.value.height === ""
+    ) {
+      mySwal.fire({
+        icon: "warning",
+        title: <p>Please fill out all fields</p>,
+        customClass: {
+          container: "alert-modal",
+        },
+      });
+      return;
+    }
     const newPatient = {
       id: uuid(),
       firstName: firstNameInput.current.value,
@@ -63,31 +88,6 @@ const AddPatientModal = ({ physiotherapist }) => {
       date: currentTime,
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
-    if (
-      newPatient.id.trim() === "" ||
-      newPatient.firstName.trim() === "" ||
-      newPatient.lastName.trim() === "" ||
-      newPatient.city.trim() === "" ||
-      newPatient.address.trim() === "" ||
-      newPatient.gender.trim() === "" ||
-      newPatient.phone.trim() === "" ||
-      newPatient.dateOfBirth.trim() === "" ||
-      newPatient.observation.trim() === "" ||
-      newPatient.physiotherapist.trim() === "" ||
-      newPatient.position.topHours === "" ||
-      newPatient.position.topMinutes === "" ||
-      newPatient.position.left === "" ||
-      newPatient.position.height === ""
-    ) {
-      mySwal.fire({
-        icon: "warning",
-        title: <p>Please fill out all fields</p>,
-        customClass: {
-          container: "alert-modal",
-        },
-      });
-      return;
-    }
     sendData(
       setIsLoading,
       individualCollection,

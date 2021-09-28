@@ -1,4 +1,5 @@
 import styles from "./IndividualSchedule.module.scss";
+import { Link } from "react-router-dom";
 
 const colorPallete = [
   "FFE194",
@@ -9,7 +10,12 @@ const colorPallete = [
   "D17484",
 ];
 
-const IndividualSchedule = ({ patients, workingDays, workingHours }) => {
+const IndividualSchedule = ({
+  patients,
+  workingDays,
+  workingHours,
+  physiotherapist,
+}) => {
   const indexValue = workingDays.length * workingHours.length;
   const createScheduleBackground = () => {
     let scheduleFields = [];
@@ -20,6 +26,7 @@ const IndividualSchedule = ({ patients, workingDays, workingHours }) => {
 
     return scheduleFields;
   };
+
   return (
     <section className={styles.IndividualScheduleWrapper}>
       <header className={styles.Header}>{workingDays}</header>
@@ -50,7 +57,8 @@ const IndividualSchedule = ({ patients, workingDays, workingHours }) => {
                   patient.position.topHours * 12 +
                   patient.position.topMinutes * 0.2;
                 return (
-                  <p
+                  <Link
+                    to={`/patients/individual/${physiotherapist}/${patient.id}`}
                     key={i}
                     style={
                       workingDays.length > 5
@@ -62,7 +70,7 @@ const IndividualSchedule = ({ patients, workingDays, workingHours }) => {
                               0.5
                             }%`,
                             width: `${100 / workingDays.length}%`,
-                            height: `${patient.position.height * 0.2}rem`,
+                            height: `${patient.position.height * 0.2 - 0.1}rem`,
                             backgroundColor: `#${
                               colorPallete[
                                 Math.floor(Math.random() * colorPallete.length)
@@ -72,7 +80,7 @@ const IndividualSchedule = ({ patients, workingDays, workingHours }) => {
                         : {
                             top: `${topPositionValue}rem`,
                             left: `${patient.position.left * 20 + 0.5}%`,
-                            height: `${patient.position.height * 0.2}rem`,
+                            height: `${patient.position.height * 0.2 - 0.1}rem`,
                             //This fixes issues with layout if there are less then 6 working days
                             backgroundColor: `#${
                               colorPallete[
@@ -83,7 +91,7 @@ const IndividualSchedule = ({ patients, workingDays, workingHours }) => {
                     }
                   >
                     {`${patient.firstName + " " + patient.lastName}`}
-                  </p>
+                  </Link>
                 );
               })
             : null}

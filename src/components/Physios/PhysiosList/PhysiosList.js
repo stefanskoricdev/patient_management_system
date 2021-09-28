@@ -1,17 +1,55 @@
 import styles from "./PhysiosList.module.scss";
-import { useRef, useContext } from "react";
+import { useRef, useContext, useState, useEffect } from "react";
 import AppContext from "../../../store/AppProvider";
 
 const PhysiosList = () => {
   const appCtx = useContext(AppContext);
   const { physios } = appCtx;
 
+  const [physiosList, setPhysiosList] = useState(physios);
+
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const emailRef = useRef();
   const idRef = useRef();
 
-  const filterListHandler = () => {};
+  const filterListHandler = (e) => {
+    e.preventDefault();
+    let filterValue = {};
+
+    const firstName = firstNameRef.current.value.trim();
+    const lastName = lastNameRef.current.value.trim();
+    const email = emailRef.current.value.trim();
+    const id = idRef.current.value.trim();
+    if (firstName) {
+      filterValue["firstName"] = firstName;
+    }
+    if (lastName) {
+      filterValue["lastName"] = lastName;
+    }
+    if (email) {
+      filterValue["email"] = email;
+    }
+    if (id) {
+      filterValue["id"] = id;
+    }
+    let filteredList = physios.filter((physio) => {
+      for (let key in filterValue) {
+        if (
+          physio[key] === undefined ||
+          physio[key].toLowerCase() !== filterValue[key].toLowerCase()
+        )
+          return false;
+      }
+      return physio;
+    });
+    setPhysiosList(filteredList);
+  };
+
+  useEffect(() => {
+    setPhysiosList(physios);
+  }, [physios]);
+
   return (
     <section className={styles.PhysiosWrapper}>
       <section className={styles.Filters}>
@@ -42,8 +80,8 @@ const PhysiosList = () => {
         </form>
       </section>
       <section className={styles.PhysiosList}>
-        {physios.length < 0 && <p>No physios available</p>}
-        {physios.length > 0 && (
+        {physiosList.length < 1 && <p>No physios available</p>}
+        {physiosList.length > 0 && (
           <table>
             <tbody>
               <tr>
@@ -52,7 +90,7 @@ const PhysiosList = () => {
                 <th>Email</th>
                 <th>Phone Number</th>
               </tr>
-              {physios.map((patient) => {
+              {physiosList.map((patient) => {
                 return (
                   <tr key={patient.id}>
                     <td>{patient.firstName}</td>

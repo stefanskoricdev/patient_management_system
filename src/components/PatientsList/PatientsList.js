@@ -33,7 +33,7 @@ const PatientsList = () => {
         )
           return false;
       }
-      return true;
+      return user;
     });
     firstNameRef.current.value = "";
     lastNameRef.current.value = "";

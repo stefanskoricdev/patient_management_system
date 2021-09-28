@@ -43,7 +43,7 @@ const UsersList = () => {
         )
           return false;
       }
-      return true;
+      return user;
     });
     setUsersList(filteredList);
   };

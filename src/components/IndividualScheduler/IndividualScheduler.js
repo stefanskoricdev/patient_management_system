@@ -11,6 +11,7 @@ import Loader from "../UI/Loader/Loader";
 import AppContext from "../../store/AppProvider";
 import IndividualSchedule from "./IndividualSchedule/IndividualSchedule";
 import AddPatientModal from "../UI/AddPatientModal/AddPatientModal";
+import PatientDetailsModal from "../UI/PatientDetailsModal/PatientDetailsModal";
 
 const IndividualScheduler = ({ config, physiotherapist }) => {
   const { path } = useRouteMatch();
@@ -61,10 +62,14 @@ const IndividualScheduler = ({ config, physiotherapist }) => {
               patients={filteredPatients}
               workingDays={workingDays}
               workingHours={workingHours}
+              physiotherapist={physiotherapist.firstName}
             />
           </Route>
           <Route path={`${path}/add-patient`}>
             <AddPatientModal physiotherapist={physiotherapist} />
+          </Route>
+          <Route path={`${path}/:id`}>
+            <PatientDetailsModal />
           </Route>
           <Route path="*">
             <Redirect to={`${path}`} />

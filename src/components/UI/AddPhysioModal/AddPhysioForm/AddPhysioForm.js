@@ -103,10 +103,10 @@ const AddPhysioForm = () => {
     }
     const newPhysio = {
       id: uuid(),
-      firstName: firstNameRef.current.value,
-      lastName: lastNameRef.current.value,
-      email: emailRef.current.value,
-      phoneNumber: phoneNumberRef.current.value,
+      firstName: firstNameRef.current.value.trim(),
+      lastName: lastNameRef.current.value.trim(),
+      email: emailRef.current.value.trim(),
+      phoneNumber: phoneNumberRef.current.value.trim(),
       workingDays: daysInputValue.sort(),
       workingHours: hoursInputValue.sort(),
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
