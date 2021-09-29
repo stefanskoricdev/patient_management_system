@@ -1,7 +1,7 @@
 import styles from "./TypeChart.module.scss";
 import { Bar } from "react-chartjs-2";
 
-const TypeChart = ({ individual, group, isLoading }) => {
+const TypeChart = ({ individual, group }) => {
   const individualsCount = individual.length;
   const groupsCount = group.length;
   const data = {
