@@ -1,6 +1,7 @@
 import styles from "./PatientsList.module.scss";
 import { useContext, useEffect, useRef, useState } from "react";
 import AppContext from "../../store/AppProvider";
+import resetFilterInputs from "../../helpers/resetFilterInputs";
 
 const PatientsList = () => {
   const appCtx = useContext(AppContext);
@@ -35,8 +36,7 @@ const PatientsList = () => {
       }
       return user;
     });
-    firstNameRef.current.value = "";
-    lastNameRef.current.value = "";
+    resetFilterInputs([firstNameRef, lastNameRef]);
     setPatientsList(filteredList);
   };
 

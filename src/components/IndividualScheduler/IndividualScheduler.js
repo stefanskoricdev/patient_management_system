@@ -7,17 +7,16 @@ import {
   Switch,
   useRouteMatch,
 } from "react-router-dom";
-import Loader from "../UI/Loader/Loader";
 import AppContext from "../../store/AppProvider";
 import IndividualSchedule from "./IndividualSchedule/IndividualSchedule";
 import AddPatientModal from "../UI/AddPatientModal/AddPatientModal";
 import PatientDetailsModal from "../UI/PatientDetailsModal/PatientDetailsModal";
 
-const IndividualScheduler = ({ config, physiotherapist }) => {
+const IndividualScheduler = ({ physiotherapist }) => {
   const { path } = useRouteMatch();
 
   const appCtx = useContext(AppContext);
-  const { individualPatients, isLoading } = appCtx;
+  const { individualPatients } = appCtx;
 
   const filteredPatients = individualPatients.filter(
     (patient) => patient.physiotherapist === physiotherapist.firstName
@@ -26,16 +25,15 @@ const IndividualScheduler = ({ config, physiotherapist }) => {
   // which is sent in this component through appContext and then filtered according
   //to which physio this component belongs to (we get that trough props).
   //This way we avoid data being fetched every time we click physio tab!
-  const workingDays = config[0].workingDays.map((days, i) => (
-    <li key={i}>{days.substr(2)}</li>
+  const workingDays = physiotherapist.workingDays.map((day, i) => (
+    <li key={i}>{day.substr(2)}</li>
   ));
-  const workingHours = config[0].workingHours.map((hours, i) => (
-    <li key={i}>{hours}</li>
+  const workingHours = physiotherapist.workingHours.map((time, i) => (
+    <li key={i}>{time}</li>
   ));
 
   return (
     <section className={styles.Scheduler}>
-      {isLoading && <Loader />}
       <nav className={styles.Nav}>
         <NavLink
           activeClassName={styles.active}

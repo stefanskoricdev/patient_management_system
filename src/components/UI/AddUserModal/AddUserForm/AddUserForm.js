@@ -2,11 +2,12 @@ import styles from "./AddUserForm.module.scss";
 import { useRef, useContext } from "react";
 import { auth } from "../../../../services/firebase";
 import { sendData } from "../../../actions/actions";
-import AppContext from "../../../../store/AppProvider";
+import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
+import resetFormInputs from "../../../../helpers/resetFormInputs";
+import AuthContext from "../../../../store/AuthProvider";
 
 const mySwal = withReactContent(Swal);
 
@@ -16,17 +17,10 @@ const AddUserForm = () => {
   let emailRef = useRef();
   let passwordRef = useRef();
 
-  const appCtx = useContext(AppContext);
-  const { setIsLoading, setUsers, usersCollection } = appCtx;
+  const authCtx = useContext(AuthContext);
+  const { setIsLoading, setUsers, usersCollection } = authCtx;
 
   let history = useHistory();
-
-  const resetInputs = () => {
-    firstNameRef.current.value = "";
-    lastNameRef.current.value = "";
-    emailRef.current.value = "";
-    passwordRef.current.value = "";
-  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -56,8 +50,9 @@ const AddUserForm = () => {
           lastName: lastNameRef.current.value,
           email: emailRef.current.value,
           dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
+          isAdmin: false,
         };
-        resetInputs();
+        resetFormInputs([firstNameRef, lastNameRef, emailRef, passwordRef]);
         sendData(setIsLoading, usersCollection, newUser, setUsers);
         history.push("/settings");
       })

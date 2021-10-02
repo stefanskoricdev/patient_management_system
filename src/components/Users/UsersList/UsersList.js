@@ -1,10 +1,11 @@
 import styles from "./UsersList.module.scss";
 import { useContext, useEffect, useRef, useState } from "react";
-import AppContext from "../../../store/AppProvider";
+import resetFilterInputs from "../../../helpers/resetFilterInputs";
+import AuthContext from "../../../store/AuthProvider";
 
 const UsersList = () => {
-  const appCtx = useContext(AppContext);
-  const { users } = appCtx;
+  const authCtx = useContext(AuthContext);
+  const { users } = authCtx;
 
   const [usersList, setUsersList] = useState(users);
 
@@ -45,6 +46,7 @@ const UsersList = () => {
       }
       return user;
     });
+    resetFilterInputs([firstNameRef, lastNameRef, emailRef, idRef]);
     setUsersList(filteredList);
   };
 

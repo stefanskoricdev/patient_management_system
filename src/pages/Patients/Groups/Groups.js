@@ -1,17 +1,16 @@
 import styles from "./Groups.module.scss";
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
-import comingSoon from "../../../assets/img/coming_soon.png";
 import GroupsScheduler from "../../../components/GroupsScheduler/GroupsScheduler";
 const physioConfig = [
   {
     id: "p1",
-    name: "Stefan",
+    firstName: "Stefan",
     workingHours: ["19:00", "20:00"],
     workingDays: ["MON/THU", "TUE/FRI"],
   },
   {
     id: "p2",
-    name: "Sara",
+    firstName: "Sara",
     workingHours: ["21:00/ 19:00"],
     workingDays: ["MON/WED"],
   },
@@ -23,15 +22,15 @@ const Groups = () => {
       <header className={styles.Header}>
         <h1>Groups</h1>
       </header>
-      {/* <nav className={styles.Nav}>
+      <nav className={styles.Nav}>
         {physioConfig.map((physio) => {
           return (
             <NavLink
               key={physio.id}
               activeClassName={styles.active}
-              to={`/patients/groups/${physio.name.toLowerCase()}`}
+              to={`/patients/groups/${physio.firstName.toLowerCase()}`}
             >
-              {physio.name}
+              {physio.firstName}
               <i className="fas fa-caret-up"></i>
             </NavLink>
           );
@@ -41,18 +40,18 @@ const Groups = () => {
         <Switch>
           <Route path="/patients/groups/" exact>
             <Redirect
-              to={`/patients/groups/${physioConfig[0].name.toLowerCase()}`}
+              to={`/patients/groups/${physioConfig[0].firstName.toLowerCase()}`}
             />
           </Route>
           {physioConfig.map((physio) => {
             return (
               <Route
                 key={physio.id}
-                path={`/patients/groups/${physio.name.toLowerCase()}`}
+                path={`/patients/groups/${physio.firstName.toLowerCase()}`}
               >
                 <GroupsScheduler
                   key={physio.id}
-                  physiotherapist={physio.name}
+                  physiotherapist={physio.firstName}
                   config={physioConfig.filter(
                     (config) => config.id === physio.id
                   )}
@@ -62,12 +61,12 @@ const Groups = () => {
           })}
           <Route path="*">
             <Redirect
-              to={`/patients/groups/${physioConfig[0].name.toLowerCase()}`}
+              to={`/patients/groups/${physioConfig[0].firstName.toLowerCase()}`}
             />
           </Route>
         </Switch>
-      </main> */}
-      <img src={comingSoon} alt="cooming-soon"></img>
+      </main>
+      {/* <img src={comingSoon} alt="cooming-soon"></img> */}
     </section>
   );
 };

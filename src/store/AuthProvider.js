@@ -1,17 +1,20 @@
-import React, { useState } from "react";
-import { createDisplayName } from "../helpers/createDisplayName";
+import React, { useState, useEffect } from "react";
+import { getData } from "../components/actions/actions";
 
 const AuthContext = React.createContext({
   token: "",
   user: "",
   isLoggedIn: false,
   isAdmin: false,
-  login: (token) => {},
+  login: () => {},
   logout: () => {},
-  setDisplayName: (user) => {},
+  setDisplayName: () => {},
 });
 
+const USERS_COLLECTION = "users";
+
 export const AuthProvider = ({ children }) => {
+  const [users, setUsers] = useState([]);
   const initialToken = localStorage.getItem("token");
   const [token, setToken] = useState(initialToken);
 
@@ -22,17 +25,21 @@ export const AuthProvider = ({ children }) => {
   const initialIsAdminValue = localStorage.getItem("isAdmin");
   const [isAdmin, setIsAdmin] = useState(initialIsAdminValue);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const userIsLoggedIn = !!token;
 
-  const loginHandler = (token, email, admin) => {
+  const loginHandler = (token, targetedUser) => {
+    const admin = targetedUser.isAdmin;
+    const displayName = targetedUser.firstName;
     if (admin) {
       setIsAdmin(admin);
       localStorage.setItem("isAdmin", admin);
     }
     setToken(token);
     localStorage.setItem("token", token);
-    setDisplayName(createDisplayName(email));
-    localStorage.setItem("displayName", createDisplayName(email));
+    setDisplayName(displayName);
+    localStorage.setItem("displayName", displayName);
   };
 
   const logoutHandler = () => {
@@ -45,13 +52,22 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("displayName");
   };
 
+  useEffect(() => {
+    getData(setIsLoading, setUsers, USERS_COLLECTION);
+  }, []);
+
   const authCtxValue = {
+    usersCollection: USERS_COLLECTION,
+    setUsers,
+    users,
     token,
-    isLoggedIn: userIsLoggedIn,
+    displayName,
+    setIsLoading,
+    isLoading,
     isAdmin,
     login: loginHandler,
     logout: logoutHandler,
-    displayName,
+    isLoggedIn: userIsLoggedIn,
   };
 
   return (

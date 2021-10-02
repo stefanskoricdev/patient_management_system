@@ -90,7 +90,6 @@ export const deleteData = (setLoading, setState, collection, targetId) => {
           })
           .catch((error) => {
             setLoading(false);
-            console.log(error);
             mySwal.fire({
               title: "Something went wrong!!",
               text: `${error}`,

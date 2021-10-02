@@ -14,7 +14,6 @@ const PatientDetailsModal = () => {
   const targetedPatient = individualPatients
     .filter((patient) => patient.id === id)
     .map((pat, i) => {
-      console.log(pat);
       const age = getAge(pat.dateOfBirth);
       return (
         <Fragment key={i}>
@@ -46,22 +45,7 @@ const PatientDetailsModal = () => {
             </p>
             <div className={styles.Observation}>
               <h2>Observation:</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                tincidunt purus id libero auctor, vitae cursus tellus lobortis.
-                Proin malesuada risus eu scelerisque tristique. In hac habitasse
-                platea dictumst. Sed tincidunt nibh vitae suscipit pharetra.
-                Vivamus arcu justo, aliquam vel velit non, tincidunt vulputate
-                ante. Phasellus congue dictum felis quis iaculis. Sed nisi
-                massa, sodales vel nisl ac, accumsan ornare leo. Sed id eros mi.
-                Quisque iaculis lorem lorem, eu auctor nisi egestas at. Maecenas
-                eget aliquam leo, a gravida nisl. Cras at dui ultricies,
-                tincidunt sem et, tempus turpis. Nulla in tincidunt nisi.
-                Suspendisse porta vitae nulla sit amet iaculis. Suspendisse sed
-                ligula nec enim suscipit congue. Etiam eget eros et libero
-                eleifend pulvinar ac nec eros. Fusce lacinia nunc dui, non
-                viverra orci fermentum mattis.
-              </p>
+              <p>{pat.observation}</p>
             </div>
           </main>
         </Fragment>

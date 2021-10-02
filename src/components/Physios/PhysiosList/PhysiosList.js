@@ -1,6 +1,7 @@
 import styles from "./PhysiosList.module.scss";
 import { useRef, useContext, useState, useEffect } from "react";
 import AppContext from "../../../store/AppProvider";
+import resetFilterInputs from "../../../helpers/resetFilterInputs";
 
 const PhysiosList = () => {
   const appCtx = useContext(AppContext);
@@ -43,6 +44,7 @@ const PhysiosList = () => {
       }
       return physio;
     });
+    resetFilterInputs([firstNameRef, lastNameRef, emailRef, idRef]);
     setPhysiosList(filteredList);
   };
 

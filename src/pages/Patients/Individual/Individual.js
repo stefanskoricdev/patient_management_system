@@ -14,7 +14,7 @@ const Individual = () => {
         <h1>Individual</h1>
       </header>
       <nav className={styles.Nav}>
-        {physios.map((physio, i) => {
+        {physios.map((physio) => {
           return (
             <NavLink
               key={physio.id}
@@ -44,7 +44,6 @@ const Individual = () => {
                   <IndividualScheduler
                     key={physio.id}
                     physiotherapist={physio}
-                    config={physios.filter((config) => config.id === physio.id)}
                   />
                 </Route>
               );

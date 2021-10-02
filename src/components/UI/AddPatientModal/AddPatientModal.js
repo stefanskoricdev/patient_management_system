@@ -9,6 +9,7 @@ import AppContext from "../../../store/AppProvider";
 import AddPatientForm from "./AddPatientForm/AddPatientForm";
 import firebase from "firebase/app";
 import uuid from "react-uuid";
+import resetFormInputs from "../../../helpers/resetFormInputs";
 
 const mySwal = withReactContent(Swal);
 
@@ -37,10 +38,6 @@ const AddPatientModal = ({ physiotherapist }) => {
     setIsFormPageChanged((prevValue) => !prevValue);
   };
 
-  const resetForm = (inputs) => {
-    inputs.map((input) => (input.current.value = ""));
-  };
-
   const addPatientHandler = (e) => {
     e.preventDefault();
     const currentTime = getTime();
@@ -54,10 +51,10 @@ const AddPatientModal = ({ physiotherapist }) => {
       dateOfBirthInput.current.value.trim() === "" ||
       observationInput.current.value.trim() === "" ||
       physiotherapist.firstName.trim() === "" ||
-      hourInputValue.current.value.topHours === "" ||
-      minutesInputValue.current.value.topMinutes === "" ||
-      dayInputValue.current.value.left === "" ||
-      durationInputValue.current.value.height === ""
+      hourInputValue.current.value === "" ||
+      minutesInputValue.current === "" ||
+      dayInputValue.current.value === "" ||
+      durationInputValue.current.value === ""
     ) {
       mySwal.fire({
         icon: "warning",
@@ -94,7 +91,7 @@ const AddPatientModal = ({ physiotherapist }) => {
       newPatient,
       setIndividualPatients
     );
-    resetForm([
+    resetFormInputs([
       firstNameInput,
       lastNameInput,
       genderInput,

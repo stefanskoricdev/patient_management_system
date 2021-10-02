@@ -6,6 +6,7 @@ import AppContext from "../../../../store/AppProvider";
 import firebase from "firebase/app";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import resetFormInputs from "../../../../helpers/resetFormInputs";
 
 const mySwal = withReactContent(Swal);
 
@@ -74,21 +75,13 @@ const AddPhysioForm = () => {
     }
   };
 
-  const resetInputs = () => {
-    firstNameRef.current.value = "";
-    lastNameRef.current.value = "";
-    emailRef.current.value = "";
-    phoneNumberRef.current.value = "";
-    setDaysCheckedState(initialDaysCheckValue);
-    setHoursCheckedState(initialHoursCheckValue);
-  };
-
   const submitHandler = (e) => {
     e.preventDefault();
     if (
       firstNameRef.current.value.trim() === "" ||
       lastNameRef.current.value.trim() === "" ||
       emailRef.current.value.trim() === "" ||
+      phoneNumberRef.current.value.trim() === "" ||
       !hoursCheckedState.includes(true) ||
       !daysCheckedState.includes(true)
     ) {
@@ -112,7 +105,9 @@ const AddPhysioForm = () => {
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
     sendData(setIsLoading, physiosCollection, newPhysio, setPhysios);
-    resetInputs();
+    resetFormInputs([firstNameRef, lastNameRef, emailRef, phoneNumberRef]);
+    setDaysCheckedState(initialDaysCheckValue);
+    setHoursCheckedState(initialHoursCheckValue);
   };
 
   return (

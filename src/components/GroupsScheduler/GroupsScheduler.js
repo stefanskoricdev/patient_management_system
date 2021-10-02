@@ -6,7 +6,6 @@ import PatientDetailsModal from "../UI/PatientDetailsModal/PatientDetailsModal";
 import Backdrop from "../UI/Backdrop/Backdrop";
 import Loader from "../UI/Loader/Loader";
 import AppContext from "../../store/AppProvider";
-import LayoutContext from "../../store/LayoutProvider";
 
 const GroupsScheduler = ({ physiotherapist, config }) => {
   const appCtx = useContext(AppContext);
@@ -18,18 +17,6 @@ const GroupsScheduler = ({ physiotherapist, config }) => {
     setIsLoading,
   } = appCtx;
 
-  const layoutCtx = useContext(LayoutContext);
-  const {
-    patientId,
-    isAddPatientModalOpen,
-    isPatientDetailsModalOpen,
-    patientModalHandler,
-    closePatientDetailsModal,
-    closeAddPatientModal,
-    setIsAddPatientModalOpen,
-    setIsPatientDetailsModalOpen,
-  } = layoutCtx;
-
   const workingDays = config[0].workingDays.map((day, i) => (
     <li key={i}>{day}</li>
   ));
@@ -38,40 +25,8 @@ const GroupsScheduler = ({ physiotherapist, config }) => {
   ));
 
   return (
-    <section
-      className={
-        isAddPatientModalOpen || isPatientDetailsModalOpen
-          ? [styles.SchedulerWrapper, styles["ModalOpen"]].join(" ")
-          : styles.SchedulerWrapper
-      }
-    >
-      {isPatientDetailsModalOpen && (
-        <Backdrop closeModal={closePatientDetailsModal}>
-          <PatientDetailsModal
-            closeModal={closePatientDetailsModal}
-            setIsModalOpen={setIsPatientDetailsModalOpen}
-            setLoading={setIsLoading}
-            setPatients={setGroupPatients}
-            patients={groupPatients}
-            patientId={patientId}
-            collection={groupsCollection}
-          />
-        </Backdrop>
-      )}
-      {isAddPatientModalOpen && (
-        <Backdrop closeModal={closeAddPatientModal}>
-          <AddPatientModal
-            closeModal={closeAddPatientModal}
-            setPatients={setGroupPatients}
-            setIsModalOpen={setIsAddPatientModalOpen}
-            patientId={patientId}
-            collection={groupsCollection}
-            physio={physiotherapist}
-          />
-        </Backdrop>
-      )}
+    <section className={styles.SchedulerWrapper}>
       {isLoading && <Loader />}
-
       <header className={styles.Header}>{workingDays}</header>
       <main className={styles.Main}>
         <div className={styles.Time}>
@@ -84,16 +39,7 @@ const GroupsScheduler = ({ physiotherapist, config }) => {
             gridTemplateColumns: `repeat(${workingDays.length}, 20% [col-start])`,
             gridTemplateRows: `repeat(${workingHours.length}, 20rem [row-start])`,
           }}
-        >
-          {createGroupsScheduleFields(
-            groupPatients,
-            physiotherapist,
-            workingDays,
-            workingHours,
-            patientModalHandler,
-            patientId
-          )}
-        </section>
+        ></section>
       </main>
     </section>
   );
