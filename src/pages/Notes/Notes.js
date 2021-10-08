@@ -1,18 +1,20 @@
 import styles from "./Notes.module.scss";
-import getTime from "../../helpers/getTime";
+import { useContext } from "react";
 import NotesBuilder from "../../components/NotesBuilder/NotesBuilder";
+import AppContext from "../../store/AppProvider";
 
 const Notes = () => {
-  const currentTime = getTime();
+  const appCtx = useContext(AppContext);
+  const { currentDate } = appCtx;
 
   return (
     <section className={styles.Notes}>
       <header className={styles.Header}>
         <h1>Notes</h1>
-        <p>{currentTime}</p>
+        <p>{currentDate}</p>
       </header>
       <main className={styles.Main}>
-        <NotesBuilder currentTime={currentTime} />
+        <NotesBuilder currentDate={currentDate} />
       </main>
     </section>
   );

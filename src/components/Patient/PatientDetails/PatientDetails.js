@@ -1,4 +1,4 @@
-import styles from "./PatientDetailsModal.module.scss";
+import styles from "./PatientDetails.module.scss";
 import { useParams } from "react-router-dom";
 import { useContext, Fragment } from "react";
 import { getAge } from "../../../helpers/getAge";
@@ -6,7 +6,7 @@ import AppContext from "../../../store/AppProvider";
 import maleAvatar from "../../../assets/img/male_avatar.svg";
 import femaleAvatar from "../../../assets/img/female_avatar.svg";
 
-const PatientDetailsModal = () => {
+const PatientDetails = () => {
   const { id } = useParams();
   const appCtx = useContext(AppContext);
   const { individualPatients } = appCtx;
@@ -58,4 +58,4 @@ const PatientDetailsModal = () => {
   );
 };
 
-export default PatientDetailsModal;
+export default PatientDetails;

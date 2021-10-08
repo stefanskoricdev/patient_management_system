@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }) => {
 
   const initialDisplayName = localStorage.getItem("displayName");
   const [displayName, setDisplayName] = useState(initialDisplayName);
-  //Stores user email so it can be stored and rendered on MainHeader component!
 
   const initialIsAdminValue = localStorage.getItem("isAdmin");
   const [isAdmin, setIsAdmin] = useState(initialIsAdminValue);

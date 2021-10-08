@@ -11,7 +11,7 @@ import firebase from "firebase/app";
 
 const mySwal = withReactContent(Swal);
 
-const NotesBuilder = ({ currentTime }) => {
+const NotesBuilder = ({ currentDate }) => {
   const [filter, setFilter] = useState("all");
   const noteInputRef = useRef();
 
@@ -29,7 +29,7 @@ const NotesBuilder = ({ currentTime }) => {
         title: noteInputRef.current.value,
         isChecked: false,
         author: displayName,
-        date: currentTime,
+        date: currentDate,
         dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
       };
       sendData(setIsLoading, notesCollection, newNote, setNotes);

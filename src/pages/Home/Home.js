@@ -1,16 +1,14 @@
 import styles from "./Home.module.scss";
 import { useContext } from "react";
-import getTime from "../../helpers/getTime";
 import GenderChart from "../../components/UI/ChartJs/GenderChart/GenderChart";
 import CountUp from "react-countup";
 import AppContext from "../../store/AppProvider";
 import TypeChart from "../../components/UI/ChartJs/TypeChart/TypeChart";
 
 const Home = () => {
-  const currentTime = getTime();
-
   const appCtx = useContext(AppContext);
-  const { individualPatients, groupPatients, isLoading, notes } = appCtx;
+  const { individualPatients, groupPatients, isLoading, notes, currentDate } =
+    appCtx;
 
   const allPatients = individualPatients.concat(groupPatients);
   const patientsCount = allPatients.length;
@@ -50,7 +48,7 @@ const Home = () => {
     <section className={styles.Home}>
       <header className={styles.Header}>
         <h1>Home</h1>
-        <p>{currentTime}</p>
+        <p>{currentDate}</p>
       </header>
       <main className={styles.Main}>
         <section className={styles.Stats}>

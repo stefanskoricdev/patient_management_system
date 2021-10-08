@@ -60,6 +60,10 @@
             border-radius: .5rem;
             box-shadow: 2px 2px 10px $dark-blue;
         }
+
+        a:hover {
+            border: 1px solid $dark-blue;
+        }
     }
 
 }

@@ -1,8 +1,8 @@
 import styles from "./Backdrop.module.scss";
 
-const Backdrop = ({ closeModal, children }) => {
+const Backdrop = ({ children }) => {
   return (
-    <section id="backdrop" onClick={closeModal} className={styles.Backdrop}>
+    <section id="backdrop" className={styles.Backdrop}>
       {children}
     </section>
   );

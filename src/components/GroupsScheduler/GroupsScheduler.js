@@ -1,21 +1,11 @@
 import styles from "./GroupsScheduler.module.scss";
 import { useContext } from "react";
-import { createGroupsScheduleFields } from "../../helpers/createGroupsScheduleFields";
-import AddPatientModal from "../UI/AddPatientModal/AddPatientModal";
-import PatientDetailsModal from "../UI/PatientDetailsModal/PatientDetailsModal";
-import Backdrop from "../UI/Backdrop/Backdrop";
 import Loader from "../UI/Loader/Loader";
 import AppContext from "../../store/AppProvider";
 
 const GroupsScheduler = ({ physiotherapist, config }) => {
   const appCtx = useContext(AppContext);
-  const {
-    groupPatients,
-    groupsCollection,
-    setGroupPatients,
-    isLoading,
-    setIsLoading,
-  } = appCtx;
+  const { isLoading } = appCtx;
 
   const workingDays = config[0].workingDays.map((day, i) => (
     <li key={i}>{day}</li>

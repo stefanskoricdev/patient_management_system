@@ -1,5 +1,5 @@
 import AddPhysioForm from "./AddPhysioForm/AddPhysioForm";
-const AddPhysioModal = () => {
+const AddPhysio = () => {
   return (
     <section>
       <AddPhysioForm />
@@ -7,4 +7,4 @@ const AddPhysioModal = () => {
   );
 };
 
-export default AddPhysioModal;
+export default AddPhysio;

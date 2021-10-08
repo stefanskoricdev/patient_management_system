@@ -6,13 +6,15 @@ import {
   Redirect,
   useRouteMatch,
 } from "react-router-dom";
-import getTime from "../../helpers/getTime";
+import { useContext } from "react";
 import Individual from "./Individual/Individual";
 import Groups from "./Groups/Groups";
-import PatientsList from "../../components/PatientsList/PatientsList";
+import PatientsList from "./PatientsList/PatientsList";
+import AppContext from "../../store/AppProvider";
 
 const Patients = () => {
-  const currentTime = getTime();
+  const appCtx = useContext(AppContext);
+  const { currentDate } = appCtx;
 
   const { path } = useRouteMatch();
 
@@ -20,7 +22,7 @@ const Patients = () => {
     <section className={styles.Patients}>
       <header className={styles.Header}>
         <h1>Patients</h1>
-        <p>{currentTime}</p>
+        <p>{currentDate}</p>
       </header>
       <nav className={styles.Nav}>
         <NavLink

@@ -1,23 +1,26 @@
 import { useState, useRef, useContext } from "react";
 import { sendData } from "../../actions/actions";
 import { useHistory } from "react-router-dom";
-import getTime from "../../../helpers/getTime";
-import styles from "./AddPatientModal.module.scss";
+import styles from "./AddPatient.module.scss";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import AppContext from "../../../store/AppProvider";
 import AddPatientForm from "./AddPatientForm/AddPatientForm";
 import firebase from "firebase/app";
 import uuid from "react-uuid";
-import resetFormInputs from "../../../helpers/resetFormInputs";
 
 const mySwal = withReactContent(Swal);
 
-const AddPatientModal = ({ physiotherapist }) => {
+const AddPatient = ({ physiotherapist }) => {
   const [isFormPageChanged, setIsFormPageChanged] = useState(false);
 
   const appCtx = useContext(AppContext);
-  const { setIsLoading, individualCollection, setIndividualPatients } = appCtx;
+  const {
+    setIsLoading,
+    individualCollection,
+    setIndividualPatients,
+    currentDate,
+  } = appCtx;
 
   const history = useHistory();
 
@@ -40,7 +43,6 @@ const AddPatientModal = ({ physiotherapist }) => {
 
   const addPatientHandler = (e) => {
     e.preventDefault();
-    const currentTime = getTime();
     if (
       firstNameInput.current.value.trim() === "" ||
       lastNameInput.current.value.trim() === "" ||
@@ -52,7 +54,7 @@ const AddPatientModal = ({ physiotherapist }) => {
       observationInput.current.value.trim() === "" ||
       physiotherapist.firstName.trim() === "" ||
       hourInputValue.current.value === "" ||
-      minutesInputValue.current === "" ||
+      minutesInputValue.current.value === "" ||
       dayInputValue.current.value === "" ||
       durationInputValue.current.value === ""
     ) {
@@ -82,7 +84,7 @@ const AddPatientModal = ({ physiotherapist }) => {
         left: dayInputValue.current.value,
         height: durationInputValue.current.value,
       },
-      date: currentTime,
+      date: currentDate,
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
     sendData(
@@ -91,25 +93,11 @@ const AddPatientModal = ({ physiotherapist }) => {
       newPatient,
       setIndividualPatients
     );
-    resetFormInputs([
-      firstNameInput,
-      lastNameInput,
-      genderInput,
-      cityInput,
-      addressInput,
-      phoneNumberInput,
-      dateOfBirthInput,
-      observationInput,
-      dayInputValue,
-      hourInputValue,
-      minutesInputValue,
-      durationInputValue,
-    ]);
     history.push(`/patients/individual/${physiotherapist.firstName}/schedule`);
   };
 
   return (
-    <section id="addPatientModalWrapper" className={styles.AddPatientModal}>
+    <section id="addPatientModalWrapper" className={styles.AddPatientWrapper}>
       <AddPatientForm
         submit={addPatientHandler}
         firstName={firstNameInput}
@@ -131,4 +119,4 @@ const AddPatientModal = ({ physiotherapist }) => {
     </section>
   );
 };
-export default AddPatientModal;
+export default AddPatient;

@@ -7,10 +7,10 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import UsersList from "./UsersList/UsersList";
-import AddUserModal from "../UI/AddUserModal/AddUserModal";
+import AddUser from "./AddUser/AddUser";
 
 const Users = () => {
-  const { path, url } = useRouteMatch();
+  const { path } = useRouteMatch();
 
   return (
     <section className={styles.Users}>
@@ -24,14 +24,14 @@ const Users = () => {
       </nav>
       <main>
         <Switch>
-          <Route path={url} exact>
+          <Route path={path} exact>
             <Redirect to={`${path}/users-list`} />
           </Route>
           <Route path={`${path}/users-list`}>
             <UsersList />
           </Route>
           <Route path={`${path}/add-user`}>
-            <AddUserModal />
+            <AddUser />
           </Route>
           <Route path="*">
             <Redirect to={`${path}/users-list`} />

@@ -1,7 +1,7 @@
 import styles from "./PatientsList.module.scss";
 import { useContext, useEffect, useRef, useState } from "react";
-import AppContext from "../../store/AppProvider";
-import resetFilterInputs from "../../helpers/resetFilterInputs";
+import AppContext from "../../../store/AppProvider";
+import resetFilterInputs from "../../../helpers/resetFilterInputs";
 
 const PatientsList = () => {
   const appCtx = useContext(AppContext);

@@ -3,6 +3,7 @@ import { useContext, useRef } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import AuthContext from "../../../store/AuthProvider";
+import resetFormInputs from "../../../helpers/resetFormInputs";
 
 const mySwal = withReactContent(Swal);
 
@@ -13,16 +14,22 @@ const LoginForm = ({ setLoading }) => {
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
 
-  const resetInput = () => {
-    emailInputRef.current.value = "";
-    passwordInputRef.current.value = "";
-  };
-
   const submitHandler = (e) => {
     e.preventDefault();
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
     const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_API_KEY}`;
+
+    if (enteredEmail === "" || enteredPassword === "") {
+      mySwal.fire({
+        icon: "warning",
+        title: <p>Please fill out all fields</p>,
+        customClass: {
+          container: "alert-modal",
+        },
+      });
+      return;
+    }
 
     setLoading(true);
     fetch(url, {
@@ -56,11 +63,10 @@ const LoginForm = ({ setLoading }) => {
       })
       .then((data) => {
         const targetedUser = users.find((user) => user.email === data.email);
-        console.log(targetedUser);
         login(data.idToken, targetedUser);
       })
       .catch((error) => {
-        resetInput();
+        resetFormInputs([emailInputRef, passwordInputRef]);
         setLoading(false);
         mySwal.fire({
           title: "Something went wrong!",

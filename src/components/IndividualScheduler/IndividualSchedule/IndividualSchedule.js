@@ -23,7 +23,6 @@ const IndividualSchedule = ({
     for (let i = 0; i < indexValue; i++) {
       scheduleFields.push(<div key={i}></div>);
     }
-
     return scheduleFields;
   };
 
@@ -58,7 +57,9 @@ const IndividualSchedule = ({
                   patient.position.topMinutes * 0.2;
                 return (
                   <Link
-                    to={`/patients/individual/${physiotherapist}/${patient.id}`}
+                    to={`/patients/individual/${physiotherapist.toLowerCase()}/${
+                      patient.id
+                    }`}
                     key={i}
                     style={
                       workingDays.length > 5

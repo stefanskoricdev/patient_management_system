@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { getData } from "../components/actions/actions";
+import getDate from "../helpers/getDate";
 import AuthContext from "./AuthProvider";
 
 const AppContext = React.createContext();
@@ -14,6 +15,7 @@ export const AppProvider = ({ children }) => {
   const [groupPatients, setGroupPatients] = useState([]);
   const [notes, setNotes] = useState([]);
   const [physios, setPhysios] = useState([]);
+  const [currentDate, setCurrentDate] = useState();
 
   const authCtx = useContext(AuthContext);
   const { isLoggedIn, isLoading, setIsLoading } = authCtx;
@@ -28,6 +30,10 @@ export const AppProvider = ({ children }) => {
     //Getting data here and send trough app via context
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    setCurrentDate(getDate());
+  }, []);
 
   const appContextValue = {
     individualPatients,
@@ -44,6 +50,7 @@ export const AppProvider = ({ children }) => {
     physiosCollection: PHYSIOS_COLLECTION,
     isLoading,
     setIsLoading,
+    currentDate,
   };
   return (
     <AppContext.Provider value={appContextValue}>

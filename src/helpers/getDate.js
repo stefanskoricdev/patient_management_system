@@ -1,9 +1,9 @@
 import moment from "moment";
 
-const getTime = () => {
+const getDate = () => {
   const time = new Date();
   const formatedTime = moment(time).format("MMMM Do YYYY");
   return formatedTime;
 };
 
-export default getTime;
+export default getDate;

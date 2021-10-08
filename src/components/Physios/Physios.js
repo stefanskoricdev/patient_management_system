@@ -7,10 +7,10 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import PhysiosList from "./PhysiosList/PhysiosList";
-import AddPhysioModal from "../UI/AddPhysioModal/AddPhysioModal";
+import AddPhysio from "./AddPhysio/AddPhysio";
 
 const Physios = () => {
-  const { path, url } = useRouteMatch();
+  const { path } = useRouteMatch();
   return (
     <section className={styles.Physios}>
       <nav className={styles.Nav}>
@@ -25,14 +25,14 @@ const Physios = () => {
       </nav>
       <main>
         <Switch>
-          <Route path={url} exact>
+          <Route path={path} exact>
             <Redirect to={`${path}/physios-list`} />
           </Route>
           <Route path={`${path}/physios-list`}>
             <PhysiosList />
           </Route>
           <Route path={`${path}/add-physio`}>
-            <AddPhysioModal />
+            <AddPhysio />
           </Route>
           <Route path="*">
             <Redirect to={`${path}/physios-list`} />

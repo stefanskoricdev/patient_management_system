@@ -8,9 +8,9 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import AppContext from "../../store/AppProvider";
+import AddPatient from "../Patient/AddPatient/AddPatient";
 import IndividualSchedule from "./IndividualSchedule/IndividualSchedule";
-import AddPatientModal from "../UI/AddPatientModal/AddPatientModal";
-import PatientDetailsModal from "../UI/PatientDetailsModal/PatientDetailsModal";
+import PatientDetails from "../Patient/PatientDetails/PatientDetails";
 
 const IndividualScheduler = ({ physiotherapist }) => {
   const { path } = useRouteMatch();
@@ -18,17 +18,19 @@ const IndividualScheduler = ({ physiotherapist }) => {
   const appCtx = useContext(AppContext);
   const { individualPatients } = appCtx;
 
+  const { firstName, workingDays, workingHours } = physiotherapist;
+
   const filteredPatients = individualPatients.filter(
-    (patient) => patient.physiotherapist === physiotherapist.firstName
+    (patient) => patient.physiotherapist === firstName
   );
   // getData() in App Provider fetches data from firebase and adds it to patients state
   // which is sent in this component through appContext and then filtered according
   //to which physio this component belongs to (we get that trough props).
   //This way we avoid data being fetched every time we click physio tab!
-  const workingDays = physiotherapist.workingDays.map((day, i) => (
+  const workingDaysValue = workingDays.map((day, i) => (
     <li key={i}>{day.substr(2)}</li>
   ));
-  const workingHours = physiotherapist.workingHours.map((time, i) => (
+  const workingHoursValue = workingHours.map((time, i) => (
     <li key={i}>{time}</li>
   ));
 
@@ -58,16 +60,16 @@ const IndividualScheduler = ({ physiotherapist }) => {
           <Route path={`${path}/schedule`}>
             <IndividualSchedule
               patients={filteredPatients}
-              workingDays={workingDays}
-              workingHours={workingHours}
-              physiotherapist={physiotherapist.firstName}
+              workingDays={workingDaysValue}
+              workingHours={workingHoursValue}
+              physiotherapist={firstName}
             />
           </Route>
           <Route path={`${path}/add-patient`}>
-            <AddPatientModal physiotherapist={physiotherapist} />
+            <AddPatient physiotherapist={physiotherapist} />
           </Route>
           <Route path={`${path}/:id`}>
-            <PatientDetailsModal />
+            <PatientDetails />
           </Route>
           <Route path="*">
             <Redirect to={`${path}`} />
