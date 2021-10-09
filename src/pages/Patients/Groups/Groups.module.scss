@@ -8,11 +8,7 @@
     border-radius: 1rem;
     border: 1px solid $light-blue;
 
-    .Header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+    @include pageHeader;
 
     @include pageNav;
 

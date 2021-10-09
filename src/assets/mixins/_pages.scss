@@ -12,6 +12,14 @@
     margin-left: 5.2rem;
 }
 
+@mixin pageHeader {
+    .Header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
 @mixin pageNav {
     .Nav {
         display: flex;

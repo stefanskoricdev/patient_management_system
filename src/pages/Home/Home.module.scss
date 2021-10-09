@@ -4,11 +4,7 @@
 .Home {
     @include pageWrapper;
 
-    .Header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+    @include pageHeader;
 
     .Main {
         h1 {
