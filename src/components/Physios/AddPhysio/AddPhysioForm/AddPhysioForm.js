@@ -4,11 +4,8 @@ import { useState, useContext, useRef } from "react";
 import { sendData } from "../../../actions/actions";
 import AppContext from "../../../../store/AppProvider";
 import firebase from "firebase/app";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import resetFormInputs from "../../../../helpers/resetFormInputs";
-
-const mySwal = withReactContent(Swal);
+import validateInputs from "../../../../helpers/validateInputs";
 
 const workingDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const workingHours = [
@@ -77,23 +74,13 @@ const AddPhysioForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (
-      firstNameRef.current.value.trim() === "" ||
-      lastNameRef.current.value.trim() === "" ||
-      emailRef.current.value.trim() === "" ||
-      phoneNumberRef.current.value.trim() === "" ||
-      !hoursCheckedState.includes(true) ||
-      !daysCheckedState.includes(true)
-    ) {
-      mySwal.fire({
-        icon: "warning",
-        title: <p>Please fill out all fields</p>,
-        customClass: {
-          container: "alert-modal",
-        },
-      });
-      return;
-    }
+    const validate = validateInputs(
+      [firstNameRef, lastNameRef, emailRef, phoneNumberRef],
+      [hoursCheckedState, daysCheckedState]
+    );
+
+    if (!validate) return;
+
     const newPhysio = {
       id: uuid(),
       firstName: firstNameRef.current.value.trim(),
@@ -111,7 +98,7 @@ const AddPhysioForm = () => {
   };
 
   return (
-    <form onSubmit={submitHandler} className={styles.AddPhysioForm}>
+    <form onSubmit={submitHandler} noValidate className={styles.AddPhysioForm}>
       <h2>Add Physiotherapist</h2>
       <div className={styles.BasicInfo}>
         <label>

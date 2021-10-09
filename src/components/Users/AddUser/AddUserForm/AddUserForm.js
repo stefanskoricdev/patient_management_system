@@ -8,6 +8,7 @@ import withReactContent from "sweetalert2-react-content";
 import firebase from "firebase/app";
 import resetFormInputs from "../../../../helpers/resetFormInputs";
 import AuthContext from "../../../../store/AuthProvider";
+import validateInputs from "../../../../helpers/validateInputs";
 
 const mySwal = withReactContent(Swal);
 
@@ -24,19 +25,13 @@ const AddUserForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (
-      emailRef.current.value.trim() === "" ||
-      passwordRef.current.value.trim() === ""
-    ) {
-      mySwal.fire({
-        icon: "warning",
-        title: <p>Please fill out all fields</p>,
-        customClass: {
-          container: "alert-modal",
-        },
-      });
-      return;
-    }
+    const validate = validateInputs([
+      firstNameRef,
+      lastNameRef,
+      emailRef,
+      passwordRef,
+    ]);
+    if (!validate) return;
     setIsLoading(true);
     auth
       .createUserWithEmailAndPassword(
@@ -68,7 +63,7 @@ const AddUserForm = () => {
   };
 
   return (
-    <form onSubmit={submitHandler} className={styles.AddUserForm}>
+    <form onSubmit={submitHandler} noValidate className={styles.AddUserForm}>
       <h2>Add User</h2>
       <section>
         <label>

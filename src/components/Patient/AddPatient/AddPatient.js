@@ -2,14 +2,11 @@ import { useState, useRef, useContext } from "react";
 import { sendData } from "../../actions/actions";
 import { useHistory } from "react-router-dom";
 import styles from "./AddPatient.module.scss";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import AppContext from "../../../store/AppProvider";
 import AddPatientForm from "./AddPatientForm/AddPatientForm";
 import firebase from "firebase/app";
 import uuid from "react-uuid";
-
-const mySwal = withReactContent(Swal);
+import validateInputs from "../../../helpers/validateInputs";
 
 const AddPatient = ({ physiotherapist }) => {
   const [isFormPageChanged, setIsFormPageChanged] = useState(false);
@@ -43,30 +40,22 @@ const AddPatient = ({ physiotherapist }) => {
 
   const addPatientHandler = (e) => {
     e.preventDefault();
-    if (
-      firstNameInput.current.value.trim() === "" ||
-      lastNameInput.current.value.trim() === "" ||
-      cityInput.current.value.trim() === "" ||
-      addressInput.current.value.trim() === "" ||
-      genderInput.current.value.trim() === "" ||
-      phoneNumberInput.current.value.trim() === "" ||
-      dateOfBirthInput.current.value.trim() === "" ||
-      observationInput.current.value.trim() === "" ||
-      physiotherapist.firstName.trim() === "" ||
-      hourInputValue.current.value === "" ||
-      minutesInputValue.current.value === "" ||
-      dayInputValue.current.value === "" ||
-      durationInputValue.current.value === ""
-    ) {
-      mySwal.fire({
-        icon: "warning",
-        title: <p>Please fill out all fields</p>,
-        customClass: {
-          container: "alert-modal",
-        },
-      });
-      return;
-    }
+    const validate = validateInputs([
+      firstNameInput,
+      lastNameInput,
+      cityInput,
+      addressInput,
+      phoneNumberInput,
+      dateOfBirthInput,
+      observationInput,
+      dayInputValue,
+      hourInputValue,
+      minutesInputValue,
+      durationInputValue,
+    ]);
+
+    if (!validate) return;
+
     const newPatient = {
       id: uuid(),
       firstName: firstNameInput.current.value,

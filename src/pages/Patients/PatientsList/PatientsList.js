@@ -1,6 +1,7 @@
 import styles from "./PatientsList.module.scss";
 import { useContext, useEffect, useRef, useState } from "react";
 import AppContext from "../../../store/AppProvider";
+import FilterForm from "../../../components/UI/Forms/FilterForm/FilterForm";
 import filterListHandler from "../../../helpers/filterListHandler";
 
 const PatientsList = () => {
@@ -14,31 +15,20 @@ const PatientsList = () => {
   const firstNameRef = useRef();
   const lastNameRef = useRef();
 
-  /* const filterListHandler = (e) => {
-    e.preventDefault();
-    let filterValue = {};
-    const firstName = firstNameRef.current.value.trim();
-    const lastName = lastNameRef.current.value.trim();
-    if (firstName) {
-      filterValue["firstName"] = firstName;
-    }
-    if (lastName) {
-      filterValue["lastName"] = lastName;
-    }
-
-    let filteredList = allPatientsList.filter((user) => {
-      for (let key in filterValue) {
-        if (
-          user[key] === undefined ||
-          user[key].toLowerCase() !== filterValue[key].toLowerCase()
-        )
-          return false;
-      }
-      return user;
-    });
-    resetFilterInputs([firstNameRef, lastNameRef]);
-    setPatientsList(filteredList);
-  }; */
+  const filterInputs = [
+    {
+      label: "First Name",
+      name: "firstName",
+      type: "text",
+      inputRef: firstNameRef,
+    },
+    {
+      label: "Last Name",
+      name: "lastName",
+      type: "text",
+      inputRef: lastNameRef,
+    },
+  ];
 
   useEffect(() => {
     setPatientsList(groupPatients.concat(individualPatients));
@@ -51,8 +41,8 @@ const PatientsList = () => {
           <i className="fas fa-filter"></i>
           <h3>Filters</h3>
         </header>
-        <form
-          onSubmit={(e) =>
+        <FilterForm
+          submit={(e) =>
             filterListHandler(
               e,
               [firstNameRef, lastNameRef],
@@ -60,19 +50,8 @@ const PatientsList = () => {
               setPatientsList
             )
           }
-        >
-          <label>
-            First Name
-            <input name="firstName" type="text" ref={firstNameRef}></input>
-          </label>
-          <label>
-            Last Name
-            <input name="lastName" type="text" ref={lastNameRef}></input>
-          </label>
-          <button>
-            <i className="fas fa-filter"></i> Filter
-          </button>
-        </form>
+          inputs={filterInputs}
+        />
       </section>
       <section className={styles.List}>
         <header>

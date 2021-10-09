@@ -1,6 +1,7 @@
 import styles from "./PhysiosList.module.scss";
 import { useRef, useContext, useState, useEffect } from "react";
 import AppContext from "../../../store/AppProvider";
+import FilterForm from "../../UI/Forms/FilterForm/FilterForm";
 import filterListHandler from "../../../helpers/filterListHandler";
 
 const PhysiosList = () => {
@@ -14,6 +15,33 @@ const PhysiosList = () => {
   const emailRef = useRef();
   const idRef = useRef();
 
+  const filterInputs = [
+    {
+      label: "First Name",
+      name: "firstName",
+      type: "text",
+      inputRef: firstNameRef,
+    },
+    {
+      label: "Last Name",
+      name: "lastName",
+      type: "text",
+      inputRef: lastNameRef,
+    },
+    {
+      label: "Email",
+      name: "email",
+      type: "text",
+      inputRef: emailRef,
+    },
+    {
+      label: "Id",
+      name: "id",
+      type: "text",
+      inputRef: idRef,
+    },
+  ];
+
   useEffect(() => {
     setPhysiosList(physios);
   }, [physios]);
@@ -25,36 +53,17 @@ const PhysiosList = () => {
           <i className="fas fa-filter"></i>
           <h3>Filters</h3>
         </header>
-        <form
-          onSubmit={(e) => {
+        <FilterForm
+          submit={(e) =>
             filterListHandler(
               e,
               [firstNameRef, lastNameRef, emailRef, idRef],
               physios,
               setPhysiosList
-            );
-          }}
-        >
-          <label>
-            First Name
-            <input name="firstName" type="text" ref={firstNameRef}></input>
-          </label>
-          <label>
-            Last Name
-            <input name="lastName" type="text" ref={lastNameRef}></input>
-          </label>
-          <label>
-            Email
-            <input name="email" type="text" ref={emailRef}></input>
-          </label>
-          <label>
-            Id
-            <input name="id" type="text" ref={idRef}></input>
-          </label>
-          <button>
-            <i className="fas fa-filter"></i> Filter
-          </button>
-        </form>
+            )
+          }
+          inputs={filterInputs}
+        />
       </section>
       <section className={styles.List}>
         {physiosList.length < 1 && <p>No physios available</p>}
