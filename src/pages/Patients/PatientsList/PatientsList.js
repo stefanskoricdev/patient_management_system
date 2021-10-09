@@ -1,7 +1,7 @@
 import styles from "./PatientsList.module.scss";
 import { useContext, useEffect, useRef, useState } from "react";
 import AppContext from "../../../store/AppProvider";
-import resetFilterInputs from "../../../helpers/resetFilterInputs";
+import filterListHandler from "../../../helpers/filterListHandler";
 
 const PatientsList = () => {
   const appCtx = useContext(AppContext);
@@ -14,7 +14,7 @@ const PatientsList = () => {
   const firstNameRef = useRef();
   const lastNameRef = useRef();
 
-  const filterListHandler = (e) => {
+  /* const filterListHandler = (e) => {
     e.preventDefault();
     let filterValue = {};
     const firstName = firstNameRef.current.value.trim();
@@ -38,34 +38,43 @@ const PatientsList = () => {
     });
     resetFilterInputs([firstNameRef, lastNameRef]);
     setPatientsList(filteredList);
-  };
+  }; */
 
   useEffect(() => {
     setPatientsList(groupPatients.concat(individualPatients));
   }, [individualPatients, groupPatients]);
 
   return (
-    <section className={styles.PatientsListWrapper}>
+    <section className={styles.Wrapper}>
       <section className={styles.Filters}>
         <header>
           <i className="fas fa-filter"></i>
           <h3>Filters</h3>
         </header>
-        <form onSubmit={filterListHandler}>
+        <form
+          onSubmit={(e) =>
+            filterListHandler(
+              e,
+              [firstNameRef, lastNameRef],
+              allPatientsList,
+              setPatientsList
+            )
+          }
+        >
           <label>
             First Name
-            <input name="first-name" type="text" ref={firstNameRef}></input>
+            <input name="firstName" type="text" ref={firstNameRef}></input>
           </label>
           <label>
             Last Name
-            <input name="last-name" type="text" ref={lastNameRef}></input>
+            <input name="lastName" type="text" ref={lastNameRef}></input>
           </label>
           <button>
             <i className="fas fa-filter"></i> Filter
           </button>
         </form>
       </section>
-      <section className={styles.PatientsList}>
+      <section className={styles.List}>
         <header>
           <i className="fas fa-list-ul"></i>
           <h3>Patients List</h3>

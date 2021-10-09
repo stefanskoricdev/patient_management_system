@@ -1,7 +1,7 @@
 import styles from "./UsersList.module.scss";
 import { useContext, useEffect, useRef, useState } from "react";
-import resetFilterInputs from "../../../helpers/resetFilterInputs";
 import AuthContext from "../../../store/AuthProvider";
+import filterListHandler from "../../../helpers/filterListHandler";
 
 const UsersList = () => {
   const authCtx = useContext(AuthContext);
@@ -14,61 +14,34 @@ const UsersList = () => {
   const emailRef = useRef();
   const idRef = useRef();
 
-  const filterListHandler = (e) => {
-    e.preventDefault();
-
-    let filterValue = {};
-
-    const firstName = firstNameRef.current.value.trim();
-    const lastName = lastNameRef.current.value.trim();
-    const email = emailRef.current.value.trim();
-    const id = idRef.current.value.trim();
-
-    if (firstName) {
-      filterValue["firstName"] = firstName;
-    }
-    if (lastName) {
-      filterValue["lastName"] = lastName;
-    }
-    if (email) {
-      filterValue["email"] = email;
-    }
-    if (id) {
-      filterValue["id"] = id;
-    }
-    let filteredList = users.filter((user) => {
-      for (let key in filterValue) {
-        if (
-          user[key] === undefined ||
-          user[key].toLowerCase() !== filterValue[key].toLowerCase()
-        )
-          return false;
-      }
-      return user;
-    });
-    resetFilterInputs([firstNameRef, lastNameRef, emailRef, idRef]);
-    setUsersList(filteredList);
-  };
-
   useEffect(() => {
     setUsersList(users);
   }, [users]);
 
   return (
-    <section className={styles.UsersWrapper}>
+    <section className={styles.Wrapper}>
       <section className={styles.Filters}>
         <header>
           <i className="fas fa-filter"></i>
           <h3>Filters</h3>
         </header>
-        <form onSubmit={filterListHandler}>
+        <form
+          onSubmit={(e) =>
+            filterListHandler(
+              e,
+              [firstNameRef, lastNameRef, emailRef, idRef],
+              users,
+              setUsersList
+            )
+          }
+        >
           <label>
             First Name
-            <input name="first-name" type="text" ref={firstNameRef}></input>
+            <input name="firstName" type="text" ref={firstNameRef}></input>
           </label>
           <label>
             Last Name
-            <input name="last-name" type="text" ref={lastNameRef}></input>
+            <input name="lastName" type="text" ref={lastNameRef}></input>
           </label>
           <label>
             Email
@@ -83,12 +56,12 @@ const UsersList = () => {
           </button>
         </form>
       </section>
-      <section className={styles.UsersList}>
+      <section className={styles.List}>
         <header>
           <i className="fas fa-list-ul"></i>
           <h3>Users List</h3>
         </header>
-        {usersList.length < 1 && <h2>No users available</h2>}
+        {usersList.length < 1 && <p>No users available</p>}
         {usersList.length > 0 && (
           <table>
             <tbody>
