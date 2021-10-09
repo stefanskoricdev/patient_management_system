@@ -18,6 +18,8 @@ const validateInputs = (inputs, checkInputs = [true]) => {
   const passwordInput = inputs.find(
     (input) => input.current.type === "password"
   );
+  const phoneNumberInput = inputs.find((input) => input.current.type === "tel");
+  const pattern = /^\d{9}$/;
 
   if (emailInput && !emailInput.current.value.includes("@")) {
     mySwal.fire({
@@ -34,6 +36,24 @@ const validateInputs = (inputs, checkInputs = [true]) => {
     mySwal.fire({
       icon: "warning",
       title: <p>Password has to be more then 7 characters long</p>,
+      customClass: {
+        container: "alert-modal",
+      },
+    });
+    return false;
+  }
+  if (
+    phoneNumberInput &&
+    pattern.test(phoneNumberInput.current.value) === false
+  ) {
+    mySwal.fire({
+      icon: "warning",
+      title: (
+        <p>
+          Phone number should be at least 9 numbers long and should contain only
+          numbers!
+        </p>
+      ),
       customClass: {
         container: "alert-modal",
       },

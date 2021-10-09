@@ -20,7 +20,7 @@ const AddPatientForm = ({
 }) => {
   const { workingDays, workingHours } = physiotherapist;
   return (
-    <form className={styles.AddPatientForm} onSubmit={submit}>
+    <form noValidate className={styles.AddPatientForm} onSubmit={submit}>
       <header>
         <h2>Create New Patient</h2>
       </header>
@@ -34,11 +34,11 @@ const AddPatientForm = ({
         <section className={styles.MainInfo}>
           <label>
             First Name:
-            <input name="first-name" type="text" ref={firstName} />
+            <input name="firstName" type="text" ref={firstName} />
           </label>
           <label>
             Last Name:
-            <input name="last-name" type="text" ref={lastName} />
+            <input name="lastName" type="text" ref={lastName} />
           </label>
           <section className={styles.GenderWrapper}>
             <label>Select gender: </label>
@@ -58,7 +58,7 @@ const AddPatientForm = ({
           <label>
             Phone Number:
             <input
-              name="phone-number"
+              name="phoneNumber"
               type="tel"
               pattern="[0-9]{3}[0-9]{3}[0-9]{3}"
               ref={phoneNumber}
@@ -66,7 +66,7 @@ const AddPatientForm = ({
           </label>
           <label>
             Date of Birth:
-            <input name="date-of-birth" type="date" ref={dateOfBirth} />
+            <input name="dateOfBirth" type="date" ref={dateOfBirth} />
           </label>
         </section>
         <section className={styles.AdditionalInfo}>

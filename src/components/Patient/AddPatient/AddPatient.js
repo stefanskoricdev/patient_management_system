@@ -7,6 +7,10 @@ import AddPatientForm from "./AddPatientForm/AddPatientForm";
 import firebase from "firebase/app";
 import uuid from "react-uuid";
 import validateInputs from "../../../helpers/validateInputs";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const mySwal = withReactContent(Swal);
 
 const AddPatient = ({ physiotherapist }) => {
   const [isFormPageChanged, setIsFormPageChanged] = useState(false);
@@ -16,6 +20,7 @@ const AddPatient = ({ physiotherapist }) => {
     setIsLoading,
     individualCollection,
     setIndividualPatients,
+    individualPatients,
     currentDate,
   } = appCtx;
 
@@ -76,6 +81,29 @@ const AddPatient = ({ physiotherapist }) => {
       date: currentDate,
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
+
+    const isAppointmentTaken = individualPatients.find(
+      (patient) =>
+        patient.physiotherapist === newPatient.physiotherapist &&
+        patient.position.left === newPatient.position.left &&
+        patient.position.topHours === newPatient.position.topHours
+    );
+
+    if (isAppointmentTaken) {
+      mySwal.fire({
+        icon: "warning",
+        title: (
+          <p>
+            Sorry this appointment is taken, please choose another day or time!
+          </p>
+        ),
+        customClass: {
+          container: "alert-modal",
+        },
+      });
+      return;
+    }
+
     sendData(
       setIsLoading,
       individualCollection,

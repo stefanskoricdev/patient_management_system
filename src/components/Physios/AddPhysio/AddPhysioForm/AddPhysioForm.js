@@ -6,6 +6,7 @@ import AppContext from "../../../../store/AppProvider";
 import firebase from "firebase/app";
 import resetFormInputs from "../../../../helpers/resetFormInputs";
 import validateInputs from "../../../../helpers/validateInputs";
+import FormInput from "../../../UI/Forms/FormInput/FormInput";
 
 const workingDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const workingHours = [
@@ -97,31 +98,39 @@ const AddPhysioForm = () => {
     setHoursCheckedState(initialHoursCheckValue);
   };
 
+  const basicInfoInputs = [
+    {
+      label: "First Name:",
+      name: "firstName",
+      type: "text",
+      ref: firstNameRef,
+    },
+    { label: "Last Name:", name: "lastName", type: "text", ref: lastNameRef },
+    { label: "Email:", name: "email", type: "email", ref: emailRef },
+    {
+      label: "Phone Number:",
+      name: "phoneNumber",
+      type: "tel",
+      ref: phoneNumberRef,
+    },
+  ];
+
   return (
     <form onSubmit={submitHandler} noValidate className={styles.AddPhysioForm}>
       <h2>Add Physiotherapist</h2>
       <div className={styles.BasicInfo}>
-        <label>
-          First Name:
-          <input name="first-name" type="text" ref={firstNameRef} />
-        </label>
-        <label>
-          Last Name:
-          <input name="first-name" type="text" ref={lastNameRef} />
-        </label>
-        <label>
-          Email:
-          <input name="first-name" type="email" ref={emailRef} />
-        </label>
-        <label>
-          Phone Number:
-          <input
-            name="phone-number"
-            type="tel"
-            pattern="[0-9]{3}[0-9]{3}[0-9]{3}"
-            ref={phoneNumberRef}
-          />
-        </label>
+        {basicInfoInputs.map((info) => {
+          const { label, name, type, ref } = info;
+          return (
+            <FormInput
+              key={name}
+              label={label}
+              name={name}
+              type={type}
+              ref={ref}
+            />
+          );
+        })}
       </div>
       <div className={styles.WorkingDays}>
         <h3>Select working days:</h3>
@@ -129,7 +138,7 @@ const AddPhysioForm = () => {
           {workingDays.map((day, i) => {
             return (
               <label key={i}>
-                <p>{day}</p>
+                {day}
                 <input
                   name={`${day}`}
                   value={`${i}_${day}`}
@@ -157,7 +166,7 @@ const AddPhysioForm = () => {
           {workingHours.map((hour, i) => {
             return (
               <label key={i}>
-                <p>{hour}</p>
+                {hour}
                 <input
                   name={`${hour}`}
                   value={`${hour}`}

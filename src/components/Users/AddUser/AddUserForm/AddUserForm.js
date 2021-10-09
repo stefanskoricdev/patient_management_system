@@ -9,6 +9,7 @@ import firebase from "firebase/app";
 import resetFormInputs from "../../../../helpers/resetFormInputs";
 import AuthContext from "../../../../store/AuthProvider";
 import validateInputs from "../../../../helpers/validateInputs";
+import FormInput from "../../../UI/Forms/FormInput/FormInput";
 
 const mySwal = withReactContent(Swal);
 
@@ -25,6 +26,7 @@ const AddUserForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
     const validate = validateInputs([
       firstNameRef,
       lastNameRef,
@@ -32,7 +34,9 @@ const AddUserForm = () => {
       passwordRef,
     ]);
     if (!validate) return;
+
     setIsLoading(true);
+
     auth
       .createUserWithEmailAndPassword(
         emailRef.current.value,
@@ -62,30 +66,41 @@ const AddUserForm = () => {
       });
   };
 
+  const formInputs = [
+    {
+      label: "First Name:",
+      name: "firstName",
+      type: "text",
+      ref: firstNameRef,
+    },
+    { label: "Last Name:", name: "lastName", type: "text", ref: lastNameRef },
+    { label: "Email:", name: "email", type: "email", ref: emailRef },
+    {
+      label: "Password:",
+      name: "password",
+      type: "password",
+      ref: passwordRef,
+    },
+  ];
+
   return (
     <form onSubmit={submitHandler} noValidate className={styles.AddUserForm}>
       <h2>Add User</h2>
       <section>
-        <label>
-          First Name:
-          <input name="first-name" type="text" ref={firstNameRef} />
-        </label>
-        <label>
-          Last Name:
-          <input name="last-name" type="text" ref={lastNameRef} />
-        </label>
+        {formInputs.map((input) => {
+          const { label, name, type, ref } = input;
+          return (
+            <FormInput
+              key={name}
+              label={label}
+              name={name}
+              type={type}
+              ref={ref}
+            />
+          );
+        })}
       </section>
-      <section>
-        <label>
-          Email:
-          <input name="email" type="email" ref={emailRef} />
-        </label>
-        <label>
-          Password:
-          <input name="password" type="password" ref={passwordRef} />
-        </label>
-        <button className={styles.AddUserBtn}>Add</button>
-      </section>
+      <button className={styles.AddUserBtn}>Add</button>
     </form>
   );
 };
