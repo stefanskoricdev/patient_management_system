@@ -115,10 +115,6 @@
         }
     }
 
-    .MainNav.animateNone {
-        animation: none;
-    }
-
     .MainNav.active {
         width: 15rem;
         animation: navOpen 200ms linear;

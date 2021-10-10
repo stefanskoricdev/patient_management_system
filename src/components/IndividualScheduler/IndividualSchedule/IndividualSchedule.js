@@ -10,6 +10,9 @@ const colorPallete = [
   "D17484",
 ];
 
+const backgroundClrValue =
+  colorPallete[Math.floor(Math.random() * colorPallete.length)];
+
 const IndividualSchedule = ({
   patients,
   workingDays,
@@ -17,6 +20,7 @@ const IndividualSchedule = ({
   physiotherapist,
 }) => {
   const indexValue = workingDays.length * workingHours.length;
+
   const createScheduleBackground = () => {
     let scheduleFields = [];
 
@@ -24,6 +28,16 @@ const IndividualSchedule = ({
       scheduleFields.push(<div key={i}></div>);
     }
     return scheduleFields;
+  };
+
+  const gridMoreDays = {
+    gridTemplateColumns: `repeat(${workingDays.length}, ${
+      100 / workingDays.length
+    }% [col-start])`,
+    gridTemplateRows: `repeat(${workingHours.length}, 12rem [row-start])`,
+  };
+  let gridLessDays = {
+    gridTemplateColumns: `repeat(${workingDays.length}, 20% [col-start])`,
   };
 
   return (
@@ -36,28 +50,34 @@ const IndividualSchedule = ({
         <section
           className={styles.IndividualSchedule}
           style={
-            workingDays.length > 5
-              ? {
-                  gridTemplateColumns: `repeat(${workingDays.length}, ${
-                    100 / workingDays.length
-                  }% [col-start])`,
-                  gridTemplateRows: `repeat(${workingHours.length}, 12rem [row-start])`,
-                }
-              : {
-                  gridTemplateColumns: `repeat(${workingDays.length}, 20% [col-start])`,
-                  //This fixes issues with layout if there are less then 6 working days
-                }
+            workingDays.length > 5 ? gridMoreDays : gridLessDays
+            //This fixes issues with layout if there are less then 6 working days
           }
         >
           {createScheduleBackground()}
           {patients.length > 0
             ? patients.map((patient, i) => {
-                const topPositionValue =
-                  patient.position.topHours * 12 +
-                  patient.position.topMinutes * 0.2;
+                const positionValues = {
+                  topPositionValue:
+                    patient.position.topHours * 12 +
+                    patient.position.topMinutes * 0.2,
+                  leftPosValueMoreDays:
+                    (patient.position.left * 100) / workingDays.length + 0.5,
+                  leftPosValueLessDays: patient.position.left * 20 + 0.5,
+                  heightValue: patient.position.height * 0.2 - 0.1,
+                  widthValue: 100 / workingDays.length - 1,
+                };
+                const {
+                  topPositionValue,
+                  leftPosValueMoreDays,
+                  heightValue,
+                  widthValue,
+                  leftPosValueLessDays,
+                } = positionValues;
+
                 return (
                   <Link
-                    to={`/patients/individual/${physiotherapist.toLowerCase()}/${
+                    to={`/patients/individual-patients/${physiotherapist.toLowerCase()}/patient-details/${
                       patient.id
                     }`}
                     key={i}
@@ -65,30 +85,18 @@ const IndividualSchedule = ({
                       workingDays.length > 5
                         ? {
                             top: `${topPositionValue}rem`,
-                            left: `${
-                              (patient.position.left * 100) /
-                                workingDays.length +
-                              0.5
-                            }%`,
-                            width: `${100 / workingDays.length}%`,
-                            height: `${patient.position.height * 0.2 - 0.1}rem`,
-                            backgroundColor: `#${
-                              colorPallete[
-                                Math.floor(Math.random() * colorPallete.length)
-                              ]
-                            }`,
+                            left: `${leftPosValueMoreDays}%`,
+                            width: `${widthValue}%`,
+                            height: `${heightValue}rem`,
+                            backgroundColor: `#${backgroundClrValue}`,
                           }
                         : {
                             top: `${topPositionValue}rem`,
-                            left: `${patient.position.left * 20 + 0.5}%`,
-                            height: `${patient.position.height * 0.2 - 0.1}rem`,
-                            //This fixes issues with layout if there are less then 6 working days
-                            backgroundColor: `#${
-                              colorPallete[
-                                Math.floor(Math.random() * colorPallete.length)
-                              ]
-                            }`,
+                            left: `${leftPosValueLessDays}%`,
+                            height: `${heightValue}rem`,
+                            backgroundColor: `#${backgroundClrValue}`,
                           }
+                      //This fixes issues with layout if there are less then 6 working days
                     }
                   >
                     {`${patient.firstName + " " + patient.lastName}`}

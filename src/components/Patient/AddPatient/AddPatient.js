@@ -110,7 +110,9 @@ const AddPatient = ({ physiotherapist }) => {
       newPatient,
       setIndividualPatients
     );
-    history.push(`/patients/individual/${physiotherapist.firstName}/schedule`);
+    history.push(
+      `/patients/individual-patients/${physiotherapist.firstName}/schedule`
+    );
   };
 
   return (

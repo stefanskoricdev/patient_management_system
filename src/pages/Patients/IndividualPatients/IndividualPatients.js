@@ -1,10 +1,10 @@
-import styles from "./Individual.module.scss";
+import styles from "./IndividualPatients.module.scss";
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import { useContext } from "react";
 import IndividualScheduler from "../../../components/IndividualScheduler/IndividualScheduler";
 import AppContext from "../../../store/AppProvider";
 
-const Individual = () => {
+const IndividualPatients = () => {
   const appCtx = useContext(AppContext);
   const { physios } = appCtx;
 
@@ -19,7 +19,7 @@ const Individual = () => {
             <NavLink
               key={physio.id}
               activeClassName={styles.active}
-              to={`/patients/individual/${physio.firstName.toLowerCase()}`}
+              to={`/patients/individual-patients/${physio.firstName.toLowerCase()}`}
             >
               {physio.firstName}
               <i className="fas fa-caret-up"></i>
@@ -30,16 +30,16 @@ const Individual = () => {
       <main className={styles.Main}>
         {physios.length > 0 && (
           <Switch>
-            <Route path="/patients/individual/" exact>
+            <Route path="/patients/individual-patients/" exact>
               <Redirect
-                to={`/patients/individual/${physios[0].firstName.toLowerCase()}`}
+                to={`/patients/individual-patients/${physios[0].firstName.toLowerCase()}`}
               />
             </Route>
             {physios.map((physio) => {
               return (
                 <Route
                   key={physio.id}
-                  path={`/patients/individual/${physio.firstName.toLowerCase()}`}
+                  path={`/patients/individual-patients/${physio.firstName.toLowerCase()}`}
                 >
                   <IndividualScheduler
                     key={physio.id}
@@ -50,7 +50,7 @@ const Individual = () => {
             })}
             <Route path="*">
               <Redirect
-                to={`/patients/individual/${physios[0].firstName.toLowerCase()}`}
+                to={`/patients/individual-patients/${physios[0].firstName.toLowerCase()}`}
               />
             </Route>
           </Switch>
@@ -66,4 +66,4 @@ const Individual = () => {
   );
 };
 
-export default Individual;
+export default IndividualPatients;

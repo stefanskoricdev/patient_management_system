@@ -1,6 +1,6 @@
 import styles from "./PatientDetails.module.scss";
 import { useParams } from "react-router-dom";
-import { useContext, Fragment } from "react";
+import { useContext, Fragment, useState } from "react";
 import { getAge } from "../../../helpers/getAge";
 import AppContext from "../../../store/AppProvider";
 import maleAvatar from "../../../assets/img/male_avatar.svg";
@@ -10,6 +10,12 @@ const PatientDetails = () => {
   const { id } = useParams();
   const appCtx = useContext(AppContext);
   const { individualPatients } = appCtx;
+
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+
+  const optionsClickHandler = (e) => {
+    setIsOptionsOpen((prevValue) => !prevValue);
+  };
 
   const targetedPatient = individualPatients
     .filter((patient) => patient.id === id)
@@ -24,6 +30,20 @@ const PatientDetails = () => {
                 alt="avatar"
               />
             </div>
+            <button onClick={optionsClickHandler} className={styles.OptionsBtn}>
+              <i className="fas fa-ellipsis-h"></i>
+            </button>
+            <ul
+              onClick={optionsClickHandler}
+              className={
+                !isOptionsOpen
+                  ? styles.Options
+                  : [styles.Options, styles["active"]].join(" ")
+              }
+            >
+              <li>Edit</li>
+              <li>Delete</li>
+            </ul>
           </header>
           <main>
             <h2>{`${pat.firstName} ${pat.lastName}`}</h2>

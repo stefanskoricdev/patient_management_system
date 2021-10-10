@@ -4,6 +4,7 @@
     border-radius: .5rem;
     color: $dark-blue;
     font-weight: 600;
+    overflow: hidden;
 
     header {
         width: 100%;
@@ -36,6 +37,49 @@
             left: -1rem;
             border-radius: 100%;
             background-color: $light-blue;
+        }
+
+        .OptionsBtn {
+            position: absolute;
+            top: .5rem;
+            right: .5rem;
+            width: 3rem;
+            height: 2rem;
+            background-color: inherit;
+            border: none;
+            color: $light-blue;
+            font-size: 1.5rem;
+        }
+
+        .Options {
+            position: absolute;
+            top: 2.5rem;
+            right: .5rem;
+            width: fit-content;
+            padding: .5rem;
+            background-color: $light-blue;
+            border-radius: .5rem 0 .5rem .5rem;
+            opacity: 0;
+            transform: translateX(110%) rotateZ(-90deg);
+            transition: transform 200ms ease-in-out, opacity 200ms ease-in-out;
+
+            li {
+                margin-top: .5rem;
+                padding: 0 .2rem;
+                cursor: pointer;
+                transition: color 100ms linear;
+            }
+
+            li:hover {
+                color: $whiteish;
+                transition: color 100ms linear;
+            }
+        }
+
+        .Options.active {
+            opacity: 1;
+            transform: translateX(0) rotateZ(0);
+            transition: transform 200ms ease-in-out, opacity 200ms ease-in-out;
         }
     }
 

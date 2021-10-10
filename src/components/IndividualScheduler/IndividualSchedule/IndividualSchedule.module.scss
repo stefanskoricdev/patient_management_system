@@ -2,7 +2,7 @@
 @import "../../../assets/mixins/schedule";
 
 .IndividualScheduleWrapper {
-    min-width: 55rem;
+    min-width: 60rem;
     @include scheduleHeader;
 
     .Main {
@@ -40,6 +40,7 @@
         background-color: $dark-blue;
 
         div {
+            position: relative;
             height: 12rem;
             background-color: $whiteish;
             border-bottom: .1rem solid $dark-blue;

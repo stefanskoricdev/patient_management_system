@@ -8,8 +8,8 @@
 
 @mixin pageWrapper1023 {
     // PageWrapper styles for screen larger then 1023px!
-    max-width: calc(95% - 5rem);
-    margin-left: 5.2rem;
+    max-width: calc(95% - 2rem);
+    margin-left: 5rem;
 }
 
 @mixin pageHeader {

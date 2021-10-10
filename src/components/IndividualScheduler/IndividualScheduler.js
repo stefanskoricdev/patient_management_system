@@ -68,7 +68,7 @@ const IndividualScheduler = ({ physiotherapist }) => {
           <Route path={`${path}/add-patient`}>
             <AddPatient physiotherapist={physiotherapist} />
           </Route>
-          <Route path={`${path}/:id`}>
+          <Route path={`${path}/patient-details/:id`}>
             <PatientDetails />
           </Route>
           <Route path="*">

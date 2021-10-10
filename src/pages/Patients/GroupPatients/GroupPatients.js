@@ -1,4 +1,4 @@
-import styles from "./Groups.module.scss";
+import styles from "./GroupPatients.module.scss";
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import GroupsScheduler from "../../../components/GroupsScheduler/GroupsScheduler";
 const physioConfig = [
@@ -28,7 +28,7 @@ const Groups = () => {
             <NavLink
               key={physio.id}
               activeClassName={styles.active}
-              to={`/patients/groups/${physio.firstName.toLowerCase()}`}
+              to={`/patients/group-patients/${physio.firstName.toLowerCase()}`}
             >
               {physio.firstName}
               <i className="fas fa-caret-up"></i>
@@ -38,16 +38,16 @@ const Groups = () => {
       </nav>
       <main className={styles.Main}>
         <Switch>
-          <Route path="/patients/groups/" exact>
+          <Route path="/patients/group-patients/" exact>
             <Redirect
-              to={`/patients/groups/${physioConfig[0].firstName.toLowerCase()}`}
+              to={`/patients/group-patients/${physioConfig[0].firstName.toLowerCase()}`}
             />
           </Route>
           {physioConfig.map((physio) => {
             return (
               <Route
                 key={physio.id}
-                path={`/patients/groups/${physio.firstName.toLowerCase()}`}
+                path={`/patients/group-patients/${physio.firstName.toLowerCase()}`}
               >
                 <GroupsScheduler
                   key={physio.id}
@@ -61,7 +61,7 @@ const Groups = () => {
           })}
           <Route path="*">
             <Redirect
-              to={`/patients/groups/${physioConfig[0].firstName.toLowerCase()}`}
+              to={`/patients/group-patients/${physioConfig[0].firstName.toLowerCase()}`}
             />
           </Route>
         </Switch>

@@ -7,8 +7,8 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import { useContext } from "react";
-import Individual from "./Individual/Individual";
-import Groups from "./Groups/Groups";
+import IndividualPatients from "./IndividualPatients/IndividualPatients";
+import GroupPatients from "./GroupPatients/GroupPatients";
 import PatientsList from "./PatientsList/PatientsList";
 import AppContext from "../../store/AppProvider";
 
@@ -36,7 +36,7 @@ const Patients = () => {
         <NavLink
           activeClassName={styles.active}
           className={styles.PatientsLink}
-          to={`${path}/individual`}
+          to={`${path}/individual-patients`}
         >
           Individual
           <i className="fas fa-caret-up"></i>
@@ -44,7 +44,7 @@ const Patients = () => {
         <NavLink
           activeClassName={styles.active}
           className={styles.PatientsLink}
-          to={`${path}/groups`}
+          to={`${path}/group-patients`}
         >
           Groups
           <i className="fas fa-caret-up"></i>
@@ -58,11 +58,11 @@ const Patients = () => {
           <Route path={`${path}/patients-list`}>
             <PatientsList />
           </Route>
-          <Route path={`${path}/individual`}>
-            <Individual />
+          <Route path={`${path}/individual-patients`}>
+            <IndividualPatients />
           </Route>
-          <Route path={`${path}/groups`}>
-            <Groups />
+          <Route path={`${path}/group-patients`}>
+            <GroupPatients />
           </Route>
           <Route path="*">
             <Redirect to={`${path}`} />

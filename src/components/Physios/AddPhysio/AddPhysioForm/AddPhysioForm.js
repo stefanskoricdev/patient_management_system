@@ -47,6 +47,23 @@ const AddPhysioForm = () => {
   const appCtx = useContext(AppContext);
   const { setPhysios, physiosCollection, setIsLoading } = appCtx;
 
+  const basicInfoInputs = [
+    {
+      label: "First Name:",
+      name: "firstName",
+      type: "text",
+      ref: firstNameRef,
+    },
+    { label: "Last Name:", name: "lastName", type: "text", ref: lastNameRef },
+    { label: "Email:", name: "email", type: "email", ref: emailRef },
+    {
+      label: "Phone Number:",
+      name: "phoneNumber",
+      type: "tel",
+      ref: phoneNumberRef,
+    },
+  ];
+
   const handleOnChange = (
     e,
     position,
@@ -97,23 +114,6 @@ const AddPhysioForm = () => {
     setDaysCheckedState(initialDaysCheckValue);
     setHoursCheckedState(initialHoursCheckValue);
   };
-
-  const basicInfoInputs = [
-    {
-      label: "First Name:",
-      name: "firstName",
-      type: "text",
-      ref: firstNameRef,
-    },
-    { label: "Last Name:", name: "lastName", type: "text", ref: lastNameRef },
-    { label: "Email:", name: "email", type: "email", ref: emailRef },
-    {
-      label: "Phone Number:",
-      name: "phoneNumber",
-      type: "tel",
-      ref: phoneNumberRef,
-    },
-  ];
 
   return (
     <form onSubmit={submitHandler} noValidate className={styles.AddPhysioForm}>
