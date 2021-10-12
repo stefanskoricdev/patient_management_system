@@ -1,6 +1,7 @@
 import styles from "./NotesBuilder.module.scss";
 import { useContext, useRef, useState } from "react";
 import { sendData, updateNote, deleteData } from "../actions/actions";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import uuid from "react-uuid";
 import AppContext from "../../store/AppProvider";
 import AuthContext from "../../store/AuthProvider";
@@ -20,6 +21,9 @@ const NotesBuilder = ({ currentDate }) => {
 
   const authCtx = useContext(AuthContext);
   const { displayName } = authCtx;
+
+  const history = useHistory();
+  const { path } = useRouteMatch();
 
   const createNoteHandler = (e) => {
     e.preventDefault();
@@ -55,7 +59,7 @@ const NotesBuilder = ({ currentDate }) => {
 
   const deleteNoteHandler = (e) => {
     const noteId = e.target.getAttribute("data-id");
-    deleteData(setIsLoading, setNotes, notesCollection, noteId);
+    deleteData(setIsLoading, setNotes, notesCollection, noteId, history, path);
   };
 
   const filterChangeHandler = (e) => {

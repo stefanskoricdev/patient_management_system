@@ -1,21 +1,28 @@
 import styles from "./PatientDetails.module.scss";
-import { useParams } from "react-router-dom";
+import { useParams, useRouteMatch, useHistory } from "react-router-dom";
 import { useContext, Fragment, useState } from "react";
 import { getAge } from "../../../helpers/getAge";
+import { deleteData } from "../../actions/actions";
 import AppContext from "../../../store/AppProvider";
 import maleAvatar from "../../../assets/img/male_avatar.svg";
 import femaleAvatar from "../../../assets/img/female_avatar.svg";
 
-const PatientDetails = () => {
+const PatientDetails = ({ collection }) => {
   const { id } = useParams();
   const appCtx = useContext(AppContext);
-  const { individualPatients } = appCtx;
+  const { individualPatients, setIndividualPatients, setIsLoading } = appCtx;
 
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+
+  const history = useHistory();
+  const { path } = useRouteMatch();
+  const customPath = path.split(":")[0];
 
   const optionsClickHandler = (e) => {
     setIsOptionsOpen((prevValue) => !prevValue);
   };
+
+  const deletePatientHandler = () => {};
 
   const targetedPatient = individualPatients
     .filter((patient) => patient.id === id)
@@ -42,7 +49,20 @@ const PatientDetails = () => {
               }
             >
               <li>Edit</li>
-              <li>Delete</li>
+              <li
+                onClick={() =>
+                  deleteData(
+                    setIsLoading,
+                    setIndividualPatients,
+                    collection,
+                    id,
+                    history,
+                    customPath
+                  )
+                }
+              >
+                Delete
+              </li>
             </ul>
           </header>
           <main>

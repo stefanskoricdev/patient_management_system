@@ -59,7 +59,14 @@ export const sendData = (setLoading, collection, newData, setState) => {
     });
 };
 
-export const deleteData = (setLoading, setState, collection, targetId) => {
+export const deleteData = (
+  setLoading,
+  setState,
+  collection,
+  targetId,
+  history,
+  path
+) => {
   mySwal
     .fire({
       title: `Are you sure you want to delete data?`,
@@ -87,6 +94,7 @@ export const deleteData = (setLoading, setState, collection, targetId) => {
               icon: "success",
               customClass: { container: "alert-modal" },
             });
+            history.push(path);
           })
           .catch((error) => {
             setLoading(false);

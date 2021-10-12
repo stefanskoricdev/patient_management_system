@@ -16,7 +16,7 @@ const IndividualScheduler = ({ physiotherapist }) => {
   const { path } = useRouteMatch();
 
   const appCtx = useContext(AppContext);
-  const { individualPatients } = appCtx;
+  const { individualPatients, individualCollection } = appCtx;
 
   const { firstName, workingDays, workingHours } = physiotherapist;
 
@@ -69,7 +69,7 @@ const IndividualScheduler = ({ physiotherapist }) => {
             <AddPatient physiotherapist={physiotherapist} />
           </Route>
           <Route path={`${path}/patient-details/:id`}>
-            <PatientDetails />
+            <PatientDetails collection={individualCollection} />
           </Route>
           <Route path="*">
             <Redirect to={`${path}`} />
