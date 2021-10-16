@@ -63,14 +63,16 @@
             transform: translateX(110%) rotateZ(-90deg);
             transition: transform 200ms ease-in-out, opacity 200ms ease-in-out;
 
-            li {
+            li,
+            a {
                 margin-top: .5rem;
                 padding: 0 .2rem;
                 cursor: pointer;
                 transition: color 100ms linear;
             }
 
-            li:hover {
+            li:hover,
+            a:hover {
                 color: $whiteish;
                 transition: color 100ms linear;
             }

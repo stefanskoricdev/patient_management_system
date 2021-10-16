@@ -109,7 +109,7 @@ export const deleteData = (
     });
 };
 
-export const updateNote = (setLoading, collection, targetId) => {
+export const updateData = (setLoading, collection, targetId, data) => {
   setLoading(true);
   db.collection(collection)
     .doc(targetId)
@@ -117,9 +117,9 @@ export const updateNote = (setLoading, collection, targetId) => {
     .then((doc) => {
       if (doc.exists) {
         setLoading(false);
-        return doc.ref.update({ isChecked: !doc.data().isChecked });
+        return doc.ref.update(data);
       } else {
-        throw new Error("Note does not exist");
+        throw new Error("Data does not exist");
       }
     })
     .catch((error) => {
@@ -130,5 +130,57 @@ export const updateNote = (setLoading, collection, targetId) => {
         icon: "error",
         customClass: { container: "alert-modal" },
       });
+    });
+};
+//Has to be upgraded more. Add messages and stuff!
+export const deletePhysio = (
+  collection,
+  physio,
+  patients,
+  patientsCollection
+) => {
+  mySwal
+    .fire({
+      title: `Are you sure you want to delete data?`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "rgb(197, 27, 21)",
+      cancelButtonColor: "rgb(101, 195, 157)",
+      confirmButtonText: "Yes, delete it!",
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        db.collection(collection)
+          .doc(physio.id)
+          .delete()
+          .then(() => {
+            const targetedPatients = patients.filter(
+              (patient) => patient.physiotherapist === physio.firstName
+            );
+            if (targetedPatients.length < 1) {
+              return;
+            }
+            targetedPatients.forEach((patient) => {
+              db.collection(patientsCollection)
+                .doc(patient.id)
+                .delete()
+                .then(() => {
+                  console.log("success");
+                })
+                .catch((err) => console.log(err));
+            });
+            console.log("SUCCESS!");
+          })
+          .catch((error) => {
+            console.log(error);
+            mySwal.fire({
+              title: "Something went wrong!!",
+              text: `${error}`,
+              icon: "error",
+              customClass: { container: "alert-modal" },
+            });
+          });
+      }
     });
 };

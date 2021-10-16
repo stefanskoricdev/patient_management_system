@@ -38,6 +38,7 @@ const Home = () => {
         <td>{patient.lastName}</td>
         <td>{patient.dateOfBirth}</td>
         <td>{patient.phone}</td>
+        <td>{patient.email}</td>
         <td>{patient.physiotherapist}</td>
       </tr>
     );
@@ -76,6 +77,7 @@ const Home = () => {
                 <th>Last Name</th>
                 <th>DOB</th>
                 <th>Phone number</th>
+                <th>Email</th>
                 <th>Physiotherapist</th>
               </tr>
               {tableContent}

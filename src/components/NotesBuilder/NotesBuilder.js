@@ -1,6 +1,6 @@
 import styles from "./NotesBuilder.module.scss";
 import { useContext, useRef, useState } from "react";
-import { sendData, updateNote, deleteData } from "../actions/actions";
+import { sendData, updateData, deleteData } from "../actions/actions";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import uuid from "react-uuid";
 import AppContext from "../../store/AppProvider";
@@ -49,7 +49,13 @@ const NotesBuilder = ({ currentDate }) => {
 
   const isCheckedHandler = (e) => {
     const noteId = e.target.getAttribute("data-id");
-    updateNote(setIsLoading, notesCollection, noteId);
+    const targetedNoteIndex = notes.findIndex((note) => note.id === noteId);
+    const updatedNotesList = [...notes];
+    const targetedNoteCheckStatus =
+      updatedNotesList[targetedNoteIndex].isChecked;
+    updateData(setIsLoading, notesCollection, noteId, {
+      isChecked: !targetedNoteCheckStatus,
+    });
     setNotes((prevState) =>
       prevState.map((note) =>
         note.id === noteId ? { ...note, isChecked: !note.isChecked } : note

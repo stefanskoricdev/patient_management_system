@@ -70,6 +70,7 @@ const PatientsList = () => {
                 <th>City</th>
                 <th>Address</th>
                 <th>Phone Number</th>
+                <th>Email</th>
                 <th>Physiotherapist</th>
                 <th>Id</th>
               </tr>
@@ -83,6 +84,7 @@ const PatientsList = () => {
                     <td>{patient.city}</td>
                     <td>{patient.address}</td>
                     <td>{patient.phone}</td>
+                    <td>{patient.email}</td>
                     <td>{patient.physiotherapist}</td>
                     <td>{patient.id}</td>
                   </tr>

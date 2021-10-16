@@ -1,5 +1,5 @@
 import styles from "./IndividualScheduler.module.scss";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
   NavLink,
   Route,
@@ -8,11 +8,14 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import AppContext from "../../store/AppProvider";
-import AddPatient from "../Patient/AddPatient/AddPatient";
+import AddEditPatient from "../Patient/AddEditPatient/AddEditPatient";
 import IndividualSchedule from "./IndividualSchedule/IndividualSchedule";
 import PatientDetails from "../Patient/PatientDetails/PatientDetails";
+import { useEffect } from "react/cjs/react.development";
 
 const IndividualScheduler = ({ physiotherapist }) => {
+  const [showAddPatientBtn, setShowAddPatientBtn] = useState(true);
+
   const { path } = useRouteMatch();
 
   const appCtx = useContext(AppContext);
@@ -25,7 +28,7 @@ const IndividualScheduler = ({ physiotherapist }) => {
   );
   // getData() in App Provider fetches data from firebase and adds it to patients state
   // which is sent in this component through appContext and then filtered according
-  //to which physio this component belongs to (we get that trough props).
+  //to which physio this component belongs to (we get that through props).
   //This way we avoid data being fetched every time we click physio tab!
   const workingDaysValue = workingDays.map((day, i) => (
     <li key={i}>{day.substr(2)}</li>
@@ -34,6 +37,10 @@ const IndividualScheduler = ({ physiotherapist }) => {
     <li key={i}>{time}</li>
   ));
 
+  useEffect(() => {
+    setShowAddPatientBtn(true);
+  }, [individualPatients]);
+
   return (
     <section className={styles.Scheduler}>
       <nav className={styles.Nav}>
@@ -41,16 +48,21 @@ const IndividualScheduler = ({ physiotherapist }) => {
           activeClassName={styles.active}
           to={`${path}/schedule`}
           className={styles.Link}
+          onClick={() => {
+            setShowAddPatientBtn(true);
+          }}
         >
           <i className="fas fa-calendar-alt"></i>
         </NavLink>
-        <NavLink
-          activeClassName={styles.active}
-          to={`${path}/add-patient`}
-          className={styles.Link}
-        >
-          <i className="fas fa-calendar-plus"></i>
-        </NavLink>
+        {showAddPatientBtn ? (
+          <NavLink
+            activeClassName={styles.active}
+            to={`${path}/add-patient`}
+            className={styles.Link}
+          >
+            <i className="fas fa-calendar-plus"></i>
+          </NavLink>
+        ) : null}
       </nav>
       <main>
         <Switch>
@@ -66,10 +78,17 @@ const IndividualScheduler = ({ physiotherapist }) => {
             />
           </Route>
           <Route path={`${path}/add-patient`}>
-            <AddPatient physiotherapist={physiotherapist} />
+            <AddEditPatient physiotherapist={physiotherapist} />
           </Route>
           <Route path={`${path}/patient-details/:id`}>
-            <PatientDetails collection={individualCollection} />
+            <PatientDetails
+              setShowAddPatient={setShowAddPatientBtn}
+              physiotherapist={physiotherapist}
+              collection={individualCollection}
+            />
+          </Route>
+          <Route path={`${path}/edit-patient/:id`}>
+            <AddEditPatient physiotherapist={physiotherapist} />
           </Route>
           <Route path="*">
             <Redirect to={`${path}`} />

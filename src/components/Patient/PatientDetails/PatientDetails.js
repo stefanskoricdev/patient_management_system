@@ -1,5 +1,5 @@
 import styles from "./PatientDetails.module.scss";
-import { useParams, useRouteMatch, useHistory } from "react-router-dom";
+import { useParams, useRouteMatch, useHistory, Link } from "react-router-dom";
 import { useContext, Fragment, useState } from "react";
 import { getAge } from "../../../helpers/getAge";
 import { deleteData } from "../../actions/actions";
@@ -7,7 +7,7 @@ import AppContext from "../../../store/AppProvider";
 import maleAvatar from "../../../assets/img/male_avatar.svg";
 import femaleAvatar from "../../../assets/img/female_avatar.svg";
 
-const PatientDetails = ({ collection }) => {
+const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
   const { id } = useParams();
   const appCtx = useContext(AppContext);
   const { individualPatients, setIndividualPatients, setIsLoading } = appCtx;
@@ -18,11 +18,9 @@ const PatientDetails = ({ collection }) => {
   const { path } = useRouteMatch();
   const customPath = path.split(":")[0];
 
-  const optionsClickHandler = (e) => {
+  const optionsClickHandler = () => {
     setIsOptionsOpen((prevValue) => !prevValue);
   };
-
-  const deletePatientHandler = () => {};
 
   const targetedPatient = individualPatients
     .filter((patient) => patient.id === id)
@@ -48,7 +46,14 @@ const PatientDetails = ({ collection }) => {
                   : [styles.Options, styles["active"]].join(" ")
               }
             >
-              <li>Edit</li>
+              <Link
+                to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}/edit-patient/${
+                  pat.id
+                }`}
+                onClick={() => setShowAddPatient(false)}
+              >
+                Edit
+              </Link>
               <li
                 onClick={() =>
                   deleteData(
@@ -78,6 +83,10 @@ const PatientDetails = ({ collection }) => {
             <p>
               <i className="fas fa-phone-square"></i>
               {`Phone: ${pat.phone}`}
+            </p>
+            <p>
+              <i className="fas fa-envelope-square"></i>
+              {`Email: ${pat.email}`}
             </p>
             <p>
               <i className="fas fa-user-circle"></i>

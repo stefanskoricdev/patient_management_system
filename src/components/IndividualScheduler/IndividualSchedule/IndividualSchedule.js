@@ -10,9 +10,6 @@ const colorPallete = [
   "D17484",
 ];
 
-const backgroundClrValue =
-  colorPallete[Math.floor(Math.random() * colorPallete.length)];
-
 const IndividualSchedule = ({
   patients,
   workingDays,
@@ -88,13 +85,21 @@ const IndividualSchedule = ({
                             left: `${leftPosValueMoreDays}%`,
                             width: `${widthValue}%`,
                             height: `${heightValue}rem`,
-                            backgroundColor: `#${backgroundClrValue}`,
+                            backgroundColor: `#${
+                              colorPallete[
+                                Math.floor(Math.random() * colorPallete.length)
+                              ]
+                            }`,
                           }
                         : {
                             top: `${topPositionValue}rem`,
                             left: `${leftPosValueLessDays}%`,
                             height: `${heightValue}rem`,
-                            backgroundColor: `#${backgroundClrValue}`,
+                            backgroundColor: `#${
+                              colorPallete[
+                                Math.floor(Math.random() * colorPallete.length)
+                              ]
+                            }`,
                           }
                       //This fixes issues with layout if there are less then 6 working days
                     }
