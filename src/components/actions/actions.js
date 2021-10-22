@@ -1,8 +1,9 @@
 import db from "../../services/firebase";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-
-const mySwal = withReactContent(Swal);
+import {
+  ErrorMessage,
+  SuccessMessage,
+  WarningMessage,
+} from "../UI/Messages/Messages";
 
 export const getData = (setLoading, setState, collection) => {
   setLoading(true);
@@ -25,12 +26,7 @@ export const getData = (setLoading, setState, collection) => {
     })
     .catch((error) => {
       setLoading(false);
-      mySwal.fire({
-        title: "Something went wrong!!",
-        text: `${error}`,
-        icon: "error",
-        customClass: { container: "alert-modal" },
-      });
+      ErrorMessage(error);
     });
 };
 
@@ -42,20 +38,11 @@ export const sendData = (setLoading, collection, newData, setState) => {
     .then(() => {
       setLoading(false);
       setState((prevState) => [...prevState, newData]);
-      mySwal.fire({
-        title: "Success!",
-        icon: "success",
-        customClass: { container: "alert-modal" },
-      });
+      SuccessMessage("Success", "Data has been created");
     })
     .catch((error) => {
       setLoading(false);
-      mySwal.fire({
-        title: "Something went wrong!",
-        text: `${error}`,
-        icon: "error",
-        customClass: { container: "alert-modal" },
-      });
+      ErrorMessage(error);
     });
 };
 
@@ -67,46 +54,29 @@ export const deleteData = (
   history,
   path
 ) => {
-  mySwal
-    .fire({
-      title: `Are you sure you want to delete data?`,
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "rgb(197, 27, 21)",
-      cancelButtonColor: "rgb(101, 195, 157)",
-      confirmButtonText: "Yes, delete it!",
-    })
-    .then((result) => {
-      if (result.isConfirmed) {
-        setLoading(true);
-        db.collection(collection)
-          .doc(targetId)
-          .delete()
-          .then(() => {
-            setState((prevState) =>
-              prevState.filter((patient) => patient.id !== targetId)
-            );
-            setLoading(false);
-            mySwal.fire({
-              title: "Deleted!",
-              text: "Data has been deleted",
-              icon: "success",
-              customClass: { container: "alert-modal" },
-            });
-            history.push(path);
-          })
-          .catch((error) => {
-            setLoading(false);
-            mySwal.fire({
-              title: "Something went wrong!!",
-              text: `${error}`,
-              icon: "error",
-              customClass: { container: "alert-modal" },
-            });
-          });
-      }
-    });
+  WarningMessage(
+    "Are you sure you want to delete data?",
+    "You won't be able to revert this!"
+  ).then((result) => {
+    if (result.isConfirmed) {
+      setLoading(true);
+      db.collection(collection)
+        .doc(targetId)
+        .delete()
+        .then(() => {
+          setState((prevState) =>
+            prevState.filter((patient) => patient.id !== targetId)
+          );
+          setLoading(false);
+          SuccessMessage("Deleted!", "Data has been deleted");
+          history.push(path);
+        })
+        .catch((error) => {
+          setLoading(false);
+          ErrorMessage(error);
+        });
+    }
+  });
 };
 
 export const updateData = (setLoading, collection, targetId, data) => {
@@ -124,12 +94,7 @@ export const updateData = (setLoading, collection, targetId, data) => {
     })
     .catch((error) => {
       setLoading(false);
-      mySwal.fire({
-        title: "Something went wrong!!",
-        text: `${error}`,
-        icon: "error",
-        customClass: { container: "alert-modal" },
-      });
+      ErrorMessage(error);
     });
 };
 //Has to be upgraded more. Add messages and stuff!
@@ -139,48 +104,34 @@ export const deletePhysio = (
   patients,
   patientsCollection
 ) => {
-  mySwal
-    .fire({
-      title: `Are you sure you want to delete data?`,
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "rgb(197, 27, 21)",
-      cancelButtonColor: "rgb(101, 195, 157)",
-      confirmButtonText: "Yes, delete it!",
-    })
-    .then((result) => {
-      if (result.isConfirmed) {
-        db.collection(collection)
-          .doc(physio.id)
-          .delete()
-          .then(() => {
-            const targetedPatients = patients.filter(
-              (patient) => patient.physiotherapist === physio.firstName
-            );
-            if (targetedPatients.length < 1) {
-              return;
-            }
-            targetedPatients.forEach((patient) => {
-              db.collection(patientsCollection)
-                .doc(patient.id)
-                .delete()
-                .then(() => {
-                  console.log("success");
-                })
-                .catch((err) => console.log(err));
-            });
-            console.log("SUCCESS!");
-          })
-          .catch((error) => {
-            console.log(error);
-            mySwal.fire({
-              title: "Something went wrong!!",
-              text: `${error}`,
-              icon: "error",
-              customClass: { container: "alert-modal" },
-            });
+  WarningMessage(
+    "Are you sure you want to delete data?",
+    "You won't be able to revert this!"
+  ).then((result) => {
+    if (result.isConfirmed) {
+      db.collection(collection)
+        .doc(physio.id)
+        .delete()
+        .then(() => {
+          const targetedPatients = patients.filter(
+            (patient) => patient.physiotherapist === physio.firstName
+          );
+          if (targetedPatients.length < 1) {
+            return;
+          }
+          targetedPatients.forEach((patient) => {
+            db.collection(patientsCollection)
+              .doc(patient.id)
+              .delete()
+              .then(() => {
+                SuccessMessage("Deleted!", "Data has been deleted!");
+              })
+              .catch((err) => ErrorMessage(err));
           });
-      }
-    });
+        })
+        .catch((error) => {
+          ErrorMessage(error);
+        });
+    }
+  });
 };

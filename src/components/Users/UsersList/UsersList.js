@@ -3,10 +3,11 @@ import { useContext, useEffect, useRef, useState } from "react";
 import AuthContext from "../../../store/AuthProvider";
 import filterListHandler from "../../../helpers/filterListHandler";
 import FilterForm from "../../UI/Forms/FilterForm/FilterForm";
+import List from "../../UI/List/List";
 
-const UsersList = () => {
+const UsersList = ({ rootPath }) => {
   const authCtx = useContext(AuthContext);
-  const { users } = authCtx;
+  const { users, setUsers, usersCollection, setIsLoading } = authCtx;
 
   const [usersList, setUsersList] = useState(users);
 
@@ -42,6 +43,9 @@ const UsersList = () => {
     },
   ];
 
+  const tableHeader = ["First Name", "Last Name", "Email", "Id"];
+  const dataKeys = ["firstName", "lastName", "email", "id"];
+
   useEffect(() => {
     setUsersList(users);
   }, [users]);
@@ -66,33 +70,13 @@ const UsersList = () => {
         />
       </section>
       <section className={styles.List}>
-        <header>
-          <i className="fas fa-list-ul"></i>
-          <h3>Users List</h3>
-        </header>
-        {usersList.length < 1 && <p>No users available</p>}
-        {usersList.length > 0 && (
-          <table>
-            <tbody>
-              <tr className={styles.BodyHeader}>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Id</th>
-              </tr>
-              {usersList.map((user) => {
-                return (
-                  <tr key={user.id}>
-                    <td>{user.firstName}</td>
-                    <td>{user.lastName}</td>
-                    <td>{user.email}</td>
-                    <td>{user.id}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
+        <List
+          title="Users List"
+          data={usersList}
+          tableHeader={tableHeader}
+          dataKeys={dataKeys}
+          path={rootPath}
+        ></List>
       </section>
     </section>
   );

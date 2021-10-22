@@ -41,6 +41,15 @@
                         padding: .5rem;
                     }
 
+                    td:nth-child(1) {
+                        button {
+                            background-color: inherit;
+                            border: none;
+                            color: rgb(163, 0, 0);
+                            font-size: 1rem;
+                        }
+                    }
+
                     th {
                         width: fit-content;
                         min-width: 10rem;

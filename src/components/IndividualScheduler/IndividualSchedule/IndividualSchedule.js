@@ -22,7 +22,13 @@ const IndividualSchedule = ({
     let scheduleFields = [];
 
     for (let i = 0; i < indexValue; i++) {
-      scheduleFields.push(<div key={i}></div>);
+      scheduleFields.push(
+        <div key={i}>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      );
     }
     return scheduleFields;
   };

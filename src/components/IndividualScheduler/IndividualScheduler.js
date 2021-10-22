@@ -34,7 +34,12 @@ const IndividualScheduler = ({ physiotherapist }) => {
     <li key={i}>{day.substr(2)}</li>
   ));
   const workingHoursValue = workingHours.map((time, i) => (
-    <li key={i}>{time}</li>
+    <li key={i}>
+      <div></div>
+      <div></div>
+      <div></div>
+      {time}
+    </li>
   ));
 
   useEffect(() => {

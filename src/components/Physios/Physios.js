@@ -7,7 +7,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import PhysiosList from "./PhysiosList/PhysiosList";
-import AddPhysio from "./AddPhysio/AddPhysio";
+import AddEditPhysio from "./AddEditPhysio/AddEditPhysio";
 
 const Physios = () => {
   const { path } = useRouteMatch();
@@ -32,7 +32,7 @@ const Physios = () => {
             <PhysiosList />
           </Route>
           <Route path={`${path}/add-physio`}>
-            <AddPhysio />
+            <AddEditPhysio rootPath={path} />
           </Route>
           <Route path="*">
             <Redirect to={`${path}/physios-list`} />

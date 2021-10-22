@@ -1,14 +1,13 @@
 import PropTypes from "prop-types";
-import { forwardRef } from "react";
 
-const FormInput = forwardRef(({ label, name, type }, ref) => {
+const FormInput = ({ label, name, type, value, onChange }) => {
   return (
     <label>
       {label}
-      <input name={name} type={type} ref={ref} />
+      <input name={name} type={type} value={value} onChange={onChange} />
     </label>
   );
-});
+};
 
 FormInput.propTypes = {
   label: PropTypes.string,

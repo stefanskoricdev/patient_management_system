@@ -1,4 +1,4 @@
-import FormInput from "../FormInput/FormInput";
+import FilterInputs from "./FilterInputs/FilterInputs";
 
 const FilterForm = ({ submit, inputs }) => {
   return (
@@ -6,7 +6,7 @@ const FilterForm = ({ submit, inputs }) => {
       {inputs.map((input) => {
         const { label, name, type, inputRef } = input;
         return (
-          <FormInput
+          <FilterInputs
             key={input.name}
             label={label}
             name={name}

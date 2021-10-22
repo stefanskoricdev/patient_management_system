@@ -1,6 +1,6 @@
 @import "../../../../assets/colors/colors";
 
-.AddUserForm {
+.AddEditUserForm {
     max-width: 25rem;
     margin: 1rem auto;
     padding: 1rem;
@@ -31,7 +31,7 @@
         flex-flow: column;
     }
 
-    .AddUserBtn {
+    .SubmitBtn {
         display: block;
         width: 6rem;
         height: 2rem;

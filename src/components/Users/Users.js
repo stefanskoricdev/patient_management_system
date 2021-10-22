@@ -7,7 +7,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import UsersList from "./UsersList/UsersList";
-import AddUser from "./AddUser/AddUser";
+import AddEditUser from "./AddEditUser/AddEditUser";
 
 const Users = () => {
   const { path } = useRouteMatch();
@@ -28,10 +28,13 @@ const Users = () => {
             <Redirect to={`${path}/users-list`} />
           </Route>
           <Route path={`${path}/users-list`}>
-            <UsersList />
+            <UsersList rootPath={path} />
           </Route>
           <Route path={`${path}/add-user`}>
-            <AddUser />
+            <AddEditUser />
+          </Route>
+          <Route path={`${path}/edit-user/:id`}>
+            <AddEditUser />
           </Route>
           <Route path="*">
             <Redirect to={`${path}/users-list`} />

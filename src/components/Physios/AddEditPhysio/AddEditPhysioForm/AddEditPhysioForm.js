@@ -1,12 +1,12 @@
-import styles from "./AddPhysioForm.module.scss";
-import uuid from "react-uuid";
-import { useState, useContext, useRef } from "react";
+import styles from "./AddEditPhysioForm.module.scss";
+import { useState, useContext } from "react";
 import { sendData } from "../../../actions/actions";
+import { useHistory } from "react-router-dom";
+import uuid from "react-uuid";
 import AppContext from "../../../../store/AppProvider";
 import firebase from "firebase/app";
-import resetFormInputs from "../../../../helpers/resetFormInputs";
-import validateInputs from "../../../../helpers/validateInputs";
 import FormInput from "../../../UI/Forms/FormInput/FormInput";
+import validateForm from "../../../../helpers/validateForm";
 
 const workingDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const workingHours = [
@@ -26,11 +26,17 @@ const workingHours = [
   "21:00",
 ];
 
-const AddPhysioForm = () => {
-  const firstNameRef = useRef();
-  const lastNameRef = useRef();
-  const emailRef = useRef();
-  const phoneNumberRef = useRef();
+const AddEditPhysioForm = ({ rootPath }) => {
+  const history = useHistory();
+
+  const initialValue = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+  };
+
+  const [inputValues, setInputValues] = useState(initialValue);
 
   const initialDaysCheckValue = new Array(workingDays.length).fill(false);
   const [daysInputValue, setDaysInputValue] = useState([]);
@@ -52,19 +58,31 @@ const AddPhysioForm = () => {
       label: "First Name:",
       name: "firstName",
       type: "text",
-      ref: firstNameRef,
+      value: inputValues.firstName,
     },
-    { label: "Last Name:", name: "lastName", type: "text", ref: lastNameRef },
-    { label: "Email:", name: "email", type: "email", ref: emailRef },
+    {
+      label: "Last Name:",
+      name: "lastName",
+      type: "text",
+      value: inputValues.lastName,
+    },
+    { label: "Email:", name: "email", type: "email", value: inputValues.email },
     {
       label: "Phone Number:",
       name: "phoneNumber",
       type: "tel",
-      ref: phoneNumberRef,
+      value: inputValues.phoneNumber,
     },
   ];
 
-  const handleOnChange = (
+  const handleBasicInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues((prevValues) => {
+      return { ...prevValues, [name]: value };
+    });
+  };
+
+  const handleCheckboxChange = (
     e,
     position,
     checkedState,
@@ -92,42 +110,47 @@ const AddPhysioForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const validate = validateInputs(
-      [firstNameRef, lastNameRef, emailRef, phoneNumberRef],
-      [hoursCheckedState, daysCheckedState]
-    );
+    const validate = validateForm(inputValues, [
+      hoursCheckedState,
+      daysCheckedState,
+    ]);
 
     if (!validate) return;
 
     const newPhysio = {
       id: uuid(),
-      firstName: firstNameRef.current.value.trim(),
-      lastName: lastNameRef.current.value.trim(),
-      email: emailRef.current.value.trim(),
-      phoneNumber: phoneNumberRef.current.value.trim(),
+      firstName: inputValues.firstName,
+      lastName: inputValues.lastName,
+      email: inputValues.email,
+      phoneNumber: inputValues.phoneNumber,
       workingDays: daysInputValue.sort(),
       workingHours: hoursInputValue.sort(),
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
     sendData(setIsLoading, physiosCollection, newPhysio, setPhysios);
-    resetFormInputs([firstNameRef, lastNameRef, emailRef, phoneNumberRef]);
     setDaysCheckedState(initialDaysCheckValue);
     setHoursCheckedState(initialHoursCheckValue);
+    history.push(rootPath);
   };
 
   return (
-    <form onSubmit={submitHandler} noValidate className={styles.AddPhysioForm}>
+    <form
+      onSubmit={submitHandler}
+      noValidate
+      className={styles.AddEditPhysioForm}
+    >
       <h2>Add Physiotherapist</h2>
       <div className={styles.BasicInfo}>
         {basicInfoInputs.map((info) => {
-          const { label, name, type, ref } = info;
+          const { label, name, type, value } = info;
           return (
             <FormInput
               key={name}
               label={label}
               name={name}
               type={type}
-              ref={ref}
+              value={value}
+              onChange={handleBasicInputChange}
             />
           );
         })}
@@ -144,7 +167,7 @@ const AddPhysioForm = () => {
                   value={`${i}_${day}`}
                   type="checkbox"
                   onChange={(event) => {
-                    handleOnChange(
+                    handleCheckboxChange(
                       event,
                       i,
                       daysCheckedState,
@@ -172,7 +195,7 @@ const AddPhysioForm = () => {
                   value={`${hour}`}
                   type="checkbox"
                   onChange={(event) => {
-                    handleOnChange(
+                    handleCheckboxChange(
                       event,
                       i,
                       hoursCheckedState,
@@ -187,10 +210,10 @@ const AddPhysioForm = () => {
             );
           })}
         </main>
-        <button className={styles.AddPhysioBtn}>Add</button>
+        <button className={styles.SubmitBtn}>Add</button>
       </div>
     </form>
   );
 };
 
-export default AddPhysioForm;
+export default AddEditPhysioForm;

@@ -68,6 +68,7 @@ const LoginForm = ({ setLoading }) => {
       .catch((error) => {
         resetFormInputs([emailInputRef, passwordInputRef]);
         setLoading(false);
+        console.log(error);
         mySwal.fire({
           title: "Something went wrong!",
           text: `${error}`,

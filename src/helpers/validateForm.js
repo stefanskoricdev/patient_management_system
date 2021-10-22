@@ -13,7 +13,7 @@ const errorModal = (message) => {
   });
 };
 
-const validateForm = (inputValues) => {
+const validateForm = (inputValues, checkboxInputs = [true]) => {
   const findEmptyInputHandler = () => {
     for (const key in inputValues) {
       if (inputValues[key] === "") {
@@ -27,7 +27,13 @@ const validateForm = (inputValues) => {
 
   const pattern = /^\d{9}$/;
 
-  if (!textInputsValue) {
+  const checkboxInputIsValid = checkboxInputs
+    .reduce((currValue, prevValue) => {
+      return currValue + prevValue;
+    }, [])
+    .includes(true);
+
+  if (!textInputsValue || !checkboxInputIsValid) {
     errorModal("Please fill out all input fields");
     return false;
   }
@@ -36,7 +42,7 @@ const validateForm = (inputValues) => {
     errorModal("Please enter valid email");
     return false;
   }
-  if (inputValues.password && !inputValues.password.length < 6) {
+  if (inputValues.password && inputValues.password.length < 6) {
     errorModal(
       "Please enter valid password. It should be at least 6 characters long!"
     );
