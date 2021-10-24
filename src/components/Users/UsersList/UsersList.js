@@ -7,7 +7,7 @@ import List from "../../UI/List/List";
 
 const UsersList = ({ rootPath }) => {
   const authCtx = useContext(AuthContext);
-  const { users, setUsers, usersCollection, setIsLoading } = authCtx;
+  const { users } = authCtx;
 
   const [usersList, setUsersList] = useState(users);
 

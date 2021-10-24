@@ -38,7 +38,7 @@ export const sendData = (setLoading, collection, newData, setState) => {
     .then(() => {
       setLoading(false);
       setState((prevState) => [...prevState, newData]);
-      SuccessMessage("Success", "Data has been created");
+      SuccessMessage("Success", "Your data has been created successfully");
     })
     .catch((error) => {
       setLoading(false);
@@ -68,7 +68,7 @@ export const deleteData = (
             prevState.filter((patient) => patient.id !== targetId)
           );
           setLoading(false);
-          SuccessMessage("Deleted!", "Data has been deleted");
+          SuccessMessage("Deleted!", "Your data has been deleted successfully");
           history.push(path);
         })
         .catch((error) => {
@@ -79,7 +79,14 @@ export const deleteData = (
   });
 };
 
-export const updateData = (setLoading, collection, targetId, data) => {
+export const updateData = (
+  setLoading,
+  collection,
+  targetId,
+  data,
+  setState,
+  updatedData
+) => {
   setLoading(true);
   db.collection(collection)
     .doc(targetId)
@@ -87,6 +94,8 @@ export const updateData = (setLoading, collection, targetId, data) => {
     .then((doc) => {
       if (doc.exists) {
         setLoading(false);
+        setState(updatedData);
+        SuccessMessage("Success", "Your data has been updated successfully");
         return doc.ref.update(data);
       } else {
         throw new Error("Data does not exist");

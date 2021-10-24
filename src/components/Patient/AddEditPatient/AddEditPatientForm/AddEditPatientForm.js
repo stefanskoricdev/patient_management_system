@@ -150,8 +150,14 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       );
       const updatedPatientsList = [...individualPatients];
       updatedPatientsList[targetedPatientIndex] = newPatient;
-      updateData(setIsLoading, individualCollection, id, newPatient);
-      setIndividualPatients(updatedPatientsList);
+      updateData(
+        setIsLoading,
+        individualCollection,
+        id,
+        newPatient,
+        setIndividualPatients,
+        updatedPatientsList
+      );
     }
     history.push(
       `/patients/individual-patients/${physiotherapist.firstName}/schedule`
@@ -292,9 +298,10 @@ const AddEditPatientForm = ({ physiotherapist }) => {
                 onChange={onChangeHandler}
               >
                 {workingHours.map((hour, i) => {
+                  const substrStartIndex = hour.indexOf("_") + 1;
                   return (
                     <option key={i} value={i}>
-                      {hour.substr(0, hour.length - 3)}
+                      {hour.substr(substrStartIndex, 2)}
                     </option>
                   );
                 })}

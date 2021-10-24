@@ -3,8 +3,9 @@ import { useRef, useContext, useState, useEffect } from "react";
 import AppContext from "../../../store/AppProvider";
 import FilterForm from "../../UI/Forms/FilterForm/FilterForm";
 import filterListHandler from "../../../helpers/filterListHandler";
+import List from "../../UI/List/List";
 
-const PhysiosList = () => {
+const PhysiosList = ({ rootPath }) => {
   const appCtx = useContext(AppContext);
   const { physios } = appCtx;
 
@@ -42,6 +43,9 @@ const PhysiosList = () => {
     },
   ];
 
+  const tableHeader = ["First name", "Last name", "email", "phone number"];
+  const dataKeys = ["firstName", "lastName", "email", "phoneNumber"];
+
   useEffect(() => {
     setPhysiosList(physios);
   }, [physios]);
@@ -66,29 +70,14 @@ const PhysiosList = () => {
         />
       </section>
       <section className={styles.List}>
-        {physiosList.length < 1 && <p>No physios available</p>}
-        {physiosList.length > 0 && (
-          <table>
-            <tbody>
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-              </tr>
-              {physiosList.map((patient) => {
-                return (
-                  <tr key={patient.id}>
-                    <td>{patient.firstName}</td>
-                    <td>{patient.lastName}</td>
-                    <td>{patient.email}</td>
-                    <td>{patient.phoneNumber}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
+        <List
+          title="Physios List"
+          data={physiosList}
+          tableHeader={tableHeader}
+          dataKeys={dataKeys}
+          rootPath={`${rootPath}/edit-physio/`}
+          actions={true}
+        />
       </section>
     </section>
   );

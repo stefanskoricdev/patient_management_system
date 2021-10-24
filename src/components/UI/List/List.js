@@ -1,7 +1,14 @@
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-const List = ({ title, data, tableHeader, dataKeys, path = null }) => {
+const List = ({
+  title,
+  data,
+  tableHeader,
+  dataKeys,
+  rootPath = null,
+  actions,
+}) => {
   return (
     <Fragment>
       <header>
@@ -13,7 +20,7 @@ const List = ({ title, data, tableHeader, dataKeys, path = null }) => {
         <table>
           <tbody>
             <tr>
-              {/* <th>Actions</th> */}
+              {actions && <th>Actions</th>}
               {tableHeader.map((title) => (
                 <th key={title}>{title}</th>
               ))}
@@ -21,14 +28,16 @@ const List = ({ title, data, tableHeader, dataKeys, path = null }) => {
             {data.map((dataItem) => {
               return (
                 <tr key={dataItem.id}>
-                  {/* <td>
-                    <Link to={`${path}/edit-user/${dataItem.id}`}>
-                      <i className="fas fa-user-edit"></i>
-                    </Link>
-                    <button>
-                      <i className="fas fa-user-times"></i>
-                    </button>
-                  </td> */}
+                  {actions && (
+                    <td>
+                      <Link to={`${rootPath}${dataItem.id}`}>
+                        <i className="fas fa-user-edit"></i>
+                      </Link>
+                      {/* <button>
+                        <i className="fas fa-user-times"></i>
+                      </button> */}
+                    </td>
+                  )}
                   {dataKeys.map((key) => (
                     <td key={key}>{dataItem[key]}</td>
                   ))}

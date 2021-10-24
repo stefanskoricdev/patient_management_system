@@ -29,9 +29,12 @@ const Physios = () => {
             <Redirect to={`${path}/physios-list`} />
           </Route>
           <Route path={`${path}/physios-list`}>
-            <PhysiosList />
+            <PhysiosList rootPath={path} />
           </Route>
           <Route path={`${path}/add-physio`}>
+            <AddEditPhysio rootPath={path} />
+          </Route>
+          <Route path={`${path}/edit-physio/:id`}>
             <AddEditPhysio rootPath={path} />
           </Route>
           <Route path="*">

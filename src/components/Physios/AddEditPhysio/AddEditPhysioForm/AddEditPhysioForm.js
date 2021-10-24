@@ -1,12 +1,13 @@
 import styles from "./AddEditPhysioForm.module.scss";
 import { useState, useContext } from "react";
-import { sendData } from "../../../actions/actions";
-import { useHistory } from "react-router-dom";
+import { sendData, updateData } from "../../../actions/actions";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import uuid from "react-uuid";
 import AppContext from "../../../../store/AppProvider";
 import firebase from "firebase/app";
 import FormInput from "../../../UI/Forms/FormInput/FormInput";
 import validateForm from "../../../../helpers/validateForm";
+import { Fragment } from "react";
 
 const workingDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const workingHours = [
@@ -28,30 +29,72 @@ const workingHours = [
 
 const AddEditPhysioForm = ({ rootPath }) => {
   const history = useHistory();
+  const {
+    params: { id },
+  } = useRouteMatch();
 
-  const initialValue = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-  };
+  const appCtx = useContext(AppContext);
+  const { setPhysios, physiosCollection, physios, setIsLoading } = appCtx;
+
+  const isAddMode = !id;
+  let initialValue;
+  let initialDaysValue;
+  let initialHoursValue;
+  let initialDaysCheckValue = new Array(workingDays.length).fill(false);
+  let initialHoursCheckValue = new Array(workingHours.length).fill(false);
+  let physioToEdit;
+
+  if (physios.length < 1 && !isAddMode) history.push(rootPath);
+  //This prevents issues if reloading page in !isAddMode!
+
+  if (!isAddMode && physios.length > 0) {
+    physioToEdit = physios.find((physio) => physio.id === id);
+    const dayIndex = physioToEdit.workingDays.map((day) => {
+      const index = day.indexOf("_");
+      return day.substr(0, index);
+    });
+    const hoursIndex = physioToEdit.workingHours.map((hours) => {
+      const index = hours.indexOf("_");
+      return hours.substr(0, index);
+    });
+    initialValue = {
+      firstName: physioToEdit.firstName,
+      lastName: physioToEdit.lastName,
+      email: physioToEdit.email,
+      phoneNumber: physioToEdit.phoneNumber,
+    };
+    initialDaysValue = [...physioToEdit.workingDays];
+    initialHoursValue = [...physioToEdit.workingHours];
+    dayIndex.forEach((index) => {
+      const transformedIndex = parseInt(index);
+      initialDaysCheckValue[transformedIndex] = true;
+    });
+    hoursIndex.forEach((index) => {
+      const transformedIndex = parseInt(index);
+      initialHoursCheckValue[transformedIndex] = true;
+    });
+  } else {
+    initialValue = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+    };
+    initialDaysValue = [];
+    initialHoursValue = [];
+  }
 
   const [inputValues, setInputValues] = useState(initialValue);
 
-  const initialDaysCheckValue = new Array(workingDays.length).fill(false);
-  const [daysInputValue, setDaysInputValue] = useState([]);
+  const [daysInputValue, setDaysInputValue] = useState(initialDaysValue);
   const [daysCheckedState, setDaysCheckedState] = useState(
     initialDaysCheckValue
   );
 
-  const initialHoursCheckValue = new Array(workingHours.length).fill(false);
-  const [hoursInputValue, setHoursInputValue] = useState([]);
+  const [hoursInputValue, setHoursInputValue] = useState(initialHoursValue);
   const [hoursCheckedState, setHoursCheckedState] = useState(
     initialHoursCheckValue
   );
-
-  const appCtx = useContext(AppContext);
-  const { setPhysios, physiosCollection, setIsLoading } = appCtx;
 
   const basicInfoInputs = [
     {
@@ -118,101 +161,123 @@ const AddEditPhysioForm = ({ rootPath }) => {
     if (!validate) return;
 
     const newPhysio = {
-      id: uuid(),
+      id: isAddMode ? uuid() : id,
       firstName: inputValues.firstName,
       lastName: inputValues.lastName,
       email: inputValues.email,
       phoneNumber: inputValues.phoneNumber,
       workingDays: daysInputValue.sort(),
-      workingHours: hoursInputValue.sort(),
-      dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
+      workingHours: hoursInputValue.sort((a, b) => a > b),
+      dateCreated: isAddMode
+        ? firebase.firestore.FieldValue.serverTimestamp()
+        : physioToEdit.dateCreated,
     };
-    sendData(setIsLoading, physiosCollection, newPhysio, setPhysios);
+    if (isAddMode) {
+      sendData(setIsLoading, physiosCollection, newPhysio, setPhysios);
+    } else {
+      const targetedPhysioIndex = physios.findIndex(
+        (physio) => physio.id === id
+      );
+      const updatedPhysioList = [...physios];
+      updatedPhysioList[targetedPhysioIndex] = newPhysio;
+      updateData(
+        setIsLoading,
+        physiosCollection,
+        id,
+        newPhysio,
+        setPhysios,
+        updatedPhysioList
+      );
+    }
     setDaysCheckedState(initialDaysCheckValue);
     setHoursCheckedState(initialHoursCheckValue);
     history.push(rootPath);
   };
 
   return (
-    <form
-      onSubmit={submitHandler}
-      noValidate
-      className={styles.AddEditPhysioForm}
-    >
-      <h2>Add Physiotherapist</h2>
-      <div className={styles.BasicInfo}>
-        {basicInfoInputs.map((info) => {
-          const { label, name, type, value } = info;
-          return (
-            <FormInput
-              key={name}
-              label={label}
-              name={name}
-              type={type}
-              value={value}
-              onChange={handleBasicInputChange}
-            />
-          );
-        })}
-      </div>
-      <div className={styles.WorkingDays}>
-        <h3>Select working days:</h3>
-        <main>
-          {workingDays.map((day, i) => {
+    <Fragment>
+      <form
+        onSubmit={submitHandler}
+        noValidate
+        className={styles.AddEditPhysioForm}
+      >
+        <h2>{isAddMode ? "Add Physiotherapist" : "Edit Physiotherapist"}</h2>
+        <div className={styles.BasicInfo}>
+          {basicInfoInputs.map((info) => {
+            const { label, name, type, value } = info;
             return (
-              <label key={i}>
-                {day}
-                <input
-                  name={`${day}`}
-                  value={`${i}_${day}`}
-                  type="checkbox"
-                  onChange={(event) => {
-                    handleCheckboxChange(
-                      event,
-                      i,
-                      daysCheckedState,
-                      setDaysCheckedState,
-                      setDaysInputValue,
-                      daysInputValue
-                    );
-                  }}
-                  checked={daysCheckedState[i]}
-                />
-              </label>
+              <FormInput
+                key={name}
+                label={label}
+                name={name}
+                type={type}
+                value={value}
+                onChange={handleBasicInputChange}
+              />
             );
           })}
-        </main>
-      </div>
-      <div className={styles.WorkingHours}>
-        <h3>Select working hours:</h3>
-        <main>
-          {workingHours.map((hour, i) => {
-            return (
-              <label key={i}>
-                {hour}
-                <input
-                  name={`${hour}`}
-                  value={`${hour}`}
-                  type="checkbox"
-                  onChange={(event) => {
-                    handleCheckboxChange(
-                      event,
-                      i,
-                      hoursCheckedState,
-                      setHoursCheckedState,
-                      setHoursInputValue,
-                      hoursInputValue
-                    );
-                  }}
-                  checked={hoursCheckedState[i]}
-                />
-              </label>
-            );
-          })}
-        </main>
-        <button className={styles.SubmitBtn}>Add</button>
-      </div>
-    </form>
+        </div>
+        <div className={styles.WorkingDays}>
+          <h3>Select working days:</h3>
+          <main>
+            {workingDays.map((day, i) => {
+              return (
+                <label key={i}>
+                  {day}
+                  <input
+                    name={`${day}`}
+                    value={`${i}_${day}`}
+                    type="checkbox"
+                    onChange={(event) => {
+                      handleCheckboxChange(
+                        event,
+                        i,
+                        daysCheckedState,
+                        setDaysCheckedState,
+                        setDaysInputValue,
+                        daysInputValue
+                      );
+                    }}
+                    checked={daysCheckedState[i]}
+                  />
+                </label>
+              );
+            })}
+          </main>
+        </div>
+        <div className={styles.WorkingHours}>
+          <h3>Select working hours:</h3>
+          <main>
+            {workingHours.map((hour, i) => {
+              return (
+                <label key={i}>
+                  {hour}
+                  <input
+                    name={`${hour}`}
+                    value={`${i}_${hour}`}
+                    type="checkbox"
+                    onChange={(event) => {
+                      handleCheckboxChange(
+                        event,
+                        i,
+                        hoursCheckedState,
+                        setHoursCheckedState,
+                        setHoursInputValue,
+                        hoursInputValue
+                      );
+                    }}
+                    checked={hoursCheckedState[i]}
+                  />
+                </label>
+              );
+            })}
+          </main>
+          <button className={styles.SubmitBtn}>
+            {isAddMode ? "Add" : "Edit"}
+          </button>
+        </div>
+      </form>
+    </Fragment>
   );
 };
 

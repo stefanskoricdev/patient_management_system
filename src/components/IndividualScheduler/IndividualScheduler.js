@@ -1,5 +1,5 @@
 import styles from "./IndividualScheduler.module.scss";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   NavLink,
   Route,
@@ -11,7 +11,6 @@ import AppContext from "../../store/AppProvider";
 import AddEditPatient from "../Patient/AddEditPatient/AddEditPatient";
 import IndividualSchedule from "./IndividualSchedule/IndividualSchedule";
 import PatientDetails from "../Patient/PatientDetails/PatientDetails";
-import { useEffect } from "react/cjs/react.development";
 
 const IndividualScheduler = ({ physiotherapist }) => {
   const [showAddPatientBtn, setShowAddPatientBtn] = useState(true);
@@ -33,14 +32,17 @@ const IndividualScheduler = ({ physiotherapist }) => {
   const workingDaysValue = workingDays.map((day, i) => (
     <li key={i}>{day.substr(2)}</li>
   ));
-  const workingHoursValue = workingHours.map((time, i) => (
-    <li key={i}>
-      <div></div>
-      <div></div>
-      <div></div>
-      {time}
-    </li>
-  ));
+  const workingHoursValue = workingHours.map((time, i) => {
+    const substrStartIndex = time.indexOf("_");
+    return (
+      <li key={i}>
+        <div></div>
+        <div></div>
+        <div></div>
+        {time.substr(substrStartIndex + 1)}
+      </li>
+    );
+  });
 
   useEffect(() => {
     setShowAddPatientBtn(true);

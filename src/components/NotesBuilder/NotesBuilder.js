@@ -53,13 +53,16 @@ const NotesBuilder = ({ currentDate }) => {
     const updatedNotesList = [...notes];
     const targetedNoteCheckStatus =
       updatedNotesList[targetedNoteIndex].isChecked;
-    updateData(setIsLoading, notesCollection, noteId, {
-      isChecked: !targetedNoteCheckStatus,
-    });
-    setNotes((prevState) =>
-      prevState.map((note) =>
-        note.id === noteId ? { ...note, isChecked: !note.isChecked } : note
-      )
+    updatedNotesList[targetedNoteIndex].isChecked = !targetedNoteCheckStatus;
+    updateData(
+      setIsLoading,
+      notesCollection,
+      noteId,
+      {
+        isChecked: !targetedNoteCheckStatus,
+      },
+      setNotes,
+      updatedNotesList
     );
   };
 

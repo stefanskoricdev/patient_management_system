@@ -7,7 +7,7 @@ import FormInput from "../../../UI/Forms/FormInput/FormInput";
 import validateForm from "../../../../helpers/validateForm";
 import { AddUser, UpdatePassword } from "../../../actions/auth-actions";
 
-const AddEditUserForm = () => {
+const AddEditUserForm = ({ rootPath }) => {
   const {
     params: { id },
   } = useRouteMatch();
@@ -21,6 +21,9 @@ const AddEditUserForm = () => {
 
   let initialValues;
   let formInputs;
+
+  if (users.length < 1 && !isAddMode) history.push(rootPath);
+
   if (!isAddMode && users.length > 0) {
     const patientToEdit = users.find((user) => user.id === id);
     initialValues = {
