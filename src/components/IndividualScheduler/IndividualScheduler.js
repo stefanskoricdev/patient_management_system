@@ -11,6 +11,7 @@ import AppContext from "../../store/AppProvider";
 import AddEditPatient from "../Patient/AddEditPatient/AddEditPatient";
 import IndividualSchedule from "./IndividualSchedule/IndividualSchedule";
 import PatientDetails from "../Patient/PatientDetails/PatientDetails";
+import AddAppointment from "../Patient/AddAppointment/AddAppointment";
 
 const IndividualScheduler = ({ physiotherapist }) => {
   const [showAddPatientBtn, setShowAddPatientBtn] = useState(true);
@@ -96,6 +97,9 @@ const IndividualScheduler = ({ physiotherapist }) => {
           </Route>
           <Route path={`${path}/edit-patient/:id`}>
             <AddEditPatient physiotherapist={physiotherapist} />
+          </Route>
+          <Route path={`${path}/add-appointment/:id`}>
+            <AddAppointment physiotherapist={physiotherapist} />
           </Route>
           <Route path="*">
             <Redirect to={`${path}`} />

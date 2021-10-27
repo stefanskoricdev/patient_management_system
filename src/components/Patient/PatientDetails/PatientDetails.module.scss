@@ -53,6 +53,8 @@
 
         .Options {
             position: absolute;
+            display: flex;
+            flex-flow: column;
             top: 2.5rem;
             right: .5rem;
             width: fit-content;

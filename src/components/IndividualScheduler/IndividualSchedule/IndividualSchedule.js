@@ -59,60 +59,69 @@ const IndividualSchedule = ({
         >
           {createScheduleBackground()}
           {patients.length > 0
-            ? patients.map((patient, i) => {
-                const positionValues = {
-                  topPositionValue:
-                    patient.position.topHours * 12 +
-                    patient.position.topMinutes * 0.2,
-                  leftPosValueMoreDays:
-                    (patient.position.left * 100) / workingDays.length + 0.5,
-                  leftPosValueLessDays: patient.position.left * 20 + 0.5,
-                  heightValue: patient.position.height * 0.2 - 0.1,
-                  widthValue: 100 / workingDays.length - 1,
-                };
-                const {
-                  topPositionValue,
-                  leftPosValueMoreDays,
-                  heightValue,
-                  widthValue,
-                  leftPosValueLessDays,
-                } = positionValues;
+            ? patients.map((patient) => {
+                let pat = [];
+                for (let i = 0; i < patient.position.length; i++) {
+                  const positionValues = {
+                    topPositionValue:
+                      patient.position[i].topHours * 12 +
+                      patient.position[i].topMinutes * 0.2,
+                    leftPosValueMoreDays:
+                      (patient.position[i].left * 100) / workingDays.length +
+                      0.5,
+                    leftPosValueLessDays: patient.position[i].left * 20 + 0.5,
+                    heightValue: patient.position[i].height * 0.2 - 0.1,
+                    widthValue: 100 / workingDays.length - 1,
+                  };
+                  const {
+                    topPositionValue,
+                    leftPosValueMoreDays,
+                    heightValue,
+                    widthValue,
+                    leftPosValueLessDays,
+                  } = positionValues;
 
-                return (
-                  <Link
-                    to={`/patients/individual-patients/${physiotherapist.toLowerCase()}/patient-details/${
-                      patient.id
-                    }`}
-                    key={i}
-                    style={
-                      workingDays.length > 5
-                        ? {
-                            top: `${topPositionValue}rem`,
-                            left: `${leftPosValueMoreDays}%`,
-                            width: `${widthValue}%`,
-                            height: `${heightValue}rem`,
-                            backgroundColor: `#${
-                              colorPallete[
-                                Math.floor(Math.random() * colorPallete.length)
-                              ]
-                            }`,
-                          }
-                        : {
-                            top: `${topPositionValue}rem`,
-                            left: `${leftPosValueLessDays}%`,
-                            height: `${heightValue}rem`,
-                            backgroundColor: `#${
-                              colorPallete[
-                                Math.floor(Math.random() * colorPallete.length)
-                              ]
-                            }`,
-                          }
-                      //This fixes issues with layout if there are less then 6 working days
-                    }
-                  >
-                    {`${patient.firstName + " " + patient.lastName}`}
-                  </Link>
-                );
+                  pat.push(
+                    <Link
+                      to={`/patients/individual-patients/${physiotherapist.toLowerCase()}/patient-details/${
+                        patient.id
+                      }${i}`}
+                      key={patient.id + i}
+                      style={
+                        workingDays.length > 5
+                          ? {
+                              top: `${topPositionValue}rem`,
+                              left: `${leftPosValueMoreDays}%`,
+                              width: `${widthValue}%`,
+                              height: `${heightValue}rem`,
+                              backgroundColor: `#${
+                                colorPallete[
+                                  Math.floor(
+                                    Math.random() * colorPallete.length
+                                  )
+                                ]
+                              }`,
+                            }
+                          : {
+                              top: `${topPositionValue}rem`,
+                              left: `${leftPosValueLessDays}%`,
+                              height: `${heightValue}rem`,
+                              backgroundColor: `#${
+                                colorPallete[
+                                  Math.floor(
+                                    Math.random() * colorPallete.length
+                                  )
+                                ]
+                              }`,
+                            }
+                        //This fixes issues with layout if there are less then 6 working days
+                      }
+                    >
+                      {`${patient.firstName + " " + patient.lastName}`}
+                    </Link>
+                  );
+                }
+                return pat;
               })
             : null}
         </section>

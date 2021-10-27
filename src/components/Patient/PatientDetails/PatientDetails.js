@@ -9,6 +9,7 @@ import femaleAvatar from "../../../assets/img/female_avatar.svg";
 
 const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
   const { id } = useParams();
+  const transformedId = id.slice(0, -1);
   const appCtx = useContext(AppContext);
   const { individualPatients, setIndividualPatients, setIsLoading } = appCtx;
 
@@ -23,7 +24,7 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
   };
 
   const targetedPatient = individualPatients
-    .filter((patient) => patient.id === id)
+    .filter((patient) => patient.id === transformedId)
     .map((pat, i) => {
       const age = getAge(pat.dateOfBirth);
       return (
@@ -47,12 +48,16 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
               }
             >
               <Link
-                to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}/edit-patient/${
-                  pat.id
-                }`}
+                to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}/edit-patient/${id}`}
                 onClick={() => setShowAddPatient(false)}
               >
                 Edit
+              </Link>
+              <Link
+                to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}/add-appointment/${id}`}
+                onClick={() => setShowAddPatient(false)}
+              >
+                Add appointment
               </Link>
               <li
                 onClick={() =>
@@ -60,7 +65,7 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
                     setIsLoading,
                     setIndividualPatients,
                     collection,
-                    id,
+                    transformedId,
                     history,
                     customPath
                   )

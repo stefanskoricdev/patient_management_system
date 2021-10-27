@@ -13,7 +13,6 @@ import Settings from "./pages/Settings/Settings";
 function App() {
   const authCtx = useContext(AuthContext);
   const { isLoggedIn, isAdmin, isLoading } = authCtx;
-
   return (
     <div
       style={isLoading ? { height: "100vh", overflowY: "hidden" } : null}

@@ -29,11 +29,17 @@ const AddEditPatientForm = ({ physiotherapist }) => {
   } = appCtx;
 
   let initialValues;
+  let patientToEdit;
+  let appointmentIndex;
+  let transformedId;
 
   if (!isAddMode) {
-    const patientToEdit = individualPatients.find(
-      (patient) => patient.id === id
+    transformedId = id.slice(0, -1);
+    patientToEdit = individualPatients.find(
+      (patient) => patient.id === transformedId
     );
+    appointmentIndex = parseInt(id.slice(id.length - 1));
+
     initialValues = {
       firstName: patientToEdit.firstName,
       lastName: patientToEdit.lastName,
@@ -44,10 +50,10 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       email: patientToEdit.email,
       dob: patientToEdit.dateOfBirth,
       observation: patientToEdit.observation,
-      days: patientToEdit.position.left,
-      hours: patientToEdit.position.topHours,
-      minutes: patientToEdit.position.topMinutes,
-      duration: patientToEdit.position.height,
+      days: patientToEdit.position[appointmentIndex].left,
+      hours: patientToEdit.position[appointmentIndex].topHours,
+      minutes: patientToEdit.position[appointmentIndex].topMinutes,
+      duration: patientToEdit.position[appointmentIndex].height,
     };
   } else {
     initialValues = {
@@ -63,7 +69,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       days: "0",
       hours: "0",
       minutes: "0",
-      duration: "0",
+      duration: "30",
     };
   }
 
@@ -90,7 +96,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
     if (!validate) return;
 
     const newPatient = {
-      id: isAddMode ? uuid() : id,
+      id: isAddMode ? uuid() : transformedId,
       firstName: inputValue.firstName,
       lastName: inputValue.lastName,
       city: inputValue.city,
@@ -101,24 +107,42 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       dateOfBirth: inputValue.dob,
       observation: inputValue.observation,
       physiotherapist: physiotherapist.firstName,
-      position: {
-        topHours: inputValue.hours,
-        topMinutes: inputValue.minutes,
-        left: inputValue.days,
-        height: inputValue.duration,
-      },
+      position: isAddMode
+        ? [
+            {
+              topHours: inputValue.hours,
+              topMinutes: inputValue.minutes,
+              left: inputValue.days,
+              height: inputValue.duration,
+            },
+          ]
+        : patientToEdit.position.map((_, i) =>
+            i === appointmentIndex
+              ? {
+                  topHours: inputValue.hours,
+                  topMinutes: inputValue.minutes,
+                  left: inputValue.days,
+                  height: inputValue.duration,
+                }
+              : {
+                  topHours: patientToEdit.position[i].topHours,
+                  topMinutes: patientToEdit.position[i].topMinutes,
+                  left: patientToEdit.position[i].left,
+                  height: patientToEdit.position[i].height,
+                }
+          ),
       date: currentDate,
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
-    const isAppointmentTaken = individualPatients.find(
+    /* const isAppointmentTaken = individualPatients.find(
       (patient) =>
         patient.physiotherapist === newPatient.physiotherapist &&
         patient.position.left === newPatient.position.left &&
         patient.position.topHours === newPatient.position.topHours
-    );
+    ); */
 
     if (isAddMode) {
-      if (
+      /* if (
         isAppointmentTaken &&
         +newPatient.position.topMinutes <
           +isAppointmentTaken.position.topMinutes +
@@ -137,7 +161,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
           },
         });
         return;
-      }
+      } */
       sendData(
         setIsLoading,
         individualCollection,
@@ -150,10 +174,11 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       );
       const updatedPatientsList = [...individualPatients];
       updatedPatientsList[targetedPatientIndex] = newPatient;
+      console.log(newPatient);
       updateData(
         setIsLoading,
         individualCollection,
-        id,
+        transformedId,
         newPatient,
         setIndividualPatients,
         updatedPatientsList
