@@ -1,5 +1,5 @@
 import styles from "./AddEditPhysioForm.module.scss";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { sendData, updateData } from "../../../actions/actions";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import uuid from "react-uuid";
@@ -37,9 +37,15 @@ const AddEditPhysioForm = ({ rootPath }) => {
   const { setPhysios, physiosCollection, physios, setIsLoading } = appCtx;
 
   const isAddMode = !id;
-  let initialValue;
-  let initialDaysValue;
-  let initialHoursValue;
+
+  let initialValue = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+  };
+  let initialDaysValue = [];
+  let initialHoursValue = [];
   let initialDaysCheckValue = new Array(workingDays.length).fill(false);
   let initialHoursCheckValue = new Array(workingHours.length).fill(false);
   let physioToEdit;
@@ -73,15 +79,6 @@ const AddEditPhysioForm = ({ rootPath }) => {
       const transformedIndex = parseInt(index);
       initialHoursCheckValue[transformedIndex] = true;
     });
-  } else {
-    initialValue = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-    };
-    initialDaysValue = [];
-    initialHoursValue = [];
   }
 
   const [inputValues, setInputValues] = useState(initialValue);
@@ -189,6 +186,7 @@ const AddEditPhysioForm = ({ rootPath }) => {
         updatedPhysioList
       );
     }
+
     setDaysCheckedState(initialDaysCheckValue);
     setHoursCheckedState(initialHoursCheckValue);
     history.push(rootPath);

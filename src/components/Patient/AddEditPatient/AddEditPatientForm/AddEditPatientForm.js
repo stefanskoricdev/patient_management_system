@@ -5,11 +5,9 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import AppContext from "../../../../store/AppProvider";
 import firebase from "firebase/app";
 import uuid from "react-uuid";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import validateForm from "../../../../helpers/validateForm";
-
-const mySwal = withReactContent(Swal);
+import { WarningMessage } from "../../../UI/Messages/Messages";
+import { checkAppointment } from "../../../../helpers/checkAppointment";
 
 const AddEditPatientForm = ({ physiotherapist }) => {
   const history = useHistory();
@@ -28,7 +26,21 @@ const AddEditPatientForm = ({ physiotherapist }) => {
     currentDate,
   } = appCtx;
 
-  let initialValues;
+  let initialValues = {
+    firstName: "",
+    lastName: "",
+    gender: "male",
+    city: "",
+    address: "",
+    phoneNumber: "",
+    email: "",
+    dob: "",
+    observation: "",
+    days: "0",
+    hours: "0",
+    minutes: "0",
+    duration: "30",
+  };
   let patientToEdit;
   let appointmentIndex;
   let transformedId;
@@ -54,22 +66,6 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       hours: patientToEdit.position[appointmentIndex].topHours,
       minutes: patientToEdit.position[appointmentIndex].topMinutes,
       duration: patientToEdit.position[appointmentIndex].height,
-    };
-  } else {
-    initialValues = {
-      firstName: "",
-      lastName: "",
-      gender: "male",
-      city: "",
-      address: "",
-      phoneNumber: "",
-      email: "",
-      dob: "",
-      observation: "",
-      days: "0",
-      hours: "0",
-      minutes: "0",
-      duration: "30",
     };
   }
 
@@ -134,34 +130,42 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       date: currentDate,
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
-    /* const isAppointmentTaken = individualPatients.find(
-      (patient) =>
-        patient.physiotherapist === newPatient.physiotherapist &&
-        patient.position.left === newPatient.position.left &&
-        patient.position.topHours === newPatient.position.topHours
-    ); */
+    const newPatientTransformedPositions = newPatient.position.map(
+      (position) => {
+        const topHours = parseInt(position.topHours) * 60;
+        const topMinutes = parseInt(position.topMinutes);
+        const left = parseInt(position.left);
+        const height = parseInt(position.height);
+        const appointmentStart = topHours + topMinutes;
+        const appointmentEnd = appointmentStart + height;
+        return {
+          appointmentStart: appointmentStart,
+          appointmentEnd: appointmentEnd,
+          day: left,
+        };
+      }
+    );
+
+    const isAppointmentTaken = checkAppointment(
+      individualPatients,
+      physiotherapist,
+      newPatientTransformedPositions,
+      newPatient,
+      isAddMode,
+      appointmentIndex
+    ).includes(true);
+
+    if (isAppointmentTaken) {
+      WarningMessage(
+        "Sorry but this appointment is taken",
+        "Please pick another day or time.",
+        false,
+        "Go back"
+      );
+      return;
+    }
 
     if (isAddMode) {
-      /* if (
-        isAppointmentTaken &&
-        +newPatient.position.topMinutes <
-          +isAppointmentTaken.position.topMinutes +
-            +isAppointmentTaken.position.height
-      ) {
-        mySwal.fire({
-          icon: "warning",
-          title: (
-            <p>
-              Sorry this appointment is taken, please choose another day or
-              time!
-            </p>
-          ),
-          customClass: {
-            container: "alert-modal",
-          },
-        });
-        return;
-      } */
       sendData(
         setIsLoading,
         individualCollection,

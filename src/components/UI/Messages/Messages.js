@@ -21,18 +21,19 @@ export const SuccessMessage = (title, text) => {
   });
 };
 
-export const WarningMessage = (title, text) => {
-  mySwal
-    .fire({
-      title: title,
-      text: text,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "rgb(197, 27, 21)",
-      cancelButtonColor: "rgb(101, 195, 157)",
-      confirmButtonText: "Yes, delete it!",
-    })
-    .then((result) => {
-      return result.isConfirmed;
-    });
+export const WarningMessage = (
+  title,
+  text,
+  showCancelButton = true,
+  confirmButtonText = "Yes, delete it!"
+) => {
+  mySwal.fire({
+    title: title,
+    text: text,
+    icon: "warning",
+    showCancelButton: showCancelButton,
+    confirmButtonColor: "rgb(197, 27, 21)",
+    cancelButtonColor: "rgb(101, 195, 157)",
+    confirmButtonText: confirmButtonText,
+  });
 };
