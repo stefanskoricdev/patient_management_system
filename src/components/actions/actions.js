@@ -1,9 +1,5 @@
 import db from "../../services/firebase";
-import {
-  ErrorMessage,
-  SuccessMessage,
-  WarningMessage,
-} from "../UI/Messages/Messages";
+import { ErrorMessage, SuccessMessage } from "../UI/Messages/Messages";
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -77,7 +73,7 @@ export const deleteData = (
           .delete()
           .then(() => {
             setState((prevState) =>
-              prevState.filter((patient) => patient.id !== targetId)
+              prevState.filter((data) => data.id !== targetId)
             );
             setLoading(false);
             SuccessMessage(
@@ -121,41 +117,68 @@ export const updateData = (
       ErrorMessage(error);
     });
 };
-//Has to be upgraded more. Add messages and stuff!
+
 export const deletePhysio = (
-  collection,
+  physiosCollection,
   physio,
+  setPhysios,
   patients,
-  patientsCollection
+  patientsCollection,
+  setPatients
 ) => {
-  WarningMessage(
-    "Are you sure you want to delete data?",
-    "You won't be able to revert this!"
-  ).then((result) => {
-    if (result.isConfirmed) {
-      db.collection(collection)
-        .doc(physio.id)
-        .delete()
-        .then(() => {
-          const targetedPatients = patients.filter(
-            (patient) => patient.physiotherapist === physio.firstName
-          );
-          if (targetedPatients.length < 1) {
-            return;
-          }
-          targetedPatients.forEach((patient) => {
-            db.collection(patientsCollection)
-              .doc(patient.id)
-              .delete()
-              .then(() => {
-                SuccessMessage("Deleted!", "Data has been deleted!");
-              })
-              .catch((err) => ErrorMessage(err));
+  mySwal
+    .fire({
+      title: "Are you sure you want to delete data?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "rgb(197, 27, 21)",
+      cancelButtonColor: "rgb(101, 195, 157)",
+      confirmButtonText: "Yes, delete it!",
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        db.collection(physiosCollection)
+          .doc(physio.id)
+          .delete()
+          .then(() => {
+            setPhysios((prevState) =>
+              prevState.filter((data) => data.id !== physio.id)
+            );
+            //Delete targeted physio and then delete all its patients
+            const targetedPatients = patients.filter(
+              (patient) => patient.physiotherapist === physio.firstName
+            );
+            if (targetedPatients.length < 1) {
+              return;
+            }
+            batchDelete(patientsCollection, physio.firstName, setPatients);
+          })
+          .catch((error) => {
+            ErrorMessage(error);
           });
-        })
-        .catch((error) => {
-          ErrorMessage(error);
-        });
-    }
-  });
+      }
+    });
+};
+
+export const batchDelete = (collection, physio, setPatients) => {
+  db.collection(collection)
+    .where("physiotherapist", "==", physio)
+    .get()
+    .then((query) => {
+      const batch = db.batch();
+
+      query.forEach((doc) => {
+        batch.delete(doc.ref);
+        setPatients((prevState) =>
+          prevState.filter((data) => data.id !== doc.ref.id)
+        );
+      });
+
+      return batch.commit();
+    })
+    .then(() => {
+      SuccessMessage("Deleted!", "Data has been deleted!");
+    })
+    .catch((err) => ErrorMessage(err));
 };

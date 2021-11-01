@@ -9,7 +9,10 @@ import femaleAvatar from "../../../assets/img/female_avatar.svg";
 
 const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
   const { id } = useParams();
-  const transformedId = id.slice(0, -1);
+  //we get an id with index=someindex at the end,
+  //so we need to transform it to get only ID and APPOINTMENT INDEX
+  const findIndex = id.split("=").pop();
+  const transformedId = id.replace("index=", "").slice(0, -findIndex.length);
   const appCtx = useContext(AppContext);
   const { individualPatients, setIndividualPatients, setIsLoading } = appCtx;
 

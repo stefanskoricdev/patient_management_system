@@ -83,9 +83,11 @@ const IndividualSchedule = ({
 
                   pat.push(
                     <Link
+                      //We pass an index to the route so we can use it in PATIENT DETAIL and EDIT PATIENT components
+                      //To enable adding multiple appointments to same patient end to delete those appointments separately
                       to={`/patients/individual-patients/${physiotherapist.toLowerCase()}/patient-details/${
                         patient.id
-                      }${i}`}
+                      }index=${i}`}
                       key={patient.id + i}
                       style={
                         workingDays.length > 5

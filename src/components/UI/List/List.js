@@ -8,6 +8,8 @@ const List = ({
   dataKeys,
   rootPath = null,
   actions,
+  deletionData,
+  deleteHandler,
 }) => {
   return (
     <Fragment>
@@ -33,9 +35,27 @@ const List = ({
                       <Link to={`${rootPath}${dataItem.id}`}>
                         <i className="fas fa-user-edit"></i>
                       </Link>
-                      {/* <button>
+                      <button
+                        onClick={() => {
+                          const {
+                            physiosCollection,
+                            patientType,
+                            patientTypeCollection,
+                            setPatients,
+                            setPhysios,
+                          } = deletionData;
+                          deleteHandler(
+                            physiosCollection,
+                            dataItem,
+                            setPhysios,
+                            patientType,
+                            patientTypeCollection,
+                            setPatients
+                          );
+                        }}
+                      >
                         <i className="fas fa-user-times"></i>
-                      </button> */}
+                      </button>
                     </td>
                   )}
                   {dataKeys.map((key) => (

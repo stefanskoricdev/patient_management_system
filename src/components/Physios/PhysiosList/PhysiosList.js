@@ -4,10 +4,18 @@ import AppContext from "../../../store/AppProvider";
 import FilterForm from "../../UI/Forms/FilterForm/FilterForm";
 import filterListHandler from "../../../helpers/filterListHandler";
 import List from "../../UI/List/List";
+import { deletePhysio } from "../../actions/actions";
 
 const PhysiosList = ({ rootPath }) => {
   const appCtx = useContext(AppContext);
-  const { physios } = appCtx;
+  const {
+    physios,
+    setPhysios,
+    physiosCollection,
+    individualPatients,
+    setIndividualPatients,
+    individualCollection,
+  } = appCtx;
 
   const [physiosList, setPhysiosList] = useState(physios);
 
@@ -77,6 +85,14 @@ const PhysiosList = ({ rootPath }) => {
           dataKeys={dataKeys}
           rootPath={`${rootPath}/edit-physio/`}
           actions={true}
+          deletionData={{
+            physiosCollection: physiosCollection,
+            setPhysios: setPhysios,
+            patientType: individualPatients,
+            patientTypeCollection: individualCollection,
+            setPatients: setIndividualPatients,
+          }}
+          deleteHandler={deletePhysio}
         />
       </section>
     </section>

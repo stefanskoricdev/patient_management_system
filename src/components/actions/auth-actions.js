@@ -122,7 +122,6 @@ export const UpdatePassword = (
     .then((data) => {
       const newToken = data.idToken;
       localStorage.setItem("token", newToken);
-      console.log(data);
       updateData(setLoading, collection, targetId, dataToUpdate);
       setLoading(false);
       SuccessMessage("Success", "User has been updated!");
@@ -130,7 +129,6 @@ export const UpdatePassword = (
     })
     .catch((err) => {
       setLoading(false);
-      console.log(err);
       ErrorMessage(err);
     });
 };

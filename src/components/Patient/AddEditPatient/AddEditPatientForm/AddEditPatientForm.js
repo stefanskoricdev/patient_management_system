@@ -29,7 +29,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
   let initialValues = {
     firstName: "",
     lastName: "",
-    gender: "male",
+    gender: "",
     city: "",
     address: "",
     phoneNumber: "",
@@ -46,7 +46,8 @@ const AddEditPatientForm = ({ physiotherapist }) => {
   let transformedId;
 
   if (!isAddMode) {
-    transformedId = id.slice(0, -1);
+    const findIndex = id.split("=").pop();
+    transformedId = id.replace("index=", "").slice(0, -findIndex.length);
     patientToEdit = individualPatients.find(
       (patient) => patient.id === transformedId
     );
@@ -178,7 +179,6 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       );
       const updatedPatientsList = [...individualPatients];
       updatedPatientsList[targetedPatientIndex] = newPatient;
-      console.log(newPatient);
       updateData(
         setIsLoading,
         individualCollection,

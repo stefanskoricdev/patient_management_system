@@ -33,9 +33,12 @@ const Users = () => {
           <Route path={`${path}/add-user`}>
             <AddEditUser />
           </Route>
-          <Route path={`${path}/edit-user/:id`}>
+          {
+            // ADD EDIT USER FUNCTIONALITY!
+            /* <Route path={`${path}/edit-user/:id`}>
             <AddEditUser rootPath={path} />
-          </Route>
+          </Route> */
+          }
           <Route path="*">
             <Redirect to={`${path}/users-list`} />
           </Route>

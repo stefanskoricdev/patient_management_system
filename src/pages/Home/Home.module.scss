@@ -60,10 +60,14 @@
                         width: 100%;
                     }
 
+                    th {
+                        border-bottom: 1px solid $light-blue;
+                    }
+
                     th,
                     td {
                         width: fit-content;
-                        min-width: 10rem;
+                        min-width: 15rem;
                         padding: .5rem;
                         text-align: left;
                         border-right: 1px solid $light-blue;
