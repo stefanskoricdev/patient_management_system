@@ -21,7 +21,7 @@ const IndividualScheduler = ({ physiotherapist }) => {
   const appCtx = useContext(AppContext);
   const { individualPatients, individualCollection } = appCtx;
 
-  const { firstName, workingDays, workingHours } = physiotherapist;
+  const { firstName } = physiotherapist;
 
   const filteredPatients = individualPatients.filter(
     (patient) => patient.physiotherapist === firstName
@@ -30,20 +30,6 @@ const IndividualScheduler = ({ physiotherapist }) => {
   // which is sent in this component through appContext and then filtered according
   //to which physio this component belongs to (we get that through props).
   //This way we avoid data being fetched every time we click physio tab!
-  const workingDaysValue = workingDays.map((day, i) => (
-    <li key={i}>{day.substr(2)}</li>
-  ));
-  const workingHoursValue = workingHours.map((time, i) => {
-    const substrStartIndex = time.indexOf("_");
-    return (
-      <li key={i}>
-        <div></div>
-        <div></div>
-        <div></div>
-        {time.substr(substrStartIndex + 1)}
-      </li>
-    );
-  });
 
   useEffect(() => {
     setShowAddPatientBtn(true);
@@ -80,9 +66,7 @@ const IndividualScheduler = ({ physiotherapist }) => {
           <Route path={`${path}/schedule`}>
             <IndividualSchedule
               patients={filteredPatients}
-              workingDays={workingDaysValue}
-              workingHours={workingHoursValue}
-              physiotherapist={firstName}
+              physiotherapist={physiotherapist}
             />
           </Route>
           <Route path={`${path}/add-patient`}>

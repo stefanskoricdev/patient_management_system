@@ -10,13 +10,24 @@ const colorPallete = [
   "D17484",
 ];
 
-const IndividualSchedule = ({
-  patients,
-  workingDays,
-  workingHours,
-  physiotherapist,
-}) => {
+const IndividualSchedule = ({ patients, physiotherapist }) => {
+  const { firstName, workingDays, workingHours } = physiotherapist;
   const indexValue = workingDays.length * workingHours.length;
+
+  const workingDaysEl = workingDays.map((day, i) => (
+    <li key={i}>{day.substr(2)}</li>
+  ));
+  const workingHoursEl = workingHours.map((time, i) => {
+    const substrStartIndex = time.indexOf("_");
+    return (
+      <li key={i}>
+        <div></div>
+        <div></div>
+        <div></div>
+        {time.substr(substrStartIndex + 1)}
+      </li>
+    );
+  });
 
   const createScheduleBackground = () => {
     let scheduleFields = [];
@@ -45,10 +56,10 @@ const IndividualSchedule = ({
 
   return (
     <section className={styles.IndividualScheduleWrapper}>
-      <header className={styles.Header}>{workingDays}</header>
+      <header className={styles.Header}>{workingDaysEl}</header>
       <main className={styles.Main}>
         <section className={styles.Time}>
-          <ul>{workingHours}</ul>
+          <ul>{workingHoursEl}</ul>
         </section>
         <section
           className={styles.IndividualSchedule}
@@ -61,16 +72,20 @@ const IndividualSchedule = ({
           {patients.length > 0
             ? patients.map((patient) => {
                 let pat = [];
-                for (let i = 0; i < patient.position.length; i++) {
+                for (let i = 0; i < patient.appointment.length; i++) {
+                  const dayIndex = workingDays.findIndex(
+                    (day) => day === patient.appointment[i].day
+                  );
+                  const hoursIndex = workingHours.findIndex(
+                    (hour) => hour === patient.appointment[i].hours
+                  );
                   const positionValues = {
                     topPositionValue:
-                      patient.position[i].topHours * 12 +
-                      patient.position[i].topMinutes * 0.2,
+                      hoursIndex * 12 + patient.appointment[i].minutes * 0.2,
                     leftPosValueMoreDays:
-                      (patient.position[i].left * 100) / workingDays.length +
-                      0.5,
-                    leftPosValueLessDays: patient.position[i].left * 20 + 0.5,
-                    heightValue: patient.position[i].height * 0.2 - 0.1,
+                      (dayIndex * 100) / workingDays.length + 0.5,
+                    leftPosValueLessDays: dayIndex * 20 + 0.5,
+                    heightValue: patient.appointment[i].duration * 0.2 - 0.1,
                     widthValue: 100 / workingDays.length - 1,
                   };
                   const {
@@ -85,7 +100,7 @@ const IndividualSchedule = ({
                     <Link
                       //We pass an index to the route so we can use it in PATIENT DETAIL and EDIT PATIENT components
                       //To enable adding multiple appointments to same patient end to delete those appointments separately
-                      to={`/patients/individual-patients/${physiotherapist.toLowerCase()}/patient-details/${
+                      to={`/patients/individual-patients/${firstName.toLowerCase()}/patient-details/${
                         patient.id
                       }index=${i}`}
                       key={patient.id + i}

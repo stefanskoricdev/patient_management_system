@@ -1,5 +1,5 @@
 import styles from "./AddEditPhysioForm.module.scss";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { sendData, updateData } from "../../../actions/actions";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import uuid from "react-uuid";
@@ -164,11 +164,12 @@ const AddEditPhysioForm = ({ rootPath }) => {
       email: inputValues.email,
       phoneNumber: inputValues.phoneNumber,
       workingDays: daysInputValue.sort(),
-      workingHours: hoursInputValue.sort((a, b) => a > b),
+      workingHours: hoursInputValue.sort(),
       dateCreated: isAddMode
         ? firebase.firestore.FieldValue.serverTimestamp()
         : physioToEdit.dateCreated,
     };
+
     if (isAddMode) {
       sendData(setIsLoading, physiosCollection, newPhysio, setPhysios);
     } else {

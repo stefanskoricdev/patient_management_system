@@ -29,15 +29,15 @@ const AddEditPatientForm = ({ physiotherapist }) => {
   let initialValues = {
     firstName: "",
     lastName: "",
-    gender: "",
+    gender: "male",
     city: "",
     address: "",
     phoneNumber: "",
     email: "",
     dob: "",
     observation: "",
-    days: "0",
-    hours: "0",
+    days: physiotherapist.workingDays[0],
+    hours: physiotherapist.workingHours[0],
     minutes: "0",
     duration: "30",
   };
@@ -63,10 +63,10 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       email: patientToEdit.email,
       dob: patientToEdit.dateOfBirth,
       observation: patientToEdit.observation,
-      days: patientToEdit.position[appointmentIndex].left,
-      hours: patientToEdit.position[appointmentIndex].topHours,
-      minutes: patientToEdit.position[appointmentIndex].topMinutes,
-      duration: patientToEdit.position[appointmentIndex].height,
+      days: patientToEdit.appointment[appointmentIndex].day,
+      hours: patientToEdit.appointment[appointmentIndex].hours,
+      minutes: patientToEdit.appointment[appointmentIndex].minutes,
+      duration: patientToEdit.appointment[appointmentIndex].duration,
     };
   }
 
@@ -104,53 +104,40 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       dateOfBirth: inputValue.dob,
       observation: inputValue.observation,
       physiotherapist: physiotherapist.firstName,
-      position: isAddMode
+      appointment: isAddMode
         ? [
             {
-              topHours: inputValue.hours,
-              topMinutes: inputValue.minutes,
-              left: inputValue.days,
-              height: inputValue.duration,
+              hours: inputValue.hours,
+              minutes: inputValue.minutes,
+              day: inputValue.days,
+              duration: inputValue.duration,
+              appointmentIndex: 0,
             },
           ]
-        : patientToEdit.position.map((_, i) =>
+        : patientToEdit.appointment.map((_, i) =>
             i === appointmentIndex
               ? {
-                  topHours: inputValue.hours,
-                  topMinutes: inputValue.minutes,
-                  left: inputValue.days,
-                  height: inputValue.duration,
+                  hours: inputValue.hours,
+                  minutes: inputValue.minutes,
+                  day: inputValue.days,
+                  duration: inputValue.duration,
+                  appointmentIndex: 0,
                 }
               : {
-                  topHours: patientToEdit.position[i].topHours,
-                  topMinutes: patientToEdit.position[i].topMinutes,
-                  left: patientToEdit.position[i].left,
-                  height: patientToEdit.position[i].height,
+                  hours: patientToEdit.appointment[i].hours,
+                  minutes: patientToEdit.appointment[i].minutes,
+                  day: patientToEdit.appointment[i].day,
+                  duration: patientToEdit.appointment[i].duration,
+                  appointmentIndex: i,
                 }
           ),
       date: currentDate,
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
-    const newPatientTransformedPositions = newPatient.position.map(
-      (position) => {
-        const topHours = parseInt(position.topHours) * 60;
-        const topMinutes = parseInt(position.topMinutes);
-        const left = parseInt(position.left);
-        const height = parseInt(position.height);
-        const appointmentStart = topHours + topMinutes;
-        const appointmentEnd = appointmentStart + height;
-        return {
-          appointmentStart: appointmentStart,
-          appointmentEnd: appointmentEnd,
-          day: left,
-        };
-      }
-    );
 
     const isAppointmentTaken = checkAppointment(
       individualPatients,
       physiotherapist,
-      newPatientTransformedPositions,
       newPatient,
       isAddMode,
       appointmentIndex
@@ -309,7 +296,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
               >
                 {workingDays.map((day, i) => {
                   return (
-                    <option key={i} value={i}>
+                    <option key={i} value={day}>
                       {day.substr(2)}
                     </option>
                   );
@@ -329,7 +316,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
                 {workingHours.map((hour, i) => {
                   const substrStartIndex = hour.indexOf("_") + 1;
                   return (
-                    <option key={i} value={i}>
+                    <option key={i} value={hour}>
                       {hour.substr(substrStartIndex, 2)}
                     </option>
                   );

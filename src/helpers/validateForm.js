@@ -13,7 +13,7 @@ const errorModal = (message) => {
   });
 };
 
-const validateForm = (inputValues, checkboxInputs = [true]) => {
+const validateForm = (inputValues, checkboxInputs = false) => {
   const findEmptyInputHandler = () => {
     for (const key in inputValues) {
       if (inputValues[key] === "") {
@@ -28,12 +28,12 @@ const validateForm = (inputValues, checkboxInputs = [true]) => {
   const pattern = /^\d{9}$/;
 
   const checkboxInputIsValid = checkboxInputs
-    .reduce((currValue, prevValue) => {
-      return currValue + prevValue;
-    }, [])
-    .includes(true);
+    ? checkboxInputs.map((input) =>
+        input.some((inp) => inp === true) ? true : false
+      )
+    : [true];
 
-  if (!textInputsValue || !checkboxInputIsValid) {
+  if (!textInputsValue || checkboxInputIsValid.includes(false)) {
     errorModal("Please fill out all input fields");
     return false;
   }

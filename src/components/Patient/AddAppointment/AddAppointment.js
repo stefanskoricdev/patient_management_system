@@ -1,8 +1,10 @@
 import { useContext, useState } from "react";
 import { useRouteMatch, useHistory } from "react-router-dom";
+import { checkAppointment } from "../../../helpers/checkAppointment";
 import validateForm from "../../../helpers/validateForm";
 import AppContext from "../../../store/AppProvider";
 import { updateData } from "../../actions/actions";
+import { WarningMessage } from "../../UI/Messages/Messages";
 import styles from "./AddAppointment.module.scss";
 
 const AddAppointment = ({ physiotherapist }) => {
@@ -10,7 +12,8 @@ const AddAppointment = ({ physiotherapist }) => {
     params: { id },
   } = useRouteMatch();
 
-  const transformedId = id.slice(0, -1);
+  const findIndex = id.split("=").pop();
+  const transformedId = id.replace("index=", "").slice(0, -findIndex.length);
 
   const history = useHistory();
 
@@ -27,11 +30,12 @@ const AddAppointment = ({ physiotherapist }) => {
   );
 
   const initialValues = {
-    days: "0",
-    hours: "0",
+    days: physiotherapist.workingDays[0],
+    hours: physiotherapist.workingHours[0],
     minutes: "0",
-    duration: patientToUpdate.position[0].height,
+    duration: patientToUpdate.appointment[0].duration,
   };
+
   const [inputValue, setInputValue] = useState(initialValues);
 
   const { workingDays, workingHours } = physiotherapist;
@@ -47,13 +51,36 @@ const AddAppointment = ({ physiotherapist }) => {
     if (!validate) return;
 
     const updatedAppointment = {
-      topHours: inputValue.hours,
-      topMinutes: inputValue.minutes,
-      left: inputValue.days,
-      height: inputValue.duration,
+      hours: inputValue.hours,
+      minutes: inputValue.minutes,
+      day: inputValue.days,
+      duration: inputValue.duration,
+      appointmentIndex: patientToUpdate.appointment.length,
     };
 
-    patientToUpdate.position.push(updatedAppointment);
+    const updatedPatientPosition = {
+      appointment: [...patientToUpdate.appointment, { ...updatedAppointment }],
+    };
+
+    const isAppointmentTaken = checkAppointment(
+      individualPatients,
+      physiotherapist,
+      updatedPatientPosition,
+      false,
+      updatedAppointment.appointmentIndex
+    ).includes(true);
+
+    if (isAppointmentTaken) {
+      WarningMessage(
+        "Sorry but this appointment is taken",
+        "Please pick another day or time.",
+        false,
+        "Go back"
+      );
+      return;
+    }
+
+    patientToUpdate.appointment.push(updatedAppointment);
 
     const targetedPatientIndex = individualPatients.findIndex(
       (patient) => patient.id === patientToUpdate.id
@@ -87,7 +114,7 @@ const AddAppointment = ({ physiotherapist }) => {
           >
             {workingDays.map((day, i) => {
               return (
-                <option key={i} value={i}>
+                <option key={i} value={day}>
                   {day.substr(2)}
                 </option>
               );
@@ -107,7 +134,7 @@ const AddAppointment = ({ physiotherapist }) => {
             {workingHours.map((hour, i) => {
               const substrStartIndex = hour.indexOf("_") + 1;
               return (
-                <option key={i} value={i}>
+                <option key={i} value={hour}>
                   {hour.substr(substrStartIndex, 2)}
                 </option>
               );

@@ -1,7 +1,6 @@
 export const checkAppointment = (
   patientType,
   physio,
-  newPatientTransformedPositions,
   newPatient,
   mode,
   appointmentIndex
@@ -14,8 +13,19 @@ export const checkAppointment = (
     //Transform them so we pass an id to patient.position object,
     //We need that so we avoid being rejected to edit existing appointment
     const transformedPatients = targetedPatients.map((patient) => {
-      return patient.position.map((pat) => {
-        return { ...pat, id: patient.id };
+      return patient.appointment.map((pat) => {
+        const dayIndex = physio.workingDays.findIndex((day) => day === pat.day);
+        const hoursIndex = physio.workingHours.findIndex(
+          (hour) => hour === pat.hours
+        );
+        return {
+          ...pat,
+          day: dayIndex,
+          hours: hoursIndex,
+          minutes: parseInt(pat.minutes),
+          duration: parseInt(pat.duration),
+          id: patient.id,
+        };
       });
     });
     //Reduce all patient positions to one array so we can map through
@@ -26,19 +36,42 @@ export const checkAppointment = (
     //Transform hours to minutes so we can make "red zones", and if newly created patient
     //is in "red zone" that meens that appointment is taken
     const transformedAllPositions = allPatientPositions.map((position) => {
-      const topHours = parseInt(position.topHours) * 60;
-      const topMinutes = parseInt(position.topMinutes);
-      const left = parseInt(position.left);
-      const height = parseInt(position.height);
+      const topHours = position.hours * 60;
+      const topMinutes = position.minutes;
+      const day = position.day;
+      const duration = position.duration;
       const appointmentStart = topHours + topMinutes;
-      const appointmentEnd = appointmentStart + height;
+      const appointmentEnd = appointmentStart + duration;
       return {
         appointmentStart: appointmentStart,
         appointmentEnd: appointmentEnd,
-        day: left,
+        day: day,
         id: position.id,
+        appointmentIndex: position.appointmentIndex,
       };
     });
+
+    const newPatientTransformedPositions = newPatient.appointment.map(
+      (appointment) => {
+        const dayIndex = physio.workingDays.findIndex(
+          (day) => day === appointment.day
+        );
+        const hoursIndex = physio.workingHours.findIndex(
+          (hour) => hour === appointment.hours
+        );
+        const topHours = hoursIndex * 60;
+        const topMinutes = parseInt(appointment.minutes);
+        const day = dayIndex;
+        const duration = parseInt(appointment.duration);
+        const appointmentStart = topHours + topMinutes;
+        const appointmentEnd = appointmentStart + duration;
+        return {
+          appointmentStart: appointmentStart,
+          appointmentEnd: appointmentEnd,
+          day: day,
+        };
+      }
+    );
     //Conditions which create "red zones" on schedule so we cant appoint a patient
     //to allready taken day and time
     const isTakenResults = [];
@@ -50,14 +83,18 @@ export const checkAppointment = (
           //(This is the case with patients with multiple appointments)!
           newPatientTransformedPositions[appointmentIndex];
       if (
-        newPatient.id !== position.id &&
+        (newPatient.id !== position.id ||
+          (newPatient.id === position.id &&
+            appointmentIndex !== position.appointmentIndex)) &&
         day === position.day &&
         appointmentStart >= position.appointmentStart &&
         appointmentStart < position.appointmentEnd
       ) {
         isTakenResults.push(true);
       } else if (
-        newPatient.id !== position.id &&
+        (newPatient.id !== position.id ||
+          (newPatient.id === position.id &&
+            appointmentIndex !== position.appointmentIndex)) &&
         day === position.day &&
         appointmentEnd > position.appointmentStart &&
         appointmentEnd < position.appointmentEnd
