@@ -147,7 +147,14 @@ const EditProfile = () => {
   return (
     <section className={styles.EditProfile}>
       <div className={styles.ProfileImg}>
-        <img src={profileImgUrl ? profileImgUrl : defaultImg} alt="userImg" />
+        <img
+          src={
+            profileImgUrl === "undefined" || !profileImgUrl
+              ? defaultImg
+              : profileImgUrl
+          }
+          alt="userImg"
+        />
       </div>
       <form onSubmit={editProfileHandler} className={styles.ProfileForm}>
         {formInputs.map((input) => (

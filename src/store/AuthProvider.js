@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   const userIsLoggedIn = !!token;
 
   const loginHandler = (token, targetedUser) => {
-    const { isAdmin, firstName, id, profileImgUrl = null } = targetedUser;
+    const { isAdmin, firstName, id, profileImgUrl } = targetedUser;
     if (isAdmin) {
       setIsAdmin(isAdmin);
       localStorage.setItem("isAdmin", isAdmin);

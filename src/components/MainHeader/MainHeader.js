@@ -19,10 +19,10 @@ const MainHeader = ({ openNavHandler }) => {
       </button>
       <div className={styles.UserAvatar}>
         <p>{displayName}</p>
-        {profileImgUrl ? (
-          <img src={profileImgUrl} alt="profileImg" />
-        ) : (
+        {profileImgUrl === "undefined" || !profileImgUrl ? (
           <i className="fas fa-user"></i>
+        ) : (
+          <img src={profileImgUrl} alt="profileImg" />
         )}
       </div>
     </header>
