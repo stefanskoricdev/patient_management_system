@@ -24,21 +24,30 @@ export const AuthProvider = ({ children }) => {
   const initialIsAdminValue = localStorage.getItem("isAdmin");
   const [isAdmin, setIsAdmin] = useState(initialIsAdminValue);
 
+  const initialUserId = localStorage.getItem("userID");
+  const [userId, setUserId] = useState(initialUserId);
+
+  const initialProfileImgUrl = localStorage.getItem("profileImg");
+  const [profileImgUrl, setProfileImgUrl] = useState(initialProfileImgUrl);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const userIsLoggedIn = !!token;
 
   const loginHandler = (token, targetedUser) => {
-    const admin = targetedUser.isAdmin;
-    const displayName = targetedUser.firstName;
-    if (admin) {
-      setIsAdmin(admin);
-      localStorage.setItem("isAdmin", admin);
+    const { isAdmin, firstName, id, profileImgUrl = null } = targetedUser;
+    if (isAdmin) {
+      setIsAdmin(isAdmin);
+      localStorage.setItem("isAdmin", isAdmin);
     }
     setToken(token);
     localStorage.setItem("token", token);
-    setDisplayName(displayName);
-    localStorage.setItem("displayName", displayName);
+    setDisplayName(firstName);
+    localStorage.setItem("displayName", firstName);
+    setUserId(id);
+    localStorage.setItem("userID", id);
+    setProfileImgUrl(profileImgUrl);
+    localStorage.setItem("profileImg", profileImgUrl);
   };
 
   const logoutHandler = () => {
@@ -49,6 +58,8 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     localStorage.removeItem("token");
     localStorage.removeItem("displayName");
+    localStorage.removeItem("userID");
+    localStorage.removeItem("profileImg");
   };
 
   useEffect(() => {
@@ -61,6 +72,8 @@ export const AuthProvider = ({ children }) => {
     users,
     token,
     displayName,
+    userId,
+    profileImgUrl,
     setIsLoading,
     isLoading,
     isAdmin,

@@ -38,6 +38,12 @@ const MainNavigation = ({ isNavBtnClicked }) => {
               <p>Notes</p>
             </NavLink>
           </li>
+          <li>
+            <NavLink activeClassName={styles.active} to="/profile">
+              <i className="fas fa-user"></i>
+              <p>Profile</p>
+            </NavLink>
+          </li>
           {isAdmin && (
             <li>
               <NavLink activeClassName={styles.active} to="/settings">

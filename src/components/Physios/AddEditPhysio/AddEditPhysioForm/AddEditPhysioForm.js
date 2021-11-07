@@ -39,10 +39,10 @@ const AddEditPhysioForm = ({ rootPath }) => {
   const isAddMode = !id;
 
   let initialValue = {
-    firstName: "Test",
-    lastName: "Test",
-    email: "test@test.com",
-    phoneNumber: "065123123",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
   };
   let initialDaysValue = [];
   let initialHoursValue = [];

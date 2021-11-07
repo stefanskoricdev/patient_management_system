@@ -96,9 +96,13 @@ export const updateData = (
   targetId,
   data,
   setState,
-  updatedData
+  updatedData,
+  storageKeys = [],
+  storageValues = []
 ) => {
   setLoading(true);
+  console.log(storageKeys);
+  console.log(storageValues);
   db.collection(collection)
     .doc(targetId)
     .get()
@@ -106,6 +110,11 @@ export const updateData = (
       if (doc.exists) {
         setLoading(false);
         setState(updatedData);
+        if (storageKeys.length > 0) {
+          storageKeys.forEach((key, i) => {
+            localStorage.setItem(`${key}`, `${storageValues[i]}`);
+          });
+        }
         SuccessMessage("Success", "Your data has been updated successfully");
         return doc.ref.update(data);
       } else {

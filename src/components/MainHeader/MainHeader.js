@@ -4,7 +4,7 @@ import AuthContext from "../../store/AuthProvider";
 
 const MainHeader = ({ openNavHandler }) => {
   const authCtx = useContext(AuthContext);
-  const { displayName } = authCtx;
+  const { displayName, profileImgUrl } = authCtx;
 
   return (
     <header className={styles.MainHeader}>
@@ -19,7 +19,11 @@ const MainHeader = ({ openNavHandler }) => {
       </button>
       <div className={styles.UserAvatar}>
         <p>{displayName}</p>
-        <i className="fas fa-user"></i>
+        {profileImgUrl ? (
+          <img src={profileImgUrl} alt="profileImg" />
+        ) : (
+          <i className="fas fa-user"></i>
+        )}
       </div>
     </header>
   );

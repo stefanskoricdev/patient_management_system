@@ -9,6 +9,7 @@ import Loader from "./components/UI/Loader/Loader";
 import Login from "./pages/Login/Login";
 import AuthContext from "./store/AuthProvider";
 import Settings from "./pages/Settings/Settings";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -47,6 +48,9 @@ function App() {
             </Route>
             <Route path="/notes">
               <Notes />
+            </Route>
+            <Route path="/profile">
+              <Profile />
             </Route>
             {isAdmin && (
               <Route path="/settings">

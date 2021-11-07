@@ -1,0 +1,29 @@
+@import "../../assets/colors/colors";
+@import "../../assets/mixins/pages";
+
+.Profile {
+    @include pageWrapper;
+
+    @include pageHeader;
+
+    .Main {
+        @include pageNav;
+
+        .MainContent {
+            border: 4px solid $dark-blue;
+            border-radius: .5rem;
+            margin-top: 1rem;
+            padding: .5rem 0;
+        }
+    }
+}
+
+@media (min-width: 1023px) {
+    .Profile {
+        @include pageWrapper1023;
+
+        .Nav {
+            overflow-x: auto;
+        }
+    }
+}

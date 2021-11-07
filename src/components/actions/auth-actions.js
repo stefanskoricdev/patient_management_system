@@ -10,8 +10,6 @@ import firebase from "firebase/app";
 export const AddUser = (
   email,
   password,
-  isAddMode,
-  id,
   firstName,
   lastName,
   sendData,
@@ -25,7 +23,7 @@ export const AddUser = (
     .createUserWithEmailAndPassword(email, password)
     .then((userCredentials) => {
       const newUser = {
-        id: isAddMode ? userCredentials.user.uid : id,
+        id: userCredentials.user.uid,
         firstName: firstName,
         lastName: lastName,
         email: email,

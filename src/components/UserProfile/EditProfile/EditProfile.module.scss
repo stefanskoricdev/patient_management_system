@@ -1,0 +1,76 @@
+@import "../../../assets/colors/colors";
+
+.EditProfile {
+    .ProfileImg {
+        position: relative;
+        width: 100%;
+        height: 10rem;
+        margin: auto;
+
+        img {
+            position: relative;
+            display: block;
+            width: 10rem;
+            height: 10rem;
+            margin: 5rem auto 0;
+            border: 10px solid $light-blue;
+            border-radius: 100%;
+            background-color: $light-blue;
+        }
+    }
+
+    .ProfileImg::before {
+        display: block;
+        position: absolute;
+        top: -5.5rem;
+        content: "";
+        width: 100%;
+        height: 10rem;
+        background-color: $dark-blue;
+    }
+
+    .ProfileForm {
+        display: flex;
+        flex-flow: column;
+
+        label {
+            display: flex;
+            flex-flow: column;
+            width: 20rem;
+            max-width: 95%;
+            margin: .5rem auto;
+            color: $dark-blue;
+            font-weight: 700;
+
+            input {
+                height: 2.5rem;
+                margin: .5rem 0 0;
+                background-color: $light-blue;
+                border: 2px solid $dark-blue;
+                border-radius: .5rem;
+            }
+
+
+            input[type="file"]::-webkit-file-upload-button {
+                height: 100%;
+                background-color: $dark-blue;
+                border: none;
+                color: $light-blue;
+            }
+        }
+
+        button {
+            display: block;
+            width: 6rem;
+            margin: 1rem auto;
+            padding: .5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: $light-blue;
+            border-radius: .5rem;
+            border: none;
+            background-color: $dark-blue;
+        }
+    }
+}
