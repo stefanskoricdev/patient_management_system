@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getData } from "../components/actions/actions";
 
-const AuthContext = React.createContext({
+const AuthContext =
+  React.createContext(/* {
   token: "",
   user: "",
   isLoggedIn: false,
@@ -9,7 +10,7 @@ const AuthContext = React.createContext({
   login: () => {},
   logout: () => {},
   setDisplayName: () => {},
-});
+} */);
 
 const USERS_COLLECTION = "users";
 
@@ -72,8 +73,10 @@ export const AuthProvider = ({ children }) => {
     users,
     token,
     displayName,
+    setDisplayName,
     userId,
     profileImgUrl,
+    setProfileImgUrl,
     setIsLoading,
     isLoading,
     isAdmin,

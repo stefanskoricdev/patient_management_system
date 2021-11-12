@@ -36,7 +36,7 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
 
     const deleteHandler = () => {
       //If patient has only one appointment simply delete it!
-      if (pat.position.length === 1) {
+      if (pat.appointment.length === 1) {
         deleteData(
           setIsLoading,
           setIndividualPatients,
@@ -52,7 +52,7 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
       const targetedPatientIndex = individualPatients.findIndex(
         (patient) => patient.id === pat.id
       );
-      pat.position.splice(findIndex, 1);
+      pat.appointment.splice(findIndex, 1);
       const updatedPatientsList = [...individualPatients];
       updatedPatientsList[targetedPatientIndex] = pat;
       updateData(

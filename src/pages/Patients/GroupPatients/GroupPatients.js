@@ -1,6 +1,7 @@
 import styles from "./GroupPatients.module.scss";
 import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import GroupsScheduler from "../../../components/GroupsScheduler/GroupsScheduler";
+import comingSoon from "../../../assets/img/coming_soon.png";
 const physioConfig = [
   {
     id: "p1",
@@ -22,7 +23,7 @@ const Groups = () => {
       <header className={styles.Header}>
         <h1>Groups</h1>
       </header>
-      <nav className={styles.Nav}>
+      {/* <nav className={styles.Nav}>
         {physioConfig.map((physio) => {
           return (
             <NavLink
@@ -35,8 +36,8 @@ const Groups = () => {
             </NavLink>
           );
         })}
-      </nav>
-      <main className={styles.Main}>
+      </nav> */}
+      {/* <main className={styles.Main}>
         <Switch>
           <Route path="/patients/group-patients/" exact>
             <Redirect
@@ -65,8 +66,8 @@ const Groups = () => {
             />
           </Route>
         </Switch>
-      </main>
-      {/* <img src={comingSoon} alt="cooming-soon"></img> */}
+      </main> */}
+      <img src={comingSoon} alt="cooming-soon"></img>
     </section>
   );
 };

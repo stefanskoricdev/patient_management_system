@@ -101,8 +101,6 @@ export const updateData = (
   storageValues = []
 ) => {
   setLoading(true);
-  console.log(storageKeys);
-  console.log(storageValues);
   db.collection(collection)
     .doc(targetId)
     .get()
@@ -118,7 +116,7 @@ export const updateData = (
         SuccessMessage("Success", "Your data has been updated successfully");
         return doc.ref.update(data);
       } else {
-        throw new Error("Data does not exist");
+        throw new Error("Data does not exist. Please try again later!");
       }
     })
     .catch((error) => {

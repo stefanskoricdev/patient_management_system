@@ -55,22 +55,27 @@ const AddEditPhysioForm = ({ rootPath }) => {
 
   if (!isAddMode && physios.length > 0) {
     physioToEdit = physios.find((physio) => physio.id === id);
+    //Get working days indexes of targeted physio.
     const dayIndex = physioToEdit.workingDays.map((day) => {
       const index = day.indexOf("_");
       return day.substr(0, index);
     });
+    //Get working hours indexes of targeted physio.
     const hoursIndex = physioToEdit.workingHours.map((hours) => {
       const index = hours.indexOf("_");
       return hours.substr(0, index);
     });
+
     initialValue = {
       firstName: physioToEdit.firstName,
       lastName: physioToEdit.lastName,
       email: physioToEdit.email,
       phoneNumber: physioToEdit.phoneNumber,
     };
+
     initialDaysValue = [...physioToEdit.workingDays];
     initialHoursValue = [...physioToEdit.workingHours];
+
     dayIndex.forEach((index) => {
       const transformedIndex = parseInt(index);
       initialDaysCheckValue[transformedIndex] = true;

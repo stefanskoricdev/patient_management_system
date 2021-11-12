@@ -7,6 +7,9 @@ import FormInput from "../../../UI/Forms/FormInput/FormInput";
 import validateForm from "../../../../helpers/validateForm";
 import { AddUser } from "../../../actions/auth-actions";
 
+const DEFAULT_PROFILE_IMG_URL =
+  "https://firebasestorage.googleapis.com/v0/b/dmf-patient-management-d003a.appspot.com/o/user-circle-solid-240.png?alt=media&token=43ff9eff-b670-49c5-a93a-74582edc6719";
+
 const AddUserForm = () => {
   let history = useHistory();
 
@@ -16,6 +19,7 @@ const AddUserForm = () => {
   const initialValues = {
     firstName: "",
     lastName: "",
+    gender: "male",
     email: "",
     password: "",
   };
@@ -40,6 +44,11 @@ const AddUserForm = () => {
 
   const [inputValues, setInputValues] = useState(initialValues);
 
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setInputValues({ ...inputValues, [name]: value });
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -47,22 +56,23 @@ const AddUserForm = () => {
     if (!validate) return;
 
     const { firstName, lastName, email, password } = inputValues;
+
+    let newUser = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      profileImgUrl: DEFAULT_PROFILE_IMG_URL,
+    };
+
     AddUser(
-      email,
-      password,
-      firstName,
-      lastName,
+      newUser,
       sendData,
       setIsLoading,
       usersCollection,
       setUsers,
       history
     );
-  };
-
-  const onChangeHandler = (e) => {
-    const { name, value } = e.target;
-    setInputValues({ ...inputValues, [name]: value });
   };
 
   return (

@@ -3,7 +3,6 @@ import { useState, useRef, useContext, useEffect } from "react";
 import { storage } from "../../../services/firebase";
 import { updateData } from "../../actions/actions";
 import { ErrorMessage } from "../../UI/Messages/Messages";
-import defaultImg from "../../../assets/img/male_avatar.svg";
 import FormInput from "../../UI/Forms/FormInput/FormInput";
 import AuthContext from "../../../store/AuthProvider";
 import validateForm from "../../../helpers/validateForm";
@@ -17,30 +16,33 @@ const EditProfile = () => {
     users,
     setUsers,
     profileImgUrl,
+    setProfileImgUrl,
+    setDisplayName,
   } = authCtx;
 
   const storageRef = storage.ref();
 
-  let initialValues = {
+  const [value, setValue] = useState({
     firstName: "",
     lastName: "",
     phoneNumber: "",
     dob: "",
-  };
-
-  if (users && users.length > 0) {
-    const targetedUser = users.find((user) => user.id === userId);
-    initialValues = {
-      firstName: targetedUser.firstName,
-      lastName: targetedUser.lastName,
-      phoneNumber: targetedUser.phoneNumber ? targetedUser.phoneNumber : "",
-      dob: targetedUser.dob ? targetedUser.dob : "",
-    };
-  }
-
-  const [value, setValue] = useState(initialValues);
+  });
 
   const fileInput = useRef();
+
+  useEffect(() => {
+    if (users && users.length > 0) {
+      const targetedUser = users.find((user) => user.id === userId);
+      const initialValues = {
+        firstName: targetedUser.firstName,
+        lastName: targetedUser.lastName,
+        phoneNumber: targetedUser.phoneNumber ? targetedUser.phoneNumber : "",
+        dob: targetedUser.dob ? targetedUser.dob : "",
+      };
+      setValue(initialValues);
+    }
+  }, [users, userId]);
 
   const editProfileHandler = (e) => {
     e.preventDefault();
@@ -63,38 +65,72 @@ const EditProfile = () => {
     updatedUsersList[targetedUserIndex] = updatedUser;
 
     const fileRef = fileInput.current.files[0];
-
+    // If there is a file inside file input send files to firebase storage.
     if (fileRef) {
-      const profileImgRef = storageRef.child(
+      const profileImgsRef = storageRef.child(`profileImages/${userId}`);
+      const imgRef = storageRef.child(
         `profileImages/${userId}/${fileRef.name}`
       );
 
-      profileImgRef
-        .put(fileRef)
-        .then((snapshot) => {
-          snapshot.ref.getDownloadURL().then((url) => {
-            updatedUser = {
-              id: userId,
-              firstName: firstName,
-              lastName: lastName,
-              phoneNumber: phoneNumber,
-              dob: dob,
-              profileImgUrl: url,
-            };
+      const addToStorage = () => {
+        imgRef
+          .put(fileRef)
+          .then((snapshot) => {
+            snapshot.ref
+              .getDownloadURL()
+              .then((url) => {
+                updatedUser = {
+                  id: userId,
+                  firstName: firstName,
+                  lastName: lastName,
+                  phoneNumber: phoneNumber,
+                  dob: dob,
+                  profileImgUrl: url,
+                };
+                updateData(
+                  setIsLoading,
+                  usersCollection,
+                  userId,
+                  updatedUser,
+                  setUsers,
+                  updatedUsersList,
+                  ["displayName", "profileImg"],
+                  [updatedUser.firstName, url]
+                );
+                return { displayName: updatedUser.firstName, imgUrl: url };
+              })
+              .then((data) => {
+                setDisplayName(data.displayName);
+                setProfileImgUrl(data.imgUrl);
+              });
+          })
+          .catch((err) => ErrorMessage(err));
+      };
 
-            updateData(
-              setIsLoading,
-              usersCollection,
-              userId,
-              updatedUser,
-              setUsers,
-              updatedUsersList,
-              ["displayName", "profileImg"],
-              [updatedUser.firstName, url]
-            );
-          });
-        })
-        .catch((err) => ErrorMessage(err));
+      setIsLoading(true);
+
+      //Check if user already has existing profile img.
+      //If it has, delete it first and then add new one.
+      profileImgsRef.listAll().then((res) => {
+        const responseItems = res.items;
+        const targetedUserImg = responseItems.find((item) => item.name);
+        if (!!targetedUserImg) {
+          const uidImgRef = storageRef.child(
+            `/profileImages/${userId}/${targetedUserImg.name}`
+          );
+          uidImgRef
+            .delete()
+            .then(() => {
+              addToStorage("Add storage with delete!");
+            })
+            .catch((err) => {
+              setIsLoading(false);
+              ErrorMessage(err);
+            });
+        } else {
+          addToStorage("Add storage without delete!");
+        }
+      });
       return;
     }
     updateData(
@@ -107,6 +143,7 @@ const EditProfile = () => {
       ["displayName"],
       [updatedUser.firstName]
     );
+    setDisplayName(updatedUser.firstName);
   };
 
   const onChangeHandler = (e) => {
@@ -146,15 +183,8 @@ const EditProfile = () => {
 
   return (
     <section className={styles.EditProfile}>
-      <div className={styles.ProfileImg}>
-        <img
-          src={
-            profileImgUrl === "undefined" || !profileImgUrl
-              ? defaultImg
-              : profileImgUrl
-          }
-          alt="userImg"
-        />
+      <div key="uniqueKey" className={styles.ProfileImg}>
+        <img src={profileImgUrl} alt="userImg" />
       </div>
       <form onSubmit={editProfileHandler} className={styles.ProfileForm}>
         {formInputs.map((input) => (

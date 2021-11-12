@@ -50,7 +50,9 @@
         img {
             width: 3rem;
             height: 3rem;
+            object-fit: cover;
             border-radius: 100%;
+            background-color: $light-blue;
         }
 
 
@@ -62,9 +64,6 @@
         position: static;
         width: calc(95% - 2rem);
         margin-left: 5rem;
-        /* .BurgerBtn {
-            margin-left: 4rem;
-        } */
 
         .UserAvatar {
             margin-right: 0;

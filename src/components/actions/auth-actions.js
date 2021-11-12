@@ -8,10 +8,7 @@ import { deleteData, updateData } from "./actions";
 import firebase from "firebase/app";
 
 export const AddUser = (
-  email,
-  password,
-  firstName,
-  lastName,
+  newUser,
   sendData,
   setIsLoading,
   collection,
@@ -19,6 +16,7 @@ export const AddUser = (
   history
 ) => {
   setIsLoading(true);
+  const { firstName, lastName, email, password, profileImgUrl } = newUser;
   auth
     .createUserWithEmailAndPassword(email, password)
     .then((userCredentials) => {
@@ -29,7 +27,7 @@ export const AddUser = (
         email: email,
         dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
         isAdmin: false,
-        password: password,
+        profileImgUrl: profileImgUrl,
       };
       sendData(setIsLoading, collection, newUser, setUsers);
       setIsLoading(false);
