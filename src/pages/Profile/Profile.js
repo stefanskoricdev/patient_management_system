@@ -3,11 +3,14 @@ import { useContext } from "react";
 import { NavLink, Route, useRouteMatch, Redirect } from "react-router-dom";
 import AppContext from "../../store/AppProvider";
 import EditProfile from "../../components/UserProfile/EditProfile/EditProfile";
+import ChangeEmailPassword from "../../components/UserProfile/ChangeEmailPassword/ChangeEmailPassword";
 
 const Profile = () => {
   const appCtx = useContext(AppContext);
   const { currentDate } = appCtx;
+
   const { path } = useRouteMatch();
+
   return (
     <section className={styles.Profile}>
       <header className={styles.Header}>
@@ -37,10 +40,10 @@ const Profile = () => {
             <EditProfile />
           </Route>
           <Route path={`${path}/change-email`}>
-            <h1>Change password</h1>
+            <ChangeEmailPassword data="Email" />
           </Route>
           <Route path={`${path}/change-password`}>
-            <h1>Change email</h1>
+            <ChangeEmailPassword data="Password" />
           </Route>
         </section>
       </main>

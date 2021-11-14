@@ -31,23 +31,10 @@ const EditProfile = () => {
 
   const fileInput = useRef();
 
-  useEffect(() => {
-    if (users && users.length > 0) {
-      const targetedUser = users.find((user) => user.id === userId);
-      const initialValues = {
-        firstName: targetedUser.firstName,
-        lastName: targetedUser.lastName,
-        phoneNumber: targetedUser.phoneNumber ? targetedUser.phoneNumber : "",
-        dob: targetedUser.dob ? targetedUser.dob : "",
-      };
-      setValue(initialValues);
-    }
-  }, [users, userId]);
-
   const editProfileHandler = (e) => {
     e.preventDefault();
 
-    const { firstName, lastName, phoneNumber, dob } = value;
+    const { firstName, lastName, phoneNumber, dob, email } = value;
 
     const validate = validateForm(value);
     if (!validate) return;
@@ -57,6 +44,7 @@ const EditProfile = () => {
       firstName: firstName,
       lastName: lastName,
       phoneNumber: phoneNumber,
+      email: email,
       dob: dob,
     };
 
@@ -121,14 +109,14 @@ const EditProfile = () => {
           uidImgRef
             .delete()
             .then(() => {
-              addToStorage("Add storage with delete!");
+              addToStorage();
             })
             .catch((err) => {
               setIsLoading(false);
               ErrorMessage(err);
             });
         } else {
-          addToStorage("Add storage without delete!");
+          addToStorage();
         }
       });
       return;
@@ -180,6 +168,20 @@ const EditProfile = () => {
       value: value.dob,
     },
   ];
+
+  useEffect(() => {
+    if (users && users.length > 0) {
+      const targetedUser = users.find((user) => user.id === userId);
+      const initialValues = {
+        firstName: targetedUser.firstName,
+        lastName: targetedUser.lastName,
+        phoneNumber: targetedUser.phoneNumber ? targetedUser.phoneNumber : "",
+        dob: targetedUser.dob ? targetedUser.dob : "",
+        email: targetedUser.email,
+      };
+      setValue(initialValues);
+    }
+  }, [users, userId]);
 
   return (
     <section className={styles.EditProfile}>
