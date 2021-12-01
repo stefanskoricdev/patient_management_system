@@ -8,7 +8,7 @@ import firebase from "firebase/app";
 import FormInput from "../../../UI/Forms/FormInput/FormInput";
 import validateForm from "../../../../helpers/validateForm";
 import { Fragment } from "react";
-
+/* 
 const workingDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const workingHours = [
   "08:00",
@@ -25,9 +25,9 @@ const workingHours = [
   "19:00",
   "20:00",
   "21:00",
-];
+]; */
 
-const AddEditPhysioForm = ({ rootPath }) => {
+const AddEditPhysioForm = ({ rootPath, workingDays, workingHours }) => {
   const history = useHistory();
   const {
     params: { id },
@@ -170,11 +170,11 @@ const AddEditPhysioForm = ({ rootPath }) => {
       phoneNumber: inputValues.phoneNumber,
       workingDays: daysInputValue.sort(),
       workingHours: hoursInputValue.sort(),
+      physioType: "individual",
       dateCreated: isAddMode
         ? firebase.firestore.FieldValue.serverTimestamp()
         : physioToEdit.dateCreated,
     };
-
     if (isAddMode) {
       sendData(setIsLoading, physiosCollection, newPhysio, setPhysios);
     } else {
@@ -226,7 +226,7 @@ const AddEditPhysioForm = ({ rootPath }) => {
           <main>
             {workingDays.map((day, i) => {
               return (
-                <label key={i}>
+                <label key={day}>
                   {day}
                   <input
                     name={`${day}`}
@@ -254,7 +254,7 @@ const AddEditPhysioForm = ({ rootPath }) => {
           <main>
             {workingHours.map((hour, i) => {
               return (
-                <label key={i}>
+                <label key={hour}>
                   {hour}
                   <input
                     name={`${hour}`}

@@ -8,6 +8,25 @@ import {
 } from "react-router-dom";
 import PhysiosList from "./PhysiosList/PhysiosList";
 import AddEditPhysio from "./AddEditPhysio/AddEditPhysio";
+import AddEditGroupPhysio from "./AddEditGroupPhysio/AddEditGroupPhysio";
+
+const workingDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const workingHours = [
+  "08:00",
+  "09:00",
+  "10:00",
+  "11:00",
+  "12:00",
+  "13:00",
+  "14:00",
+  "15:00",
+  "16:00",
+  "17:00",
+  "18:00",
+  "19:00",
+  "20:00",
+  "21:00",
+];
 
 const Physios = () => {
   const { path } = useRouteMatch();
@@ -22,6 +41,13 @@ const Physios = () => {
           Add physio
           <i className="fas fa-caret-up"></i>
         </NavLink>
+        <NavLink
+          activeClassName={styles.active}
+          to={`${path}/add-group-physio`}
+        >
+          Add group physio
+          <i className="fas fa-caret-up"></i>
+        </NavLink>
       </nav>
       <main>
         <Switch>
@@ -32,10 +58,21 @@ const Physios = () => {
             <PhysiosList rootPath={path} />
           </Route>
           <Route path={`${path}/add-physio`}>
-            <AddEditPhysio rootPath={path} />
+            <AddEditPhysio
+              workingDays={workingDays}
+              workingHours={workingHours}
+              rootPath={path}
+            />
           </Route>
           <Route path={`${path}/edit-physio/:id`}>
-            <AddEditPhysio rootPath={path} />
+            <AddEditPhysio
+              workingDays={workingDays}
+              workingHours={workingHours}
+              rootPath={path}
+            />
+          </Route>
+          <Route path={`${path}/add-group-physio`}>
+            <AddEditGroupPhysio workingHours={workingHours} rootPath={path} />
           </Route>
           <Route path="*">
             <Redirect to={`${path}/physios-list`} />

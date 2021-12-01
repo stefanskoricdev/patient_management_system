@@ -33,7 +33,6 @@ const ChangeEmailPassword = ({ data }) => {
     const validate = validateForm(inputValue);
     if (!validate) return;
     if (data === "Email" && inputValue.currentData !== currentEmail) {
-      console.log(currentEmail);
       WarningMessage(
         "Warning",
         `The old email you have entered is incorrect!`,
@@ -79,7 +78,6 @@ const ChangeEmailPassword = ({ data }) => {
         } else {
           return response.json().then((errData) => {
             if (errData && errData.error && errData.error.message) {
-              console.log(errData);
               let errorMessage;
               if (
                 errData.error.message === "INVALID_ID_TOKEN" ||

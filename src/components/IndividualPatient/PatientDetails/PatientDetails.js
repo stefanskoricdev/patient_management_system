@@ -67,7 +67,7 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
     };
 
     return (
-      <Fragment key={i}>
+      <Fragment>
         <header>
           <div>
             <img

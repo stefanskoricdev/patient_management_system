@@ -1,0 +1,13 @@
+@import "../../../assets/colors/colors";
+
+.AddGroupPatientWrapper {
+    height: fit-content;
+    width: 30rem;
+    max-width: 95%;
+    margin: 2rem auto;
+    overflow: hidden;
+    border-radius: .5rem;
+    color: $whiteish;
+    background-color: $dark-blue;
+    box-shadow: 5px 5px 10px $dark-blue;
+}

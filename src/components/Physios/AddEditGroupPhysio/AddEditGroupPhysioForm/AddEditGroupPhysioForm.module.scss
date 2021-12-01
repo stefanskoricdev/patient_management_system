@@ -1,0 +1,91 @@
+@import "../../../../assets/colors/colors";
+
+.Form {
+    max-width: 25rem;
+    margin: 1rem auto;
+    padding: .5rem;
+    border-radius: .5rem;
+    background-color: $dark-blue;
+    box-shadow: 5px 5px 10px $dark-blue;
+
+    h2 {
+        text-align: center;
+    }
+
+    input {
+        background-color: $whiteish;
+        border-radius: .2rem;
+        border: none;
+    }
+
+    .BasicInfo,
+    .CreateGroup {
+        label {
+            display: flex;
+            flex-flow: column;
+            margin: .5rem 0;
+
+            input {
+                height: 2rem;
+                padding: .2rem;
+                margin: .5rem 0;
+            }
+        }
+    }
+
+    .CreateGroup {
+        select {
+            height: 2rem;
+            padding: .2rem;
+            margin: .5rem 0;
+        }
+
+        button {
+            width: 4rem;
+            height: 2rem;
+            border: none;
+            border-radius: .2rem;
+        }
+
+        .GroupCfgPreview {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            width: 100%;
+            max-height: 15rem;
+            margin: .5rem auto;
+            padding: 0 .5rem;
+            border: 1px solid $whiteish;
+            border-radius: .5rem;
+            overflow-y: scroll;
+
+            p {
+                position: relative;
+                width: 6rem;
+                text-align: center;
+                background-color: $light-blue;
+                padding: 1rem;
+                border-radius: .5rem;
+
+                svg {
+                    position: absolute;
+                    top: .2rem;
+                    right: .2rem;
+                }
+            }
+        }
+    }
+
+    .SubmitBtn {
+        display: block;
+        width: 6rem;
+        height: 2rem;
+        margin: 2rem auto 1rem;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: $dark-blue;
+        border-radius: .5rem;
+        border: none;
+    }
+}

@@ -121,6 +121,7 @@ const EditProfile = () => {
       });
       return;
     }
+    //If user didnt pick img file just update other data.
     updateData(
       setIsLoading,
       usersCollection,

@@ -23,6 +23,7 @@ const PhysiosList = ({ rootPath }) => {
   const lastNameRef = useRef();
   const emailRef = useRef();
   const idRef = useRef();
+  const typeRef = useRef();
 
   const filterInputs = [
     {
@@ -44,6 +45,12 @@ const PhysiosList = ({ rootPath }) => {
       inputRef: emailRef,
     },
     {
+      label: "Type",
+      name: "physioType",
+      type: "text",
+      inputRef: typeRef,
+    },
+    {
       label: "Id",
       name: "id",
       type: "text",
@@ -51,8 +58,20 @@ const PhysiosList = ({ rootPath }) => {
     },
   ];
 
-  const tableHeader = ["First name", "Last name", "email", "phone number"];
-  const dataKeys = ["firstName", "lastName", "email", "phoneNumber"];
+  const tableHeader = [
+    "First name",
+    "Last name",
+    "email",
+    "phone number",
+    "type",
+  ];
+  const dataKeys = [
+    "firstName",
+    "lastName",
+    "email",
+    "phoneNumber",
+    "physioType",
+  ];
 
   useEffect(() => {
     setPhysiosList(physios);
@@ -69,7 +88,7 @@ const PhysiosList = ({ rootPath }) => {
           submit={(e) =>
             filterListHandler(
               e,
-              [firstNameRef, lastNameRef, emailRef, idRef],
+              [firstNameRef, lastNameRef, emailRef, idRef, typeRef],
               physios,
               setPhysiosList
             )

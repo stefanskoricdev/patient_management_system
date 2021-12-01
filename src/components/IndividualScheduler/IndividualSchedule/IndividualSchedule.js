@@ -14,13 +14,13 @@ const IndividualSchedule = ({ patients, physiotherapist }) => {
   const { firstName, workingDays, workingHours } = physiotherapist;
   const indexValue = workingDays.length * workingHours.length;
 
-  const workingDaysEl = workingDays.map((day, i) => (
-    <li key={i}>{day.substr(2)}</li>
+  const workingDaysEl = workingDays.map((day) => (
+    <li key={day}>{day.substr(2)}</li>
   ));
-  const workingHoursEl = workingHours.map((time, i) => {
+  const workingHoursEl = workingHours.map((time) => {
     const substrStartIndex = time.indexOf("_");
     return (
-      <li key={i}>
+      <li key={time}>
         <div></div>
         <div></div>
         <div></div>

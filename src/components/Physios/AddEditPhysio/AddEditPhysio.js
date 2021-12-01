@@ -1,8 +1,12 @@
 import AddEditPhysioForm from "./AddEditPhysioForm/AddEditPhysioForm";
-const AddEditPhysio = ({ rootPath }) => {
+const AddEditPhysio = ({ rootPath, workingDays, workingHours }) => {
   return (
     <section>
-      <AddEditPhysioForm rootPath={rootPath} />
+      <AddEditPhysioForm
+        rootPath={rootPath}
+        workingDays={workingDays}
+        workingHours={workingHours}
+      />
     </section>
   );
 };

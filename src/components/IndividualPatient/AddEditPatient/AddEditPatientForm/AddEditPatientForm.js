@@ -294,9 +294,9 @@ const AddEditPatientForm = ({ physiotherapist }) => {
                 value={inputValue.days}
                 onChange={onChangeHandler}
               >
-                {workingDays.map((day, i) => {
+                {workingDays.map((day) => {
                   return (
-                    <option key={i} value={day}>
+                    <option key={day} value={day}>
                       {day.substr(2)}
                     </option>
                   );
@@ -316,7 +316,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
                 {workingHours.map((hour, i) => {
                   const substrStartIndex = hour.indexOf("_") + 1;
                   return (
-                    <option key={i} value={hour}>
+                    <option key={hour} value={hour}>
                       {hour.substr(substrStartIndex, 2)}
                     </option>
                   );

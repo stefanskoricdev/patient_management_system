@@ -6,7 +6,11 @@ import AppContext from "../../../store/AppProvider";
 
 const IndividualPatients = () => {
   const appCtx = useContext(AppContext);
-  const { physios } = appCtx;
+  const { physios, individualPatients, individualCollection } = appCtx;
+
+  const individualPhysios = physios.filter(
+    (physio) => physio.physioType === "individual"
+  );
 
   return (
     <section className={styles.IndividualWrapper}>
@@ -14,7 +18,7 @@ const IndividualPatients = () => {
         <h1>Individual</h1>
       </header>
       <nav className={styles.Nav}>
-        {physios.map((physio) => {
+        {individualPhysios.map((physio) => {
           return (
             <NavLink
               key={physio.id}
@@ -28,14 +32,14 @@ const IndividualPatients = () => {
         })}
       </nav>
       <main className={styles.Main}>
-        {physios.length > 0 && (
+        {individualPhysios.length > 0 && (
           <Switch>
             <Route path="/patients/individual-patients/" exact>
               <Redirect
-                to={`/patients/individual-patients/${physios[0].firstName.toLowerCase()}`}
+                to={`/patients/individual-patients/${individualPhysios[0].firstName.toLowerCase()}`}
               />
             </Route>
-            {physios.map((physio) => {
+            {individualPhysios.map((physio) => {
               return (
                 <Route
                   key={physio.id}
@@ -44,18 +48,20 @@ const IndividualPatients = () => {
                   <IndividualScheduler
                     key={physio.id}
                     physiotherapist={physio}
+                    individualCollection={individualCollection}
+                    individualPatients={individualPatients}
                   />
                 </Route>
               );
             })}
             <Route path="*">
               <Redirect
-                to={`/patients/individual-patients/${physios[0].firstName.toLowerCase()}`}
+                to={`/patients/individual-patients/${individualPhysios[0].firstName.toLowerCase()}`}
               />
             </Route>
           </Switch>
         )}
-        {physios.length < 1 && (
+        {individualPhysios.length < 1 && (
           <section className={styles.Message}>
             <p>No available physios!</p>
             <p>Please create your first physio.</p>

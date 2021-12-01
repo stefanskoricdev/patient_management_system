@@ -89,7 +89,7 @@ const NotesBuilder = ({ currentDate }) => {
 
   const notesList = filterView(filter).map((note, i) => {
     return (
-      <li key={i}>
+      <li key={note.id}>
         <main className={styles.Note}>
           <p
             className={note.isChecked ? styles.Checked : null}

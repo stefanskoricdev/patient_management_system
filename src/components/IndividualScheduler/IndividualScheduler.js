@@ -1,5 +1,5 @@
 import styles from "./IndividualScheduler.module.scss";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   NavLink,
   Route,
@@ -7,19 +7,19 @@ import {
   Switch,
   useRouteMatch,
 } from "react-router-dom";
-import AppContext from "../../store/AppProvider";
-import AddEditPatient from "../Patient/AddEditPatient/AddEditPatient";
+import AddEditPatient from "../IndividualPatient/AddEditPatient/AddEditPatient";
 import IndividualSchedule from "./IndividualSchedule/IndividualSchedule";
-import PatientDetails from "../Patient/PatientDetails/PatientDetails";
-import AddAppointment from "../Patient/AddAppointment/AddAppointment";
+import PatientDetails from "../IndividualPatient/PatientDetails/PatientDetails";
+import AddAppointment from "../IndividualPatient/AddAppointment/AddAppointment";
 
-const IndividualScheduler = ({ physiotherapist }) => {
+const IndividualScheduler = ({
+  physiotherapist,
+  individualPatients,
+  individualCollection,
+}) => {
   const [showAddPatientBtn, setShowAddPatientBtn] = useState(true);
 
   const { path } = useRouteMatch();
-
-  const appCtx = useContext(AppContext);
-  const { individualPatients, individualCollection } = appCtx;
 
   const { firstName } = physiotherapist;
 

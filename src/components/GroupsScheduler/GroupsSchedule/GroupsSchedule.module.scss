@@ -1,0 +1,73 @@
+@import "../../../assets/colors/colors";
+@import "../../../assets/mixins/schedule";
+
+.GroupScheduleWrapper {
+    min-width: 60rem;
+    @include scheduleHeader;
+
+    .Main {
+        display: flex;
+        width: fit-content;
+        padding: .5rem;
+        background-color: $dark-blue;
+        border-radius: .5rem;
+
+        .Schedule {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+
+            section {
+                height: 25rem;
+                display: flex;
+                flex-flow: column;
+                background-color: $whiteish;
+
+                header {
+                    p {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 5rem;
+                        margin: 0;
+                        padding: .5rem;
+                        color: $whiteish;
+                        background-color: $dark-blue;
+                        font-weight: 700;
+                        text-transform: uppercase;
+                        border-bottom: 1px solid $whiteish;
+                        border-right: 1px solid $whiteish;
+                    }
+                }
+
+
+                a {
+                    min-width: 12rem;
+                    height: 4rem;
+                    border-bottom: 1px solid $dark-blue;
+                    border-right: 1px solid $dark-blue;
+                    cursor: pointer;
+
+                    p {
+                        color: $dark-blue;
+                        padding: .5rem;
+                        font-weight: 700;
+                    }
+                }
+
+                a:hover {
+                    background-color: rgb(230, 230, 230);
+                }
+            }
+
+            section:last-child {
+                header {
+                    p {
+                        border-right: none;
+                    }
+                }
+            }
+
+        }
+    }
+}

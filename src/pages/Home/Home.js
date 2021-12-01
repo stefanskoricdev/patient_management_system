@@ -21,7 +21,7 @@ const Home = () => {
 
   const notesList = notes.map((note, i) => {
     return (
-      <li className={note.isChecked ? styles.Checked : null} key={i}>
+      <li className={note.isChecked ? styles.Checked : null} key={note.id}>
         <p>{note.title}</p>
         <footer>
           <span>{note.date}</span>
@@ -31,9 +31,9 @@ const Home = () => {
     );
   });
 
-  const tableContent = allPatients.map((patient, i) => {
+  const tableContent = allPatients.map((patient) => {
     const tableContentEl = (
-      <tr key={i}>
+      <tr key={patient.id}>
         <td>{patient.firstName}</td>
         <td>{patient.lastName}</td>
         <td>{patient.dateOfBirth}</td>
