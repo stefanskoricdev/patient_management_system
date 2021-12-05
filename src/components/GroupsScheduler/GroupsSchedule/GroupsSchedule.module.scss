@@ -16,6 +16,7 @@
             width: 100%;
             display: flex;
             flex-wrap: wrap;
+            position: relative;
 
             section {
                 height: 25rem;
@@ -24,25 +25,26 @@
                 background-color: $whiteish;
 
                 header {
+                    height: 4rem;
+
                     p {
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        height: 5rem;
+                        height: 100%;
                         margin: 0;
                         padding: .5rem;
                         color: $whiteish;
                         background-color: $dark-blue;
                         font-weight: 700;
                         text-transform: uppercase;
-                        border-bottom: 1px solid $whiteish;
                         border-right: 1px solid $whiteish;
                     }
                 }
 
 
                 a {
-                    min-width: 12rem;
+                    width: 12rem;
                     height: 4rem;
                     border-bottom: 1px solid $dark-blue;
                     border-right: 1px solid $dark-blue;
@@ -66,6 +68,17 @@
                         border-right: none;
                     }
                 }
+            }
+
+            .PatientBox {
+                position: absolute;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 4rem;
+                width: 12rem;
+                margin: 0;
+                background-color: $dark-blue;
             }
 
         }

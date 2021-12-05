@@ -1,9 +1,22 @@
 import styles from "./AddGroupPatientForm.module.scss";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import AppContext from "../../../../store/AppProvider";
+import firebase from "firebase/app";
+import { sendData } from "../../../actions/actions";
+const AddGroupPatientForm = ({ physiotherapist }) => {
+  const { query } = useLocation();
+  const history = useHistory();
 
-const AddGroupPatientForm = () => {
-  const { id } = useParams();
+  useEffect(() => {
+    if (!query) {
+      history.push(`/patients/group-patients/${physiotherapist.firstName}`);
+    }
+  }, [query, history, physiotherapist.firstName]);
+
+  const appCtx = useContext(AppContext);
+  const { currentDate, setIsLoading, groupsCollection, setGroupPatients } =
+    appCtx;
 
   const initialValues = {
     firstName: "",
@@ -31,6 +44,7 @@ const AddGroupPatientForm = () => {
 
   const submitPatientHandler = (e) => {
     e.preventDefault();
+    //VALIDATE!!
     const {
       firstName,
       lastName,
@@ -43,19 +57,29 @@ const AddGroupPatientForm = () => {
       observation,
     } = inputValue;
     const newGroupPatient = {
-      id: id,
+      id: query.id,
       firstName,
       lastName,
       gender,
       city,
       address,
-      phoneNumber,
+      phone: phoneNumber,
       email,
-      dob,
+      dateOfBirth: dob,
       observation,
+      physioId: physiotherapist.id,
+      appointment: {
+        time: query.time,
+        day: query.day,
+        slot: query.slot,
+      },
+      date: currentDate,
+      dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
+    console.log(newGroupPatient);
+    sendData(setIsLoading, groupsCollection, newGroupPatient, setGroupPatients);
 
-    //Send new patient to server!
+    //history push!
   };
 
   const changeFormPageHandler = () => {

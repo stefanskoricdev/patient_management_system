@@ -8,9 +8,13 @@ import AddGroupPatient from "../GroupPatient/AddGroupPatient/AddGroupPatient";
 
 const GroupsScheduler = ({ physiotherapist }) => {
   const appCtx = useContext(AppContext);
-  const { isLoading } = appCtx;
+  const { isLoading, groupPatients } = appCtx;
 
   const { path } = useRouteMatch();
+
+  const filteredPatients = groupPatients.filter(
+    (patient) => patient.physioId === physiotherapist.id
+  );
 
   return (
     <section className={styles.SchedulerWrapper}>
@@ -21,10 +25,13 @@ const GroupsScheduler = ({ physiotherapist }) => {
             <Redirect to={`${path}/schedule`} />
           </Route>
           <Route path={`${path}/schedule`}>
-            <GroupSchedule physiotherapist={physiotherapist} />
+            <GroupSchedule
+              patients={filteredPatients}
+              physiotherapist={physiotherapist}
+            />
           </Route>
-          <Route path={`${path}/add-group-patient/:id`}>
-            <AddGroupPatient />
+          <Route path={`${path}/add-group-patient`}>
+            <AddGroupPatient physiotherapist={physiotherapist} />
           </Route>
         </Switch>
       </main>
