@@ -5,6 +5,7 @@ import Loader from "../UI/Loader/Loader";
 import AppContext from "../../store/AppProvider";
 import GroupSchedule from "./GroupsSchedule/GroupsSchedule";
 import AddGroupPatient from "../GroupPatient/AddGroupPatient/AddGroupPatient";
+import GroupPatientDetails from "../GroupPatient/GroupPatientDetails/GroupPatientDetails";
 
 const GroupsScheduler = ({ physiotherapist }) => {
   const appCtx = useContext(AppContext);
@@ -32,6 +33,9 @@ const GroupsScheduler = ({ physiotherapist }) => {
           </Route>
           <Route path={`${path}/add-group-patient`}>
             <AddGroupPatient physiotherapist={physiotherapist} />
+          </Route>
+          <Route path={`${path}/group-patient-details/:id`}>
+            <GroupPatientDetails />
           </Route>
         </Switch>
       </main>

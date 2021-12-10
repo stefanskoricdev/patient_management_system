@@ -2,85 +2,70 @@
 @import "../../../assets/mixins/schedule";
 
 .GroupScheduleWrapper {
-    min-width: 60rem;
-    @include scheduleHeader;
+  min-width: 60rem;
+  @include scheduleHeader;
 
-    .Main {
+  .Main {
+    display: flex;
+    width: fit-content;
+    padding: 0.5rem;
+    background-color: $dark-blue;
+    border-radius: 0.5rem;
+
+    .Schedule {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      position: relative;
+
+      .ScheduleBackground {
+        height: 25rem;
         display: flex;
-        width: fit-content;
-        padding: .5rem;
-        background-color: $dark-blue;
-        border-radius: .5rem;
+        flex-flow: column;
+        background-color: $whiteish;
 
-        .Schedule {
-            width: 100%;
+        header {
+          height: 4rem;
+
+          p {
             display: flex;
-            flex-wrap: wrap;
-            position: relative;
-
-            section {
-                height: 25rem;
-                display: flex;
-                flex-flow: column;
-                background-color: $whiteish;
-
-                header {
-                    height: 4rem;
-
-                    p {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        height: 100%;
-                        margin: 0;
-                        padding: .5rem;
-                        color: $whiteish;
-                        background-color: $dark-blue;
-                        font-weight: 700;
-                        text-transform: uppercase;
-                        border-right: 1px solid $whiteish;
-                    }
-                }
-
-
-                a {
-                    width: 12rem;
-                    height: 4rem;
-                    border-bottom: 1px solid $dark-blue;
-                    border-right: 1px solid $dark-blue;
-                    cursor: pointer;
-
-                    p {
-                        color: $dark-blue;
-                        padding: .5rem;
-                        font-weight: 700;
-                    }
-                }
-
-                a:hover {
-                    background-color: rgb(230, 230, 230);
-                }
-            }
-
-            section:last-child {
-                header {
-                    p {
-                        border-right: none;
-                    }
-                }
-            }
-
-            .PatientBox {
-                position: absolute;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 4rem;
-                width: 12rem;
-                margin: 0;
-                background-color: $dark-blue;
-            }
-
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            margin: 0;
+            padding: 0.5rem;
+            color: $whiteish;
+            background-color: $dark-blue;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-right: 1px solid $whiteish;
+          }
         }
+
+        a {
+          width: 12rem;
+          height: 4rem;
+          border-bottom: 1px solid $dark-blue;
+          border-right: 1px solid $dark-blue;
+          cursor: pointer;
+        }
+
+        a:hover {
+          background-color: rgb(230, 230, 230);
+        }
+      }
+
+      .PatientCard {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: calc(4rem - 1px);
+        width: calc(12rem - 1px);
+        margin: 0;
+        color: $dark-blue;
+        font-weight: 700;
+      }
     }
+  }
 }

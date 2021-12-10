@@ -1,5 +1,15 @@
 import styles from "./GroupsSchedule.module.scss";
 import { Link } from "react-router-dom";
+
+const colorPallete = [
+  "FFE194",
+  "6D97C9",
+  "8CC3A0",
+  "E9DA90",
+  "F29D72",
+  "D17484",
+];
+
 const GroupSchedule = ({ physiotherapist, patients }) => {
   const { groupCfg: config } = physiotherapist;
 
@@ -7,7 +17,7 @@ const GroupSchedule = ({ physiotherapist, patients }) => {
     let scheduleFields = [];
     for (let i = 0; i < config.length; i++) {
       scheduleFields.push(
-        <section key={i}>
+        <section className={styles.ScheduleBackground} key={i}>
           <header>
             <p>{`${config[i].workingDays}(${config[i].workingHours})`}</p>
           </header>
@@ -79,7 +89,6 @@ const GroupSchedule = ({ physiotherapist, patients }) => {
           {createScheduleBackground()}
           {patients.length > 0
             ? patients.map((patient) => {
-                let pat = [];
                 const groupIndex = config.findIndex(
                   (cfg) =>
                     cfg.workingHours === patient.appointment.time &&
@@ -89,16 +98,21 @@ const GroupSchedule = ({ physiotherapist, patients }) => {
                   top: patient.appointment.slot * 4,
                   left: groupIndex * 12,
                 };
-                console.log(positionValues);
                 return (
-                  <p
+                  <Link
+                    to={`/patients/group-patients/${physiotherapist.firstName}/group-patient-details/${patient.id}`}
                     style={{
                       top: `${positionValues.top}rem`,
                       left: `${positionValues.left}rem`,
+                      backgroundColor: `#${
+                        colorPallete[
+                          Math.floor(Math.random() * colorPallete.length)
+                        ]
+                      }`,
                     }}
-                    className={styles.PatientBox}
+                    className={styles.PatientCard}
                     key={patient.id}
-                  >{`${patient.firstName + " " + patient.lastName}`}</p>
+                  >{`${patient.firstName + " " + patient.lastName}`}</Link>
                 );
               })
             : null}

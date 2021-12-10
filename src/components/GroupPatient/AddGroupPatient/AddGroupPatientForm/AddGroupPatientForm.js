@@ -76,10 +76,8 @@ const AddGroupPatientForm = ({ physiotherapist }) => {
       date: currentDate,
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
-    console.log(newGroupPatient);
     sendData(setIsLoading, groupsCollection, newGroupPatient, setGroupPatients);
-
-    //history push!
+    history.push(`/patients/group-patients/${physiotherapist.firstName}`);
   };
 
   const changeFormPageHandler = () => {

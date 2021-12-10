@@ -31,7 +31,7 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
     (patient) => patient.id === transformedId
   );
 
-  const patientDetails = targetedPatient.map((pat, i) => {
+  const patientDetails = targetedPatient.map((pat) => {
     const age = getAge(pat.dateOfBirth);
 
     const deleteHandler = () => {
@@ -67,7 +67,7 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
     };
 
     return (
-      <Fragment>
+      <Fragment key={pat.id}>
         <header>
           <div>
             <img

@@ -22,7 +22,7 @@ const AddEditGroupPhysioForm = ({ workingHours, rootPath }) => {
     phoneNumber: "",
     groupConfig: [
       {
-        workingDays: "mon/wed",
+        workingDays: "mon-wed",
         workingHours: "08:00",
       },
     ],
