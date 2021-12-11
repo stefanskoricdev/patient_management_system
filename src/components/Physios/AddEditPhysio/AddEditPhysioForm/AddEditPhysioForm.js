@@ -168,8 +168,12 @@ const AddEditPhysioForm = ({ rootPath, workingDays, workingHours }) => {
       lastName: inputValues.lastName,
       email: inputValues.email,
       phoneNumber: inputValues.phoneNumber,
-      workingDays: daysInputValue.sort(),
-      workingHours: hoursInputValue.sort(),
+      workingDays: daysInputValue.sort(
+        (a, b) => parseInt(a.slice(0, 2)) - parseInt(b.slice(0, 2))
+      ),
+      workingHours: hoursInputValue.sort(
+        (a, b) => parseInt(a.slice(0, 2)) - parseInt(b.slice(0, 2))
+      ),
       physioType: "individual",
       dateCreated: isAddMode
         ? firebase.firestore.FieldValue.serverTimestamp()

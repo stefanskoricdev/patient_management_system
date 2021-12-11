@@ -13,13 +13,11 @@
     border-radius: 0.5rem;
 
     .Schedule {
-      width: 100%;
       display: flex;
       flex-wrap: wrap;
       position: relative;
 
       .ScheduleBackground {
-        height: 25rem;
         display: flex;
         flex-flow: column;
         background-color: $whiteish;
