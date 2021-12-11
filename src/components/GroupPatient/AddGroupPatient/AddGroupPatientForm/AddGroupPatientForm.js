@@ -4,6 +4,8 @@ import { useHistory, useLocation } from "react-router-dom";
 import AppContext from "../../../../store/AppProvider";
 import firebase from "firebase/app";
 import { sendData } from "../../../actions/actions";
+import validateForm from "../../../../helpers/validateForm";
+
 const AddGroupPatientForm = ({ physiotherapist }) => {
   const { query } = useLocation();
   const history = useHistory();
@@ -44,7 +46,11 @@ const AddGroupPatientForm = ({ physiotherapist }) => {
 
   const submitPatientHandler = (e) => {
     e.preventDefault();
-    //VALIDATE!!
+
+    const validate = validateForm(inputValue);
+
+    if (!validate) return;
+
     const {
       firstName,
       lastName,
@@ -76,6 +82,7 @@ const AddGroupPatientForm = ({ physiotherapist }) => {
       date: currentDate,
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
+
     sendData(setIsLoading, groupsCollection, newGroupPatient, setGroupPatients);
     history.push(`/patients/group-patients/${physiotherapist.firstName}`);
   };
