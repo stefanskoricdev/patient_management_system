@@ -72,6 +72,7 @@ export const deleteData = (
           .doc(targetId)
           .delete()
           .then(() => {
+            history.push(path);
             setState((prevState) =>
               prevState.filter((data) => data.id !== targetId)
             );
@@ -80,7 +81,6 @@ export const deleteData = (
               "Deleted!",
               "Your data has been deleted successfully"
             );
-            history.push(path);
           })
           .catch((error) => {
             setLoading(false);
@@ -131,7 +131,8 @@ export const deletePhysio = (
   setPhysios,
   patients,
   patientsCollection,
-  setPatients
+  setPatients,
+  setIsLoading
 ) => {
   mySwal
     .fire({
@@ -145,6 +146,7 @@ export const deletePhysio = (
     })
     .then((result) => {
       if (result.isConfirmed) {
+        setIsLoading(true);
         db.collection(physiosCollection)
           .doc(physio.id)
           .delete()
@@ -154,23 +156,25 @@ export const deletePhysio = (
             );
             //Delete targeted physio and then delete all its patients
             const targetedPatients = patients.filter(
-              (patient) => patient.physiotherapist === physio.firstName
+              (patient) => patient.physioId === physio.id
             );
             if (targetedPatients.length < 1) {
+              setIsLoading(false);
               return;
             }
-            batchDelete(patientsCollection, physio.firstName, setPatients);
+            batchDelete(patientsCollection, physio, setPatients, setIsLoading);
           })
           .catch((error) => {
+            setIsLoading(false);
             ErrorMessage(error);
           });
       }
     });
 };
 
-export const batchDelete = (collection, physio, setPatients) => {
+export const batchDelete = (collection, physio, setPatients, setIsLoading) => {
   db.collection(collection)
-    .where("physiotherapist", "==", physio)
+    .where("physioId", "==", physio.id)
     .get()
     .then((query) => {
       const batch = db.batch();
@@ -185,7 +189,11 @@ export const batchDelete = (collection, physio, setPatients) => {
       return batch.commit();
     })
     .then(() => {
+      setIsLoading(false);
       SuccessMessage("Deleted!", "Data has been deleted!");
     })
-    .catch((err) => ErrorMessage(err));
+    .catch((err) => {
+      setIsLoading(false);
+      ErrorMessage(err);
+    });
 };

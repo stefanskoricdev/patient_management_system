@@ -9,6 +9,7 @@ const List = ({
   rootPath = null,
   actions,
   deletionData,
+  setIsLoading,
   deleteHandler,
 }) => {
   return (
@@ -48,9 +49,16 @@ const List = ({
                             physiosCollection,
                             dataItem,
                             setPhysios,
-                            patientType,
-                            patientTypeCollection,
-                            setPatients
+                            dataItem.physioType === "individual"
+                              ? patientType.individual
+                              : patientType.group,
+                            dataItem.physioType === "individual"
+                              ? patientTypeCollection.individual
+                              : patientTypeCollection.group,
+                            dataItem.physioType === "individual"
+                              ? setPatients.individual
+                              : setPatients.group,
+                            setIsLoading
                           );
                         }}
                       >

@@ -1,28 +1,38 @@
 import styles from "./GroupPatientDetails.module.scss";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useContext, useState } from "react";
 import AppContext from "../../../store/AppProvider";
 import maleAvatar from "../../../assets/img/male_avatar.svg";
 import femaleAvatar from "../../../assets/img/female_avatar.svg";
 import { getAge } from "../../../helpers/getAge";
+import { deleteData } from "../../actions/actions";
 
 const GroupPatientDetails = () => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   const appCtx = useContext(AppContext);
-  const { groupPatients } = appCtx;
+  const { groupPatients, setGroupPatients, setIsLoading, groupsCollection } =
+    appCtx;
 
   const { id } = useParams();
 
+  const history = useHistory();
+
   const targetedPatient = groupPatients.find((patient) => patient.id === id);
 
-  const age = getAge(targetedPatient.dateOfBirth);
   const optionsClickHandler = () => {
     setIsOptionsOpen((prevValue) => !prevValue);
   };
 
   const deleteHandler = () => {
-    console.log("DELETE HANDLER!");
+    deleteData(
+      setIsLoading,
+      setGroupPatients,
+      groupsCollection,
+      id,
+      history,
+      `/patients/group-patients/${targetedPatient.physiotherapist}`
+    );
   };
 
   return (
@@ -56,7 +66,7 @@ const GroupPatientDetails = () => {
         </p>
         <p>
           <i className="fas fa-calendar-check"></i>
-          {`Age: ${age}`}
+          {`Age: ${getAge(targetedPatient.dateOfBirth)}`}
         </p>
         <p>
           <i className="fas fa-phone-square"></i>

@@ -103,6 +103,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       email: inputValue.email,
       dateOfBirth: inputValue.dob,
       observation: inputValue.observation,
+      physioId: physiotherapist.id,
       physiotherapist: physiotherapist.firstName,
       appointment: isAddMode
         ? [

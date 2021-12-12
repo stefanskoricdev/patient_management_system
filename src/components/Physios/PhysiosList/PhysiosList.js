@@ -15,6 +15,10 @@ const PhysiosList = ({ rootPath }) => {
     individualPatients,
     setIndividualPatients,
     individualCollection,
+    groupPatients,
+    setGroupPatients,
+    groupsCollection,
+    setIsLoading,
   } = appCtx;
 
   const [physiosList, setPhysiosList] = useState(physios);
@@ -107,10 +111,20 @@ const PhysiosList = ({ rootPath }) => {
           deletionData={{
             physiosCollection: physiosCollection,
             setPhysios: setPhysios,
-            patientType: individualPatients,
-            patientTypeCollection: individualCollection,
-            setPatients: setIndividualPatients,
+            patientType: {
+              individual: individualPatients,
+              group: groupPatients,
+            },
+            patientTypeCollection: {
+              individual: individualCollection,
+              group: groupsCollection,
+            },
+            setPatients: {
+              individual: setIndividualPatients,
+              group: setGroupPatients,
+            },
           }}
+          setIsLoading={setIsLoading}
           deleteHandler={deletePhysio}
         />
       </section>

@@ -74,6 +74,7 @@ const AddGroupPatientForm = ({ physiotherapist }) => {
       dateOfBirth: dob,
       observation,
       physioId: physiotherapist.id,
+      physiotherapist: physiotherapist.firstName,
       appointment: {
         time: query.time,
         day: query.day,

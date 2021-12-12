@@ -14,11 +14,11 @@ const Groups = () => {
 
   return (
     <section className={styles.GroupsWrapper}>
+      <header className={styles.Header}>
+        <h1>Groups</h1>
+      </header>
       {groupPhysios.length > 0 && (
         <Fragment>
-          <header className={styles.Header}>
-            <h1>Groups</h1>
-          </header>
           <nav className={styles.Nav}>
             {groupPhysios.map((physio) => {
               return (
