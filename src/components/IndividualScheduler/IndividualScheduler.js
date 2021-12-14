@@ -11,22 +11,18 @@ import AddEditPatient from "../IndividualPatient/AddEditPatient/AddEditPatient";
 import IndividualSchedule from "./IndividualSchedule/IndividualSchedule";
 import PatientDetails from "../IndividualPatient/PatientDetails/PatientDetails";
 import AddAppointment from "../IndividualPatient/AddAppointment/AddAppointment";
-import Loader from "../UI/Loader/Loader";
 
 const IndividualScheduler = ({
   physiotherapist,
   individualPatients,
   individualCollection,
-  isLoading,
 }) => {
   const [showAddPatientBtn, setShowAddPatientBtn] = useState(true);
 
   const { path } = useRouteMatch();
 
-  const { firstName } = physiotherapist;
-
   const filteredPatients = individualPatients.filter(
-    (patient) => patient.physiotherapist === firstName
+    (patient) => patient.physioId === physiotherapist.id
   );
   // getData() in App Provider fetches data from firebase and adds it to patients state
   // which is sent in this component through appContext and then filtered according

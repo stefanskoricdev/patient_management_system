@@ -2,12 +2,12 @@ import styles from "./AddEditPhysioForm.module.scss";
 import { useState, useContext } from "react";
 import { sendData, updateData } from "../../../actions/actions";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { Fragment } from "react";
 import uuid from "react-uuid";
 import AppContext from "../../../../store/AppProvider";
 import firebase from "firebase/app";
 import FormInput from "../../../UI/Forms/FormInput/FormInput";
 import validateForm from "../../../../helpers/validateForm";
-import { Fragment } from "react";
 
 const AddEditPhysioForm = ({ rootPath, workingDays, workingHours }) => {
   const history = useHistory();
@@ -161,6 +161,7 @@ const AddEditPhysioForm = ({ rootPath, workingDays, workingHours }) => {
         ? firebase.firestore.FieldValue.serverTimestamp()
         : physioToEdit.dateCreated,
     };
+
     if (isAddMode) {
       sendData(setIsLoading, physiosCollection, newPhysio, setPhysios);
     } else {

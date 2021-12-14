@@ -2,12 +2,12 @@ import styles from "./AddEditPatientForm.module.scss";
 import { useContext, useState } from "react";
 import { sendData, updateData } from "../../../actions/actions";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { WarningMessage } from "../../../UI/Messages/Messages";
+import { checkAppointment } from "../../../../helpers/checkAppointment";
 import AppContext from "../../../../store/AppProvider";
 import firebase from "firebase/app";
 import uuid from "react-uuid";
 import validateForm from "../../../../helpers/validateForm";
-import { WarningMessage } from "../../../UI/Messages/Messages";
-import { checkAppointment } from "../../../../helpers/checkAppointment";
 
 const AddEditPatientForm = ({ physiotherapist }) => {
   const history = useHistory();
@@ -71,7 +71,6 @@ const AddEditPatientForm = ({ physiotherapist }) => {
   }
 
   const [isFormPageChanged, setIsFormPageChanged] = useState(false);
-
   const [inputValue, setInputValue] = useState(initialValues);
 
   const { workingDays, workingHours } = physiotherapist;

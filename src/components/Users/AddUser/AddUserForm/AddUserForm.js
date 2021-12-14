@@ -2,10 +2,10 @@ import styles from "./AddUserForm.module.scss";
 import { useContext, useState } from "react";
 import { sendData } from "../../../actions/actions";
 import { useHistory } from "react-router-dom";
+import { AddUser } from "../../../actions/auth-actions";
 import AuthContext from "../../../../store/AuthProvider";
 import FormInput from "../../../UI/Forms/FormInput/FormInput";
 import validateForm from "../../../../helpers/validateForm";
-import { AddUser } from "../../../actions/auth-actions";
 
 const DEFAULT_PROFILE_IMG_URL =
   "https://firebasestorage.googleapis.com/v0/b/dmf-patient-management-d003a.appspot.com/o/user-circle-solid-240.png?alt=media&token=43ff9eff-b670-49c5-a93a-74582edc6719";

@@ -30,7 +30,7 @@ const workingHours = [
 
 const Physios = () => {
   const { path } = useRouteMatch();
-  console.log(path);
+
   return (
     <section className={styles.Physios}>
       <nav className={styles.Nav}>

@@ -7,6 +7,7 @@ import AuthContext from "../../store/AuthProvider";
 const MainNavigation = ({ isNavBtnClicked }) => {
   const authCtx = useContext(AuthContext);
   const { logout, isAdmin } = authCtx;
+
   return (
     <Fragment>
       <nav

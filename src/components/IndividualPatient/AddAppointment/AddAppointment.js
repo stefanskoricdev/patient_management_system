@@ -1,11 +1,11 @@
+import styles from "./AddAppointment.module.scss";
 import { useContext, useState } from "react";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import { checkAppointment } from "../../../helpers/checkAppointment";
+import { WarningMessage } from "../../UI/Messages/Messages";
+import { updateData } from "../../actions/actions";
 import validateForm from "../../../helpers/validateForm";
 import AppContext from "../../../store/AppProvider";
-import { updateData } from "../../actions/actions";
-import { WarningMessage } from "../../UI/Messages/Messages";
-import styles from "./AddAppointment.module.scss";
 
 const AddAppointment = ({ physiotherapist }) => {
   const {
@@ -44,6 +44,7 @@ const AddAppointment = ({ physiotherapist }) => {
     const { name, value } = e.target;
     setInputValue({ ...inputValue, [name]: value });
   };
+
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -100,6 +101,7 @@ const AddAppointment = ({ physiotherapist }) => {
       `/patients/individual-patients/${physiotherapist.firstName}/schedule`
     );
   };
+
   return (
     <form className={styles.AddAppointmentForm} onSubmit={onSubmit}>
       <h2>Add appointment</h2>
@@ -154,19 +156,6 @@ const AddAppointment = ({ physiotherapist }) => {
             <option value={45}>45</option>
           </select>
         </label>
-        {/* <h3>Treatment duration:</h3>
-        <label>
-          <p>Minutes: </p>
-          <input
-            type="number"
-            name="duration"
-            min="30"
-            max={workingHours.length * 60}
-            placeholder="30"
-            value={inputValue.duration}
-            onChange={onChangeHandler}
-          />
-        </label> */}
       </section>
       <button type="submit">ADD</button>
     </form>

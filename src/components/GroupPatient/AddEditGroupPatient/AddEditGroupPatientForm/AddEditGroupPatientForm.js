@@ -76,7 +76,6 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
     e.preventDefault();
 
     const validate = validateForm(inputValue);
-
     if (!validate) return;
 
     const {

@@ -1,10 +1,10 @@
 import styles from "./PhysiosList.module.scss";
 import { useRef, useContext, useState, useEffect } from "react";
+import { deletePhysio } from "../../actions/actions";
 import AppContext from "../../../store/AppProvider";
 import FilterForm from "../../UI/Forms/FilterForm/FilterForm";
 import filterListHandler from "../../../helpers/filterListHandler";
 import List from "../../UI/List/List";
-import { deletePhysio } from "../../actions/actions";
 
 const PhysiosList = ({ rootPath }) => {
   const appCtx = useContext(AppContext);

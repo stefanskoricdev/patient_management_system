@@ -2,10 +2,10 @@ import styles from "./ChangeEmailPassword.module.scss";
 import { useState, useContext, useEffect } from "react";
 import { ErrorMessage, WarningMessage } from "../../UI/Messages/Messages";
 import { useHistory } from "react-router-dom";
+import { updateData } from "../../actions/actions";
 import FormInput from "../../UI/Forms/FormInput/FormInput";
 import validateForm from "../../../helpers/validateForm";
 import AuthContext from "../../../store/AuthProvider";
-import { updateData } from "../../actions/actions";
 
 const ChangeEmailPassword = ({ data }) => {
   const authCtx = useContext(AuthContext);
