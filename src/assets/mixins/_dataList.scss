@@ -41,12 +41,31 @@
                         padding: .5rem;
                     }
 
-                    td:nth-child(1) {
+                    td {
+
+                        a,
+                        button {
+                            margin: 0 .2rem;
+                        }
+
+                        a {
+                            color: rgb(61, 58, 250);
+
+                            svg {
+                                transition: transform 200ms linear;
+                            }
+
+                            svg:hover {
+                                transform: scale(1.1);
+                            }
+                        }
+
                         button {
                             background-color: inherit;
                             border: none;
                             color: rgb(163, 0, 0);
                             font-size: 1rem;
+                            padding: 0;
                         }
                     }
 

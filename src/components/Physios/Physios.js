@@ -30,6 +30,7 @@ const workingHours = [
 
 const Physios = () => {
   const { path } = useRouteMatch();
+  console.log(path);
   return (
     <section className={styles.Physios}>
       <nav className={styles.Nav}>
@@ -72,6 +73,9 @@ const Physios = () => {
             />
           </Route>
           <Route path={`${path}/add-group-physio`}>
+            <AddEditGroupPhysio workingHours={workingHours} rootPath={path} />
+          </Route>
+          <Route path={`${path}/edit-group-physio/:id`}>
             <AddEditGroupPhysio workingHours={workingHours} rootPath={path} />
           </Route>
           <Route path="*">

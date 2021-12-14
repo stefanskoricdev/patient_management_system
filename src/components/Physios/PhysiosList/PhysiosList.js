@@ -106,7 +106,7 @@ const PhysiosList = ({ rootPath }) => {
           data={physiosList}
           tableHeader={tableHeader}
           dataKeys={dataKeys}
-          rootPath={`${rootPath}/edit-physio/`}
+          rootPath={rootPath}
           actions={true}
           deletionData={{
             physiosCollection: physiosCollection,

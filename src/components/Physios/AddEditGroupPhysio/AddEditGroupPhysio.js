@@ -1,9 +1,9 @@
 import AddEditGroupPhysioForm from "./AddEditGroupPhysioForm/AddEditGroupPhysioForm";
 
-const AddEditGroupPhysio = ({ workingHours }) => {
+const AddEditGroupPhysio = ({ workingHours, rootPath }) => {
   return (
     <section>
-      <AddEditGroupPhysioForm workingHours={workingHours} />
+      <AddEditGroupPhysioForm workingHours={workingHours} rootPath={rootPath} />
     </section>
   );
 };

@@ -8,24 +8,6 @@ import firebase from "firebase/app";
 import FormInput from "../../../UI/Forms/FormInput/FormInput";
 import validateForm from "../../../../helpers/validateForm";
 import { Fragment } from "react";
-/* 
-const workingDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const workingHours = [
-  "08:00",
-  "09:00",
-  "10:00",
-  "11:00",
-  "12:00",
-  "13:00",
-  "14:00",
-  "15:00",
-  "16:00",
-  "17:00",
-  "18:00",
-  "19:00",
-  "20:00",
-  "21:00",
-]; */
 
 const AddEditPhysioForm = ({ rootPath, workingDays, workingHours }) => {
   const history = useHistory();

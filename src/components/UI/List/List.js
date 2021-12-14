@@ -33,7 +33,13 @@ const List = ({
                 <tr key={dataItem.id}>
                   {actions && (
                     <td>
-                      <Link to={`${rootPath}${dataItem.id}`}>
+                      <Link
+                        to={
+                          dataItem.physioType === "individual"
+                            ? `${rootPath}/edit-physio/${dataItem.id}`
+                            : `${rootPath}/edit-group-physio/${dataItem.id}`
+                        }
+                      >
                         <i className="fas fa-user-edit"></i>
                       </Link>
                       <button
