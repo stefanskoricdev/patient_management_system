@@ -1,7 +1,7 @@
 import styles from "./AddEditGroupPhysioForm.module.scss";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { WarningMessage } from "../../../UI/Messages/Messages";
-import { sendData } from "../../../actions/actions";
+import { sendData, updateData } from "../../../actions/actions";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import FormInput from "../../../UI/Forms/FormInput/FormInput";
 import validateForm from "../../../../helpers/validateForm";
@@ -20,6 +20,8 @@ const AddEditGroupPhysioForm = ({ workingHours, rootPath }) => {
 
   const isAddMode = !id;
 
+  let groupPhysioToEdit;
+
   let initialValue = {
     firstName: "",
     lastName: "",
@@ -32,7 +34,7 @@ const AddEditGroupPhysioForm = ({ workingHours, rootPath }) => {
   //This prevents issues if reloading page in !isAddMode!
 
   if (!isAddMode && physios.length > 0) {
-    const groupPhysioToEdit = physios.find((physio) => physio.id === id);
+    groupPhysioToEdit = physios.find((physio) => physio.id === id);
     const { firstName, lastName, email, phoneNumber, groupCfg } =
       groupPhysioToEdit;
     initialValue = {
@@ -47,10 +49,6 @@ const AddEditGroupPhysioForm = ({ workingHours, rootPath }) => {
   const [inputValues, setInputValues] = useState(initialValue);
   const [groupConfig, setGroupConfig] = useState(initialValue.groupConfig);
   const [group, setGroup] = useState(initialValue.groupConfig);
-
-  useEffect(() => {
-    console.log(!groupConfig);
-  }, [groupConfig]);
 
   const basicInfoInputs = [
     {
@@ -129,13 +127,30 @@ const AddEditGroupPhysioForm = ({ workingHours, rootPath }) => {
       phoneNumber,
       groupCfg: group,
       physioType: "group",
-      dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
+      dateCreated: isAddMode
+        ? firebase.firestore.FieldValue.serverTimestamp()
+        : groupPhysioToEdit.dateCreated,
     };
 
-    console.log(newGroupPhysio);
+    if (isAddMode) {
+      sendData(setIsLoading, physiosCollection, newGroupPhysio, setPhysios);
+    } else {
+      const targetedPhysioIndex = physios.findIndex(
+        (physio) => physio.id === id
+      );
+      const updatedPhysioList = [...physios];
+      updatedPhysioList[targetedPhysioIndex] = newGroupPhysio;
+      updateData(
+        setIsLoading,
+        physiosCollection,
+        id,
+        newGroupPhysio,
+        setPhysios,
+        updatedPhysioList
+      );
+    }
 
-    /* sendData(setIsLoading, physiosCollection, newGroupPhysio, setPhysios);
-    history.push(rootPath); */
+    history.push(rootPath);
   };
 
   return (
@@ -146,7 +161,7 @@ const AddEditGroupPhysioForm = ({ workingHours, rootPath }) => {
           const { label, name, type, value } = info;
           return (
             <FormInput
-              key={name}
+              key={name + value}
               label={label}
               name={name}
               type={type}
