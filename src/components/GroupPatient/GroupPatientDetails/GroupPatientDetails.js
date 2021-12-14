@@ -1,13 +1,13 @@
 import styles from "./GroupPatientDetails.module.scss";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useContext, useState } from "react";
+import { getAge } from "../../../helpers/getAge";
+import { deleteData } from "../../actions/actions";
 import AppContext from "../../../store/AppProvider";
 import maleAvatar from "../../../assets/img/male_avatar.svg";
 import femaleAvatar from "../../../assets/img/female_avatar.svg";
-import { getAge } from "../../../helpers/getAge";
-import { deleteData } from "../../actions/actions";
 
-const GroupPatientDetails = () => {
+const GroupPatientDetails = ({ physiotherapist }) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   const appCtx = useContext(AppContext);
@@ -55,6 +55,11 @@ const GroupPatientDetails = () => {
               : [styles.Options, styles["active"]].join(" ")
           }
         >
+          <Link
+            to={`/patients/group-patients/${physiotherapist.firstName.toLowerCase()}/edit-group-patient/${id}`}
+          >
+            Edit
+          </Link>
           <li onClick={deleteHandler}>Delete</li>
         </ul>
       </header>

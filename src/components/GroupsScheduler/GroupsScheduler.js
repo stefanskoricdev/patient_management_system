@@ -1,16 +1,11 @@
 import styles from "./GroupsScheduler.module.scss";
-import { useContext } from "react";
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 import Loader from "../UI/Loader/Loader";
-import AppContext from "../../store/AppProvider";
 import GroupSchedule from "./GroupsSchedule/GroupsSchedule";
-import AddGroupPatient from "../GroupPatient/AddGroupPatient/AddGroupPatient";
+import AddEditGroupPatient from "../GroupPatient/AddEditGroupPatient/AddEditGroupPatient";
 import GroupPatientDetails from "../GroupPatient/GroupPatientDetails/GroupPatientDetails";
 
-const GroupsScheduler = ({ physiotherapist }) => {
-  const appCtx = useContext(AppContext);
-  const { isLoading, groupPatients } = appCtx;
-
+const GroupsScheduler = ({ physiotherapist, isLoading, groupPatients }) => {
   const { path } = useRouteMatch();
 
   const filteredPatients = groupPatients.filter(
@@ -32,10 +27,13 @@ const GroupsScheduler = ({ physiotherapist }) => {
             />
           </Route>
           <Route path={`${path}/add-group-patient`}>
-            <AddGroupPatient physiotherapist={physiotherapist} />
+            <AddEditGroupPatient physiotherapist={physiotherapist} />
+          </Route>
+          <Route path={`${path}/edit-group-patient/:id`}>
+            <AddEditGroupPatient physiotherapist={physiotherapist} />
           </Route>
           <Route path={`${path}/group-patient-details/:id`}>
-            <GroupPatientDetails />
+            <GroupPatientDetails physiotherapist={physiotherapist} />
           </Route>
         </Switch>
       </main>

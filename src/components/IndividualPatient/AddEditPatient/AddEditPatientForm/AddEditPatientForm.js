@@ -176,9 +176,8 @@ const AddEditPatientForm = ({ physiotherapist }) => {
         updatedPatientsList
       );
     }
-    history.push(
-      `/patients/individual-patients/${physiotherapist.firstName}/schedule`
-    );
+
+    history.push(`/patients/individual-patients/${physiotherapist.firstName}`);
   };
 
   return (

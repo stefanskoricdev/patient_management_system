@@ -1,26 +1,28 @@
-import styles from "./AddGroupPatientForm.module.scss";
+import styles from "./AddEditGroupPatientForm.module.scss";
 import { useState, useContext, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import { sendData, updateData } from "../../../actions/actions";
 import AppContext from "../../../../store/AppProvider";
 import firebase from "firebase/app";
-import { sendData } from "../../../actions/actions";
 import validateForm from "../../../../helpers/validateForm";
 
-const AddGroupPatientForm = ({ physiotherapist }) => {
+const AddEditGroupPatientForm = ({ physiotherapist }) => {
   const { query } = useLocation();
   const history = useHistory();
-
-  useEffect(() => {
-    if (!query) {
-      history.push(`/patients/group-patients/${physiotherapist.firstName}`);
-    }
-  }, [query, history, physiotherapist.firstName]);
+  const { id } = useParams();
 
   const appCtx = useContext(AppContext);
-  const { currentDate, setIsLoading, groupsCollection, setGroupPatients } =
-    appCtx;
+  const {
+    currentDate,
+    setIsLoading,
+    groupsCollection,
+    setGroupPatients,
+    groupPatients,
+  } = appCtx;
 
-  const initialValues = {
+  const isAddMode = !id;
+
+  let initialValues = {
     firstName: "",
     lastName: "",
     gender: "male",
@@ -31,9 +33,35 @@ const AddGroupPatientForm = ({ physiotherapist }) => {
     dob: "",
     observation: "",
   };
+  let patientToEdit;
+
+  if (!isAddMode) {
+    patientToEdit = groupPatients.find((patient) => patient.id === id);
+    const {
+      firstName,
+      lastName,
+      gender,
+      city,
+      address,
+      phone,
+      email,
+      dateOfBirth,
+      observation,
+    } = patientToEdit;
+    initialValues = {
+      firstName,
+      lastName,
+      gender,
+      city,
+      address,
+      phoneNumber: phone,
+      email,
+      dob: dateOfBirth,
+      observation,
+    };
+  }
 
   const [isFormPageChanged, setIsFormPageChanged] = useState(false);
-
   const [inputValue, setInputValue] = useState(initialValues);
 
   const onChangeHandler = (e) => {
@@ -63,7 +91,7 @@ const AddGroupPatientForm = ({ physiotherapist }) => {
       observation,
     } = inputValue;
     const newGroupPatient = {
-      id: query.id,
+      id: isAddMode ? query.id : id,
       firstName,
       lastName,
       gender,
@@ -75,16 +103,42 @@ const AddGroupPatientForm = ({ physiotherapist }) => {
       observation,
       physioId: physiotherapist.id,
       physiotherapist: physiotherapist.firstName,
-      appointment: {
-        time: query.time,
-        day: query.day,
-        slot: query.slot,
-      },
+      appointment: isAddMode
+        ? {
+            time: query.time,
+            day: query.day,
+            slot: query.slot,
+          }
+        : patientToEdit.appointment,
       date: currentDate,
-      dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
+      dateCreated: isAddMode
+        ? firebase.firestore.FieldValue.serverTimestamp()
+        : patientToEdit.dateCreated,
     };
 
-    sendData(setIsLoading, groupsCollection, newGroupPatient, setGroupPatients);
+    if (isAddMode) {
+      sendData(
+        setIsLoading,
+        groupsCollection,
+        newGroupPatient,
+        setGroupPatients
+      );
+    } else {
+      const targetedPatientIndex = groupPatients.findIndex(
+        (patient) => patient.id === newGroupPatient.id
+      );
+      const updatedPatientsList = [...groupPatients];
+      updatedPatientsList[targetedPatientIndex] = newGroupPatient;
+      updateData(
+        setIsLoading,
+        groupsCollection,
+        id,
+        newGroupPatient,
+        setGroupPatients,
+        updatedPatientsList
+      );
+    }
+
     history.push(`/patients/group-patients/${physiotherapist.firstName}`);
   };
 
@@ -92,10 +146,16 @@ const AddGroupPatientForm = ({ physiotherapist }) => {
     setIsFormPageChanged((prevValue) => !prevValue);
   };
 
+  useEffect(() => {
+    if (!query && !id) {
+      history.push(`/patients/group-patients/${physiotherapist.firstName}`);
+    }
+  }, [query, history, physiotherapist.firstName, id]);
+
   return (
     <form noValidate onSubmit={submitPatientHandler} className={styles.Form}>
       <header>
-        <h2>Create New Patient</h2>
+        <h2>{isAddMode ? "Create New Patient" : "Edit Patient"}</h2>
         <main
           className={
             isFormPageChanged
@@ -195,10 +255,10 @@ const AddGroupPatientForm = ({ physiotherapist }) => {
         <button onClick={changeFormPageHandler} type="button">
           {!isFormPageChanged ? "NEXT" : "BACK"}
         </button>
-        <button type="submit">ADD</button>
+        <button type="submit">{isAddMode ? "ADD" : "EDIT"}</button>
       </header>
     </form>
   );
 };
 
-export default AddGroupPatientForm;
+export default AddEditGroupPatientForm;

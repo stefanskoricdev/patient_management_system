@@ -31,11 +31,15 @@
         overflow-x: scroll;
         overflow-y: hidden;
 
+        p {
+            margin: 0;
+        }
+
         a {
             position: relative;
             min-width: fit-content;
             margin: 0;
-            padding: 1rem;
+            padding: .5rem 1rem;
             font-size: 1rem;
             font-weight: 700;
             text-transform: uppercase;

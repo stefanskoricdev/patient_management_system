@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getData } from "../components/actions/actions";
 
-const AuthContext =
-  React.createContext(/* {
-  token: "",
-  user: "",
-  isLoggedIn: false,
-  isAdmin: false,
-  login: () => {},
-  logout: () => {},
-  setDisplayName: () => {},
-} */);
+const AuthContext = React.createContext();
 
 const USERS_COLLECTION = "users";
 

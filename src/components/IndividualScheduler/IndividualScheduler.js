@@ -11,11 +11,13 @@ import AddEditPatient from "../IndividualPatient/AddEditPatient/AddEditPatient";
 import IndividualSchedule from "./IndividualSchedule/IndividualSchedule";
 import PatientDetails from "../IndividualPatient/PatientDetails/PatientDetails";
 import AddAppointment from "../IndividualPatient/AddAppointment/AddAppointment";
+import Loader from "../UI/Loader/Loader";
 
 const IndividualScheduler = ({
   physiotherapist,
   individualPatients,
   individualCollection,
+  isLoading,
 }) => {
   const [showAddPatientBtn, setShowAddPatientBtn] = useState(true);
 

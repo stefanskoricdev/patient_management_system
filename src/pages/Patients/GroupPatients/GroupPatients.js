@@ -6,7 +6,7 @@ import AppContext from "../../../store/AppProvider";
 
 const Groups = () => {
   const appCtx = useContext(AppContext);
-  const { physios } = appCtx;
+  const { physios, groupPatients, isLoading } = appCtx;
 
   const groupPhysios = physios.filter(
     (physio) => physio.physioType === "group"
@@ -27,7 +27,8 @@ const Groups = () => {
                   activeClassName={styles.active}
                   to={`/patients/group-patients/${physio.firstName.toLowerCase()}`}
                 >
-                  {physio.firstName}
+                  <p>{physio.firstName}</p>
+                  <p>{physio.lastName}</p>
                   <i className="fas fa-caret-up"></i>
                 </NavLink>
               );
@@ -46,7 +47,12 @@ const Groups = () => {
                     key={physio.id}
                     path={`/patients/group-patients/${physio.firstName.toLowerCase()}`}
                   >
-                    <GroupsScheduler key={physio.id} physiotherapist={physio} />
+                    <GroupsScheduler
+                      key={physio.id}
+                      physiotherapist={physio}
+                      groupPatients={groupPatients}
+                      isLoading={isLoading}
+                    />
                   </Route>
                 );
               })}
