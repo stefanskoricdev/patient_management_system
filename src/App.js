@@ -38,14 +38,14 @@ function App() {
       {isLoggedIn && (
         <Layout className={styles.Layout}>
           {isLoading && <Loader />}
-          <Switch>
-            <Route path="/" exact>
-              <Redirect to="/home" />
-            </Route>
-            <Route path="/home">
-              <Home />
-            </Route>
-            <Suspense fallback={<Loader />}>
+          <Suspense fallback={null}>
+            <Switch>
+              <Route path="/" exact>
+                <Redirect to="/home" />
+              </Route>
+              <Route path="/home">
+                <Home />
+              </Route>
               <Route path="/patients">
                 <Patients />
               </Route>
@@ -60,11 +60,11 @@ function App() {
                   <Settings />
                 </Route>
               )}
-            </Suspense>
-            <Route path="*">
-              <Redirect to="/home" />
-            </Route>
-          </Switch>
+              <Route path="*">
+                <Redirect to="/home" />
+              </Route>
+            </Switch>
+          </Suspense>
         </Layout>
       )}
     </div>
