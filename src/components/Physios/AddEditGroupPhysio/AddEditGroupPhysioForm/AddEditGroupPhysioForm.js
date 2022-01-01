@@ -161,7 +161,7 @@ const AddEditGroupPhysioForm = ({ workingHours, rootPath }) => {
           const { label, name, type, value } = info;
           return (
             <FormInput
-              key={name + value}
+              key={name}
               label={label}
               name={name}
               type={type}

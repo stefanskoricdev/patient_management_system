@@ -11,7 +11,7 @@ const colorPallete = [
 ];
 
 const IndividualSchedule = ({ patients, physiotherapist }) => {
-  const { firstName, workingDays, workingHours } = physiotherapist;
+  const { firstName, lastName, workingDays, workingHours } = physiotherapist;
   const indexValue = workingDays.length * workingHours.length;
 
   const workingDaysEl = workingDays.map((day) => (
@@ -100,7 +100,7 @@ const IndividualSchedule = ({ patients, physiotherapist }) => {
                     <Link
                       //We pass an index to the route so we can use it in PATIENT DETAIL and EDIT PATIENT components
                       //To enable adding multiple appointments to same patient end to delete those appointments separately
-                      to={`/patients/individual-patients/${firstName.toLowerCase()}/patient-details/${
+                      to={`/patients/individual-patients/${firstName.toLowerCase()}${lastName.toLowerCase()}/patient-details/${
                         patient.id
                       }index=${i}`}
                       key={patient.id + i}

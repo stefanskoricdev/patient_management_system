@@ -98,7 +98,7 @@ const AddAppointment = ({ physiotherapist }) => {
       updatedPatientsList
     );
     history.push(
-      `/patients/individual-patients/${physiotherapist.firstName}/schedule`
+      `/patients/individual-patients/${physiotherapist.firstName}${physiotherapist.lastName}/schedule`
     );
   };
 

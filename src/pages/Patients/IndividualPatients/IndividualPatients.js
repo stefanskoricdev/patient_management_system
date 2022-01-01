@@ -26,7 +26,7 @@ const IndividualPatients = () => {
                 <NavLink
                   key={physio.id}
                   activeClassName={styles.active}
-                  to={`/patients/individual-patients/${physio.firstName.toLowerCase()}`}
+                  to={`/patients/individual-patients/${physio.firstName.toLowerCase()}${physio.lastName.toLowerCase()}`}
                 >
                   <p>{physio.firstName}</p>
                   <p>{physio.lastName}</p>
@@ -39,14 +39,14 @@ const IndividualPatients = () => {
             <Switch>
               <Route path="/patients/individual-patients/" exact>
                 <Redirect
-                  to={`/patients/individual-patients/${individualPhysios[0].firstName.toLowerCase()}`}
+                  to={`/patients/individual-patients/${individualPhysios[0].firstName.toLowerCase()}${individualPhysios[0].lastName.toLowerCase()}`}
                 />
               </Route>
               {individualPhysios.map((physio) => {
                 return (
                   <Route
                     key={physio.id}
-                    path={`/patients/individual-patients/${physio.firstName.toLowerCase()}`}
+                    path={`/patients/individual-patients/${physio.firstName.toLowerCase()}${physio.lastName.toLowerCase()}`}
                   >
                     <IndividualScheduler
                       key={physio.id}
@@ -60,7 +60,7 @@ const IndividualPatients = () => {
               })}
               <Route path="*">
                 <Redirect
-                  to={`/patients/individual-patients/${individualPhysios[0].firstName.toLowerCase()}`}
+                  to={`/patients/individual-patients/${individualPhysios[0].firstName.toLowerCase()}${individualPhysios[0].lastName.toLowerCase()}`}
                 />
               </Route>
             </Switch>

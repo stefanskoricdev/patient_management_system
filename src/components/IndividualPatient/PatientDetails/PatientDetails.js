@@ -87,13 +87,13 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
             }
           >
             <Link
-              to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}/edit-patient/${id}`}
+              to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/edit-patient/${id}`}
               onClick={() => setShowAddPatient(false)}
             >
               Edit
             </Link>
             <Link
-              to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}/add-appointment/${id}`}
+              to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/add-appointment/${id}`}
               onClick={() => setShowAddPatient(false)}
             >
               Add appointment

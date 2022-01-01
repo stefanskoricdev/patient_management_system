@@ -31,7 +31,7 @@ const GroupPatientDetails = ({ physiotherapist }) => {
       groupsCollection,
       id,
       history,
-      `/patients/group-patients/${targetedPatient.physiotherapist}`
+      `/patients/group-patients/${physiotherapist.firstName}${physiotherapist.lastName}`
     );
   };
 
@@ -56,7 +56,7 @@ const GroupPatientDetails = ({ physiotherapist }) => {
           }
         >
           <Link
-            to={`/patients/group-patients/${physiotherapist.firstName.toLowerCase()}/edit-group-patient/${id}`}
+            to={`/patients/group-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/edit-group-patient/${id}`}
           >
             Edit
           </Link>

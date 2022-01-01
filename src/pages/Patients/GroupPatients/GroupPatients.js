@@ -25,7 +25,7 @@ const Groups = () => {
                 <NavLink
                   key={physio.id}
                   activeClassName={styles.active}
-                  to={`/patients/group-patients/${physio.firstName.toLowerCase()}`}
+                  to={`/patients/group-patients/${physio.firstName.toLowerCase()}${physio.lastName.toLowerCase()}`}
                 >
                   <p>{physio.firstName}</p>
                   <p>{physio.lastName}</p>
@@ -38,14 +38,14 @@ const Groups = () => {
             <Switch>
               <Route path="/patients/group-patients/" exact>
                 <Redirect
-                  to={`/patients/group-patients/${groupPhysios[0].firstName.toLowerCase()}`}
+                  to={`/patients/group-patients/${groupPhysios[0].firstName.toLowerCase()}${groupPhysios[0].lastName.toLowerCase()}`}
                 />
               </Route>
               {groupPhysios.map((physio) => {
                 return (
                   <Route
                     key={physio.id}
-                    path={`/patients/group-patients/${physio.firstName.toLowerCase()}`}
+                    path={`/patients/group-patients/${physio.firstName.toLowerCase()}${physio.lastName.toLowerCase()}`}
                   >
                     <GroupsScheduler
                       key={physio.id}
@@ -58,7 +58,7 @@ const Groups = () => {
               })}
               <Route path="*">
                 <Redirect
-                  to={`/patients/group-patients/${groupPhysios[0].firstName.toLowerCase()}`}
+                  to={`/patients/group-patients/${groupPhysios[0].firstName.toLowerCase()}${groupPhysios[0].lastName.toLowerCase()}`}
                 />
               </Route>
             </Switch>

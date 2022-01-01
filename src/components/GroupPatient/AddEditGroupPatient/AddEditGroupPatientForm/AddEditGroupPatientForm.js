@@ -138,7 +138,9 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
       );
     }
 
-    history.push(`/patients/group-patients/${physiotherapist.firstName}`);
+    history.push(
+      `/patients/group-patients/${physiotherapist.firstName}${physiotherapist.lastName}`
+    );
   };
 
   const changeFormPageHandler = () => {
@@ -147,9 +149,11 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
 
   useEffect(() => {
     if (!query && !id) {
-      history.push(`/patients/group-patients/${physiotherapist.firstName}`);
+      history.push(
+        `/patients/group-patients/${physiotherapist.firstName}${physiotherapist.lastName}`
+      );
     }
-  }, [query, history, physiotherapist.firstName, id]);
+  }, [query, history, physiotherapist.firstName, physiotherapist.lastName, id]);
 
   return (
     <form noValidate onSubmit={submitPatientHandler} className={styles.Form}>

@@ -2,6 +2,7 @@ import styles from "./MainHeader.module.scss";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../store/AuthProvider";
+import profileDefaultImg from "../../assets/img/profileDefault.png";
 
 const MainHeader = ({ openNavHandler }) => {
   const authCtx = useContext(AuthContext);
@@ -21,7 +22,10 @@ const MainHeader = ({ openNavHandler }) => {
       <div className={styles.UserAvatar}>
         <p>{displayName}</p>
         <Link to="/profile">
-          <img src={profileImgUrl} alt="profileImg" />
+          <img
+            src={profileImgUrl !== "" ? profileImgUrl : profileDefaultImg}
+            alt="profileImg"
+          />
         </Link>
       </div>
     </header>

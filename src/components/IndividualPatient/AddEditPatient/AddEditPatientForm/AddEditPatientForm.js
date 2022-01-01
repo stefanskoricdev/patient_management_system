@@ -176,7 +176,9 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       );
     }
 
-    history.push(`/patients/individual-patients/${physiotherapist.firstName}`);
+    history.push(
+      `/patients/individual-patients/${physiotherapist.firstName}${physiotherapist.lastName}`
+    );
   };
 
   return (
