@@ -9,7 +9,7 @@
             border: 2px solid $dark-blue;
             padding: .5rem;
             max-height: 40rem;
-            overflow-y: scroll;
+            overflow: scroll;
 
             header {
                 display: flex;
@@ -30,7 +30,6 @@
             table {
                 display: block;
                 width: 100%;
-                overflow-x: scroll;
                 border-collapse: collapse;
 
                 tbody {
@@ -42,6 +41,7 @@
                     }
 
                     td {
+                        height: 3.5rem;
 
                         a,
                         button {

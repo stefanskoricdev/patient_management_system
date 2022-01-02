@@ -45,6 +45,7 @@ const IndividualScheduler = ({
           }}
         >
           <i className="fas fa-calendar-alt"></i>
+          <p>Schedule</p>
         </NavLink>
         {showAddPatientBtn ? (
           <NavLink
@@ -53,6 +54,7 @@ const IndividualScheduler = ({
             className={styles.Link}
           >
             <i className="fas fa-calendar-plus"></i>
+            <p>Add Patient</p>
           </NavLink>
         ) : null}
       </nav>

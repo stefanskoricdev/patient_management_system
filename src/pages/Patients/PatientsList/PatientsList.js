@@ -72,7 +72,7 @@ const PatientsList = () => {
                 <th>Phone Number</th>
                 <th>Email</th>
                 <th>Physiotherapist</th>
-                <th>Id</th>
+                {/* <th>Id</th> */}
               </tr>
               {patientsList.map((patient) => {
                 return (
@@ -86,7 +86,7 @@ const PatientsList = () => {
                     <td>{patient.phone}</td>
                     <td>{patient.email}</td>
                     <td>{patient.physiotherapist}</td>
-                    <td>{patient.id}</td>
+                    {/* <td>{patient.id}</td> */}
                   </tr>
                 );
               })}

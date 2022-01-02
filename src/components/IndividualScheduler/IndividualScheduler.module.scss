@@ -10,12 +10,26 @@
     border-radius: 1rem;
 
     .Nav {
+        display: flex;
         margin: 1rem 0;
 
         .Link {
+            display: flex;
+            align-items: center;
             margin-right: 1rem;
             font-size: 2rem;
             color: $dark-blue;
+
+            p {
+                font-size: 1rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                text-align: center;
+            }
+
+            svg {
+                margin: 0 .5rem;
+            }
         }
 
         a.active,
