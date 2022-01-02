@@ -14,9 +14,6 @@
     z-index: 200;
 
     .Logo {
-        display: flex;
-        justify-content: center;
-
         img {
             height: 4.5rem;
         }
@@ -99,7 +96,9 @@
         animation: navClose 200ms linear;
 
         .Logo {
-            margin: .5rem auto;
+            display: flex;
+            justify-content: center;
+            margin: .5rem 0;
         }
 
         .NavList {

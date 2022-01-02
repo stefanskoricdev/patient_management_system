@@ -1,0 +1,58 @@
+@import "../../../assets/colors/colors";
+
+.LoginInfoWrapper {
+    max-height: 95%;
+    width: 30rem;
+    max-width: calc(98% - 2rem);
+    border-radius: .3rem;
+    box-shadow: 5px 5px 20px $dark-blue;
+    background-color: $dark-blue;
+    overflow-y: scroll;
+
+    img {
+        display: block;
+        height: 15rem;
+        margin: 0 auto;
+        padding: .5rem 0;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    a {
+        color: rgb(85, 124, 252);
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    p,
+    ul {
+        padding: 0 1rem;
+    }
+
+    ul {
+        p {
+            padding: 0;
+        }
+
+        li {
+            span {
+                color: rgb(85, 124, 252);
+            }
+        }
+    }
+
+    button {
+        display: block;
+        margin: 2rem auto 1rem;
+        padding: .2rem .5rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: $dark-blue;
+        border-radius: .5rem;
+        border: none;
+    }
+}
