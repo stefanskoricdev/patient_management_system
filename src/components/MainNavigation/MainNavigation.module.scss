@@ -14,7 +14,8 @@
     z-index: 200;
 
     .Logo {
-        padding-left: .5rem;
+        display: flex;
+        justify-content: center;
 
         img {
             height: 4.5rem;

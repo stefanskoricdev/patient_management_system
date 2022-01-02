@@ -1,7 +1,7 @@
 import styles from "./MainNavigation.module.scss";
 import { Fragment, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../../assets/img/logo.png";
+import logo from "../../assets/img/logo_small.png";
 import AuthContext from "../../store/AuthProvider";
 
 const MainNavigation = ({ isNavBtnClicked }) => {
