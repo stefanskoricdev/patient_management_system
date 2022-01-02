@@ -2,11 +2,11 @@ import styles from "./App.module.scss";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { useContext, lazy, Suspense } from "react";
 import Layout from "./components/Layout/Layout";
-import Home from "./pages/Home/Home";
 import Loader from "./components/UI/Loader/Loader";
 import Login from "./pages/Login/Login";
 import AuthContext from "./store/AuthProvider";
 
+const Home = lazy(() => import("./pages/Home/Home"));
 const Patients = lazy(() => import("./pages/Patients/Patients"));
 const Notes = lazy(() => import("./pages/Notes/Notes"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
@@ -38,7 +38,7 @@ function App() {
       {isLoggedIn && (
         <Layout className={styles.Layout}>
           {isLoading && <Loader />}
-          <Suspense fallback={null}>
+          <Suspense fallback={<Loader />}>
             <Switch>
               <Route path="/" exact>
                 <Redirect to="/home" />
