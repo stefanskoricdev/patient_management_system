@@ -1,68 +1,73 @@
 @mixin pageWrapper {
-    max-width: 95%;
-    margin: 2rem auto 0;
-    padding: 1rem .5rem;
-    background-color: $light-blue;
-    border-radius: 1rem;
+  max-width: 95%;
+  margin: 0 auto;
+  padding: 0 0.5rem;
+  background-color: $light-blue;
+  border-radius: 1rem;
 }
 
 @mixin pageWrapper1023 {
-    // PageWrapper styles for screen larger then 1023px!
-    max-width: calc(95% - 2rem);
-    margin-left: 5rem;
+  // PageWrapper styles for screen larger then 1023px!
+  max-width: calc(95% - 2rem);
+  margin-left: 5rem;
 }
 
 @mixin pageHeader {
-    .Header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+  .Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h1,
+    p {
+      font-size: 1rem;
+      margin: 0.5rem 0;
     }
+  }
 }
 
 @mixin pageNav {
-    .Nav {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        background-color: $dark-blue;
-        border-radius: .5rem .5rem 0 0;
-        padding: 0 1rem;
-        overflow-x: scroll;
-        overflow-y: hidden;
+  .Nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: $dark-blue;
+    border-radius: 0.5rem 0.5rem 0 0;
+    padding: 0 0.5rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
 
-        p {
-            margin: 0;
-        }
-
-        a {
-            position: relative;
-            min-width: fit-content;
-            margin: 0;
-            padding: .5rem 1rem;
-            font-size: 1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-
-            svg {
-                display: none;
-                position: absolute;
-                bottom: -6px;
-                left: calc(50% - .25rem);
-                color: $whiteish;
-            }
-        }
-
-        a.active,
-        a:active,
-        a:hover {
-            margin-bottom: 0;
-            border-bottom: 5px solid $whiteish;
-
-            svg {
-                display: block;
-            }
-        }
+    p {
+      margin: 0;
     }
+
+    a {
+      position: relative;
+      min-width: fit-content;
+      margin: 0;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+
+      svg {
+        display: none;
+        position: absolute;
+        bottom: -6px;
+        left: calc(50% - 0.25rem);
+        color: $whiteish;
+      }
+    }
+
+    a.active,
+    a:active,
+    a:hover {
+      margin-bottom: 0;
+      border-bottom: 5px solid $whiteish;
+
+      svg {
+        display: block;
+      }
+    }
+  }
 }
