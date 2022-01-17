@@ -27,8 +27,8 @@ const Groups = () => {
                   activeClassName={styles.active}
                   to={`/patients/group-patients/${physio.firstName.toLowerCase()}${physio.lastName.toLowerCase()}`}
                 >
-                  <p>{physio.firstName}</p>
-                  <p>{physio.lastName}</p>
+                  <span>{physio.firstName}</span>
+                  <span>{physio.lastName}</span>
                   <i className="fas fa-caret-up"></i>
                 </NavLink>
               );

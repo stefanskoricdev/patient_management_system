@@ -36,7 +36,8 @@
     overflow-x: scroll;
     overflow-y: hidden;
 
-    p {
+    span {
+      display: block;
       margin: 0;
     }
 
@@ -67,6 +68,16 @@
 
       svg {
         display: block;
+      }
+    }
+  }
+  @media (min-width: 1023px) {
+    .Nav {
+      a {
+        display: flex;
+        span {
+          margin: 0 0.1rem;
+        }
       }
     }
   }
