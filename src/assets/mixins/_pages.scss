@@ -1,15 +1,17 @@
 @mixin pageWrapper {
   max-width: 95%;
   margin: 0 auto;
-  padding: 0 0.5rem;
+  padding: 0.5rem 0.5rem;
   background-color: $light-blue;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
 }
 
 @mixin pageWrapper1023 {
   // PageWrapper styles for screen larger then 1023px!
-  max-width: calc(95% - 2rem);
+  max-width: 100%;
+  max-height: calc(100vh - 5rem);
   margin-left: 5rem;
+  overflow-y: scroll;
 }
 
 @mixin pageHeader {

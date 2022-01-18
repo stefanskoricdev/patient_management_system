@@ -1,143 +1,158 @@
 @import "../../assets/colors/colors";
 
 .MainNav {
-    width: 70%;
-    min-height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translateX(-110%);
-    // translateX 110% to avoid shadow to be seen when nav is closed
-    transition: transform 200ms ease-in-out;
-    border-radius: 0 1rem 1rem 0;
-    background-color: $dark-blue;
-    z-index: 200;
+  width: 70%;
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(-110%);
+  // translateX 110% to avoid shadow to be seen when nav is closed
+  transition: transform 200ms ease-in-out;
+  border-radius: 0 1rem 1rem 0;
+  background-color: $dark-blue;
+  z-index: 200;
 
-    .Logo {
-        img {
-            height: 4.5rem;
-        }
+  .Logo {
+    img {
+      height: 4.5rem;
+    }
+  }
+
+  .NavList {
+    padding-left: 0.5rem;
+    height: fit-content;
+
+    svg {
+      width: 1.2rem;
+      height: 1.2rem;
+      margin-right: 1rem;
     }
 
-    .NavList {
-        padding-left: .5rem;
-        height: fit-content;
+    li {
+      margin: 1rem 0;
 
-        svg {
-            width: 1.5rem;
-            height: 1.5rem;
-            margin-right: 1rem;
+      a {
+        display: flex;
+        padding: 1rem 0 1rem 1rem;
+        font-size: 1rem;
+        transition: border 100ms linear;
+
+        p {
+          margin: 0;
         }
+      }
 
-        li {
-            margin: 2rem 0;
-
-            a {
-                display: flex;
-                padding: 1rem 0 1rem 1rem;
-                font-size: 1.2rem;
-                transition: border 100ms linear;
-
-                p {
-                    margin: 0;
-                }
-            }
-
-            a:hover,
-            a:active,
-            a.active {
-                border-left: 5px solid $whiteish;
-            }
-        }
-
-        .Logout {
-            display: flex;
-            align-items: center;
-            background: none;
-            border: none;
-            color: $whiteish;
-            padding-left: 1rem;
-
-            p {
-                font-size: 1.2rem;
-            }
-        }
+      a:hover,
+      a:active,
+      a.active {
+        border-left: 5px solid $whiteish;
+      }
     }
+
+    .Logout {
+      display: flex;
+      align-items: center;
+      background: none;
+      border: none;
+      color: $whiteish;
+      padding: 1rem 0 1rem 1rem;
+
+      p {
+        font-size: 1rem;
+        margin: 0;
+      }
+    }
+  }
 }
 
 .MainNav.active {
-    transform: translateX(0);
-    box-shadow: 15px 15px 20px $dark-blue;
+  transform: translateX(0);
+  box-shadow: 15px 15px 20px $dark-blue;
 }
 
 @media (max-width: 320px) {
-    .MainNav {
-        width: 80%;
-    }
+  .MainNav {
+    width: 80%;
+  }
 }
 
 @media (min-height: 500px) {
-    .MainNav {
-        position: fixed;
-    }
+  .MainNav {
+    position: fixed;
+  }
 }
 
 @media (min-width: 750px) {
-    .MainNav {
-        width: 50%;
-    }
+  .MainNav {
+    width: 50%;
+  }
 }
 
 @media (min-width: 1023px) {
-    .MainNav {
-        width: 5rem;
-        overflow: hidden;
-        transform: translateX(0);
-        animation: navClose 200ms linear;
+  .MainNav {
+    width: 5rem;
+    overflow: hidden;
+    transform: translateX(0);
+    animation: navClose 200ms linear;
 
-        .Logo {
-            display: flex;
-            justify-content: center;
-            margin: .5rem 0;
-        }
-
-        .NavList {
-            width: 15rem;
-
-            p {
-                transition: opacity 200ms linear;
-                opacity: 0;
-            }
-        }
+    .Logo {
+      display: flex;
+      justify-content: center;
+      margin: 0.5rem 0;
     }
 
-    .MainNav.active {
-        width: 15rem;
-        animation: navOpen 200ms linear;
-
+    .NavList {
+      width: 15rem;
+      li {
+        svg {
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+        a,
         p {
-            transition: opacity 200ms linear;
-            opacity: 1;
+          font-size: 1.2rem;
         }
+      }
+      p {
+        transition: opacity 200ms linear;
+        opacity: 0;
+      }
+      .Logout {
+        p {
+          font-size: 1.2rem;
+        }
+      }
     }
+  }
+
+  .MainNav.active {
+    width: 15rem;
+    animation: navOpen 200ms linear;
+
+    p {
+      transition: opacity 200ms linear;
+      opacity: 1;
+    }
+  }
 }
 
 @keyframes navOpen {
-    from {
-        width: 5rem;
-    }
+  from {
+    width: 5rem;
+  }
 
-    to {
-        width: 15rem;
-    }
+  to {
+    width: 15rem;
+  }
 }
 
 @keyframes navClose {
-    from {
-        width: 15rem;
-    }
+  from {
+    width: 15rem;
+  }
 
-    to {
-        width: 5rem;
-    }
+  to {
+    width: 5rem;
+  }
 }

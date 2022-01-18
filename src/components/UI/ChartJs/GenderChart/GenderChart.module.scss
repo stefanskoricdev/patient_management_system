@@ -1,15 +1,21 @@
 @import "../../../../assets/colors/colors";
 
 .DoughnutWrapper {
-    width: 30rem;
-    max-width: 95%;
-    height: fit-content;
-    margin: 0 auto;
-    padding: 1rem;
-    background-color: $dark-blue;
-    border-radius: 1rem;
+  width: 30rem;
+  max-width: 100%;
+  height: fit-content;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: $dark-blue;
+  border-radius: 1rem;
 
-    h1 {
-        text-align: center;
-    }
+  h1 {
+    text-align: center;
+  }
+}
+
+@media (min-width: 1023px) {
+  .DoughnutWrapper {
+    max-width: 95%;
+  }
 }
