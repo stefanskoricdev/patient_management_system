@@ -189,7 +189,7 @@ const EditProfile = () => {
     <section className={styles.EditProfile}>
       <div key="uniqueKey" className={styles.ProfileImg}>
         <img
-          src={profileImgUrl !== "" ? profileImgUrl : profileDefault}
+          src={profileImgUrl !== false ? profileImgUrl : profileDefault}
           alt="userImg"
         />
       </div>

@@ -39,7 +39,7 @@ const Physios = () => {
           <i className="fas fa-caret-up"></i>
         </NavLink>
         <NavLink activeClassName={styles.active} to={`${path}/add-physio`}>
-          Add physio
+          Add individual physio
           <i className="fas fa-caret-up"></i>
         </NavLink>
         <NavLink

@@ -85,7 +85,11 @@ const IndividualSchedule = ({ patients, physiotherapist }) => {
                     leftPosValueMoreDays:
                       (dayIndex * 100) / workingDays.length + 0.5,
                     leftPosValueLessDays: dayIndex * 20 + 0.5,
+                    // 0.5% is to centralize element inside parent el
+                    //which is 20% width!
                     heightValue: patient.appointment[i].duration * 0.2 - 0.1,
+                    //0.1rem subtraction is to avoid shadow of element to overflow to
+                    //element below
                     widthValue: 100 / workingDays.length - 1,
                   };
                   const {

@@ -64,6 +64,7 @@ const LoginForm = ({ setLoading }) => {
       .then((data) => {
         const targetedUser = users.find((user) => user.email === data.email);
         login(data.idToken, targetedUser);
+        console.log(targetedUser);
       })
       .catch((error) => {
         resetFormInputs([emailInputRef, passwordInputRef]);

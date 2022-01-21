@@ -7,6 +7,7 @@ import profileDefaultImg from "../../assets/img/profileDefault.png";
 const MainHeader = ({ openNavHandler }) => {
   const authCtx = useContext(AuthContext);
   const { displayName, profileImgUrl } = authCtx;
+  console.log(profileImgUrl);
 
   return (
     <header className={styles.MainHeader}>
@@ -23,7 +24,7 @@ const MainHeader = ({ openNavHandler }) => {
         <p>{displayName}</p>
         <Link to="/profile">
           <img
-            src={profileImgUrl !== "" ? profileImgUrl : profileDefaultImg}
+            src={profileImgUrl !== false ? profileImgUrl : profileDefaultImg}
             alt="profileImg"
           />
         </Link>

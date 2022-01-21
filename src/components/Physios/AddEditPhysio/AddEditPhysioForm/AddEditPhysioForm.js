@@ -192,7 +192,11 @@ const AddEditPhysioForm = ({ rootPath, workingDays, workingHours }) => {
         noValidate
         className={styles.AddEditPhysioForm}
       >
-        <h2>{isAddMode ? "Add Physiotherapist" : "Edit Physiotherapist"}</h2>
+        <h2>
+          {isAddMode
+            ? "Add Individual Physiotherapist"
+            : "Edit Individual Physiotherapist"}
+        </h2>
         <div className={styles.BasicInfo}>
           {basicInfoInputs.map((info) => {
             const { label, name, type, value } = info;
