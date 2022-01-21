@@ -243,16 +243,18 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
             </label>
           </section>
           <section className={styles.AdditionalInfo}>
-            <label>
-              <p>Observation:</p>
-              <textarea
-                name="observation"
-                rows="8"
-                cols="80"
-                value={inputValue.observation}
-                onChange={onChangeHandler}
-              />
-            </label>
+            <section className={styles.Observation}>
+              <label>
+                <p>Observation:</p>
+                <textarea
+                  name="observation"
+                  rows="8"
+                  cols="80"
+                  value={inputValue.observation}
+                  onChange={onChangeHandler}
+                />
+              </label>
+            </section>
           </section>
         </main>
         <button onClick={changeFormPageHandler} type="button">
