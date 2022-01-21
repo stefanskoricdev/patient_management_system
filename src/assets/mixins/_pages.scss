@@ -9,6 +9,7 @@
 @mixin pageWrapper1023 {
   // PageWrapper styles for screen larger then 1023px!
   max-width: 100%;
+  /* calc(100% - 5.5rem); // 5 rem margin left and .5rem to line it up with header and avatar! */
   max-height: calc(100vh - 5rem);
   margin-left: 5rem;
   overflow-y: scroll;
@@ -19,6 +20,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     h1,
     p {
       font-size: 1rem;
@@ -73,10 +75,12 @@
       }
     }
   }
+
   @media (min-width: 1023px) {
     .Nav {
       a {
         display: flex;
+
         span {
           margin: 0 0.1rem;
         }

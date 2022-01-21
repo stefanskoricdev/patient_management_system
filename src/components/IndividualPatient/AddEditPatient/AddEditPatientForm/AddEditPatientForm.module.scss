@@ -2,7 +2,7 @@
 
 .AddEditPatientForm {
   width: 100%;
-  padding: 0.5rem 0;
+  padding: 0;
   overflow: hidden;
 
   input,
@@ -20,7 +20,8 @@
     margin: 0.5rem 0.5rem 0.5rem 0;
   }
 
-  input {
+  input,
+  select {
     margin: 0.5rem 0;
     font-size: 1rem;
     font-weight: 700;
@@ -56,13 +57,6 @@
     width: 20rem;
     max-width: 90%;
     margin: 0.5rem auto;
-  }
-
-  select {
-    width: 100%;
-    margin: 0 auto;
-    font-size: 1rem;
-    text-align: center;
   }
 
   textarea {
@@ -105,10 +99,56 @@
 
   .GenderWrapper {
     width: 20rem;
+    max-width: 90%;
     margin: 0 auto;
     display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
+
+    label {
+      max-width: 100%;
+    }
+  }
+}
+
+@media(min-width: 1023px) {
+  .AddEditPatientForm {
+    width: 40rem;
+
+    .BasicInfo {
+      display: grid;
+      grid-template-columns: 20rem 20rem;
+      grid-template-rows: repeat(4, 5rem);
+
+      .GenderWrapper {
+        justify-content: flex-start;
+      }
+    }
+
+    .AdditionalInfo {
+      display: grid;
+      grid-template-columns: 20rem 20rem;
+      grid-template-rows: auto auto;
+
+      .Observation {
+        grid-column-start: 1;
+        grid-row-start: 1;
+        grid-row-end: 3;
+
+        label {
+          height: calc(100% - 3rem);
+
+          textarea {
+            height: 100%;
+          }
+        }
+      }
+
+      .WorkingHours {
+        grid-column-start: 2;
+        grid-row-start: 2;
+      }
+    }
   }
 }

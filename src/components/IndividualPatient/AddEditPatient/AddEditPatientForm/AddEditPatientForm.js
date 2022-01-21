@@ -219,15 +219,17 @@ const AddEditPatientForm = ({ physiotherapist }) => {
             />
           </label>
           <section className={styles.GenderWrapper}>
-            <label>Select gender: </label>
-            <select
-              name="gender"
-              value={inputValue.gender}
-              onChange={onChangeHandler}
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
+            <label>
+              Select gender:
+              <select
+                name="gender"
+                value={inputValue.gender}
+                onChange={onChangeHandler}
+              >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </label>
           </section>
           <label>
             City:
@@ -276,16 +278,18 @@ const AddEditPatientForm = ({ physiotherapist }) => {
           </label>
         </section>
         <section className={styles.AdditionalInfo}>
-          <label>
-            <p>Observation:</p>
-            <textarea
-              name="observation"
-              rows="8"
-              cols="80"
-              value={inputValue.observation}
-              onChange={onChangeHandler}
-            />
-          </label>
+          <section className={styles.Observation}>
+            <h3>Observation:</h3>
+            <label>
+              <textarea
+                name="observation"
+                rows="8"
+                cols="80"
+                value={inputValue.observation}
+                onChange={onChangeHandler}
+              />
+            </label>
+          </section>
           <section className={styles.WorkingDays}>
             <h3>Select day of visit:</h3>
             <label>

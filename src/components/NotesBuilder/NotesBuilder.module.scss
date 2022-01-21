@@ -8,7 +8,7 @@
     display: flex;
     flex-flow: column;
     align-items: center;
-    border-radius: 1rem;
+    border-radius: .5rem;
 
     .CreateNote {
         width: 100%;
@@ -16,11 +16,11 @@
         display: flex;
         align-items: center;
         background-color: $dark-blue;
-        border-radius: 1rem;
+        border-radius: .5rem;
 
         input,
         button {
-            border-radius: 1rem;
+            border-radius: .5rem;
             border: none;
         }
 
@@ -113,7 +113,7 @@
         justify-content: space-around;
         width: 100%;
         margin: 1rem auto;
-        border-radius: 1rem;
+        border-radius: .5rem;
         background-color: $dark-blue;
 
         p {
