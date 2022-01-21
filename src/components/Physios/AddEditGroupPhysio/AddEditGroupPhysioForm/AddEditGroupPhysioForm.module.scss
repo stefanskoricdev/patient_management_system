@@ -12,7 +12,8 @@
         text-align: center;
     }
 
-    input {
+    input,
+    select {
         background-color: $whiteish;
         border-radius: .5rem;
         border: none;
@@ -87,5 +88,18 @@
         color: $dark-blue;
         border-radius: .5rem;
         border: none;
+    }
+}
+
+@media(min-width: 1023px) {
+    .Form {
+        max-width: 42rem; //1rem parent padding 1rem column gap
+
+        .BasicInfo {
+            display: grid;
+            grid-template-columns: 20rem 20rem;
+            grid-template-rows: repeat(2, 5rem);
+            column-gap: 1rem;
+        }
     }
 }

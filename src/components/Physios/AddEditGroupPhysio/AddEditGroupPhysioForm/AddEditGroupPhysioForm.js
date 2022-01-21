@@ -86,8 +86,24 @@ const AddEditGroupPhysioForm = ({ workingHours, rootPath }) => {
     });
   };
 
+  const checkIsGroupTaken = (arr, val) => {
+    return arr.some((arrValue) => {
+      return JSON.stringify(arrValue) === JSON.stringify(val);
+    });
+  };
+
   const createGroupHandler = (e) => {
     e.preventDefault();
+    const isTaken = checkIsGroupTaken(group, groupConfig);
+    if (isTaken) {
+      WarningMessage(
+        "This group is taken",
+        "Please create another group",
+        false,
+        "Back"
+      );
+      return;
+    }
     setGroup((prevState) => [...prevState, groupConfig]);
   };
 
