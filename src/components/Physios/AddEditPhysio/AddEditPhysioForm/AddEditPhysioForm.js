@@ -208,9 +208,9 @@ const AddEditPhysioForm = ({ rootPath, workingDays, workingHours }) => {
             );
           })}
         </div>
-        <div className={styles.WorkingDays}>
+        <section className={styles.WorkingDays}>
           <h3>Select working days:</h3>
-          <main>
+          <div>
             {workingDays.map((day, i) => {
               return (
                 <label key={day}>
@@ -234,11 +234,11 @@ const AddEditPhysioForm = ({ rootPath, workingDays, workingHours }) => {
                 </label>
               );
             })}
-          </main>
-        </div>
-        <div className={styles.WorkingHours}>
+          </div>
+        </section>
+        <section className={styles.WorkingHours}>
           <h3>Select working hours:</h3>
-          <main>
+          <div>
             {workingHours.map((hour, i) => {
               return (
                 <label key={hour}>
@@ -262,11 +262,11 @@ const AddEditPhysioForm = ({ rootPath, workingDays, workingHours }) => {
                 </label>
               );
             })}
-          </main>
-          <button className={styles.SubmitBtn}>
-            {isAddMode ? "Add" : "Edit"}
-          </button>
-        </div>
+          </div>
+        </section>
+        <button className={styles.SubmitBtn}>
+          {isAddMode ? "Add" : "Edit"}
+        </button>
       </form>
     </Fragment>
   );
