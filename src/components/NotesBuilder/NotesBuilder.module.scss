@@ -45,6 +45,7 @@
             float: right;
             background-color: $light-blue;
             color: $whiteish;
+            transition: all 200ms linear;
         }
 
         button:hover {
