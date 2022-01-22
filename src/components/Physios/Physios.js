@@ -6,27 +6,10 @@ import {
   Redirect,
   useRouteMatch,
 } from "react-router-dom";
+import { workingDays, workingHours } from "../../helpers/physiosConfig";
 import PhysiosList from "./PhysiosList/PhysiosList";
 import AddEditPhysio from "./AddEditPhysio/AddEditPhysio";
 import AddEditGroupPhysio from "./AddEditGroupPhysio/AddEditGroupPhysio";
-
-const workingDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const workingHours = [
-  "08:00",
-  "09:00",
-  "10:00",
-  "11:00",
-  "12:00",
-  "13:00",
-  "14:00",
-  "15:00",
-  "16:00",
-  "17:00",
-  "18:00",
-  "19:00",
-  "20:00",
-  "21:00",
-];
 
 const Physios = () => {
   const { path } = useRouteMatch();
