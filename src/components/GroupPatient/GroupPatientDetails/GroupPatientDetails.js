@@ -6,9 +6,10 @@ import { deleteData } from "../../actions/actions";
 import AppContext from "../../../store/AppProvider";
 import maleAvatar from "../../../assets/img/male_avatar.svg";
 import femaleAvatar from "../../../assets/img/female_avatar.svg";
+import Popover from "../../UI/Popover/Popover";
 
 const GroupPatientDetails = ({ physiotherapist }) => {
-  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [popoverShow, setPopoverShow] = useState(false);
 
   const appCtx = useContext(AppContext);
   const { groupPatients, setGroupPatients, setIsLoading, groupsCollection } =
@@ -21,7 +22,7 @@ const GroupPatientDetails = ({ physiotherapist }) => {
   const targetedPatient = groupPatients.find((patient) => patient.id === id);
 
   const optionsClickHandler = () => {
-    setIsOptionsOpen((prevValue) => !prevValue);
+    setPopoverShow((prevValue) => !prevValue);
   };
 
   const deleteHandler = () => {
@@ -38,7 +39,7 @@ const GroupPatientDetails = ({ physiotherapist }) => {
   return (
     <section className={styles.PatientDetailsWrapper}>
       <header>
-        <div>
+        <div className={styles.AvatarWrapper}>
           <img
             src={targetedPatient.gender === "male" ? maleAvatar : femaleAvatar}
             alt="avatar"
@@ -46,8 +47,18 @@ const GroupPatientDetails = ({ physiotherapist }) => {
         </div>
         <button onClick={optionsClickHandler} className={styles.OptionsBtn}>
           <i className="fas fa-ellipsis-h"></i>
+          <Popover isVisible={popoverShow}>
+            <li>
+              <Link
+                to={`/patients/group-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/edit-group-patient/${id}`}
+              >
+                Edit
+              </Link>
+            </li>
+            <li onClick={deleteHandler}>Delete</li>
+          </Popover>
         </button>
-        <ul
+        {/* <ul
           onClick={optionsClickHandler}
           className={
             !isOptionsOpen
@@ -61,7 +72,7 @@ const GroupPatientDetails = ({ physiotherapist }) => {
             Edit
           </Link>
           <li onClick={deleteHandler}>Delete</li>
-        </ul>
+        </ul> */}
       </header>
       <main>
         <h2>{`${targetedPatient.firstName} ${targetedPatient.lastName}`}</h2>

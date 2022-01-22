@@ -6,6 +6,7 @@ import { deleteData, updateData } from "../../actions/actions";
 import AppContext from "../../../store/AppProvider";
 import maleAvatar from "../../../assets/img/male_avatar.svg";
 import femaleAvatar from "../../../assets/img/female_avatar.svg";
+import Popover from "../../UI/Popover/Popover";
 
 const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
   const { id } = useParams();
@@ -17,14 +18,14 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
   const appCtx = useContext(AppContext);
   const { individualPatients, setIndividualPatients, setIsLoading } = appCtx;
 
-  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [popoverShow, setPopoverShow] = useState(false);
 
   const history = useHistory();
   const { path } = useRouteMatch();
   const customPath = path.split(":")[0];
 
   const optionsClickHandler = () => {
-    setIsOptionsOpen((prevValue) => !prevValue);
+    setPopoverShow((prevValue) => !prevValue);
   };
 
   const targetedPatient = individualPatients.filter(
@@ -69,7 +70,7 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
     return (
       <Fragment key={pat.id}>
         <header>
-          <div>
+          <div className={styles.AvatarWrapper}>
             <img
               src={pat.gender === "male" ? maleAvatar : femaleAvatar}
               alt="avatar"
@@ -77,8 +78,27 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
           </div>
           <button onClick={optionsClickHandler} className={styles.OptionsBtn}>
             <i className="fas fa-ellipsis-h"></i>
+            <Popover isVisible={popoverShow}>
+              <li>
+                <Link
+                  to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/edit-patient/${id}`}
+                  onClick={() => setShowAddPatient(false)}
+                >
+                  Edit Patient
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/add-appointment/${id}`}
+                  onClick={() => setShowAddPatient(false)}
+                >
+                  Add appointment
+                </Link>
+              </li>
+              <li onClick={deleteHandler}>Delete</li>
+            </Popover>
           </button>
-          <ul
+          {/* <ul
             onClick={optionsClickHandler}
             className={
               !isOptionsOpen
@@ -99,7 +119,7 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
               Add appointment
             </Link>
             <li onClick={deleteHandler}>Delete</li>
-          </ul>
+          </ul> */}
         </header>
         <main>
           <h2>{`${pat.firstName} ${pat.lastName}`}</h2>

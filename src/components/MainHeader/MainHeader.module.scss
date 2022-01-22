@@ -32,10 +32,12 @@
     }
 
     .UserAvatar {
+        position: relative;
         height: 4rem;
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
 
         p {
             color: $whiteish;
