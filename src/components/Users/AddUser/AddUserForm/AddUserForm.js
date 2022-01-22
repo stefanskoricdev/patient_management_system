@@ -59,7 +59,7 @@ const AddUserForm = () => {
       lastName: lastName,
       email: email,
       password: password,
-      profileImgUrl: false,
+      profileImgUrl: "",
     };
 
     AddUser(

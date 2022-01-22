@@ -24,9 +24,7 @@ export const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState(initialUserId);
 
   const initialProfileImgUrl = localStorage.getItem("profileImg");
-  const [profileImgUrl, setProfileImgUrl] = useState(
-    JSON.parse(initialProfileImgUrl)
-  );
+  const [profileImgUrl, setProfileImgUrl] = useState(initialProfileImgUrl);
 
   const [isLoading, setIsLoading] = useState(false);
 
