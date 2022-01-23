@@ -50,7 +50,7 @@ const GroupPatientDetails = ({ physiotherapist }) => {
           <Popover isVisible={popoverShow}>
             <li>
               <Link
-                to={`/patients/group-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/edit-group-patient/${id}`}
+                to={`/patients/group-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/edit-patient/${id}`}
               >
                 Edit
               </Link>
@@ -58,21 +58,6 @@ const GroupPatientDetails = ({ physiotherapist }) => {
             <li onClick={deleteHandler}>Delete</li>
           </Popover>
         </button>
-        {/* <ul
-          onClick={optionsClickHandler}
-          className={
-            !isOptionsOpen
-              ? styles.Options
-              : [styles.Options, styles["active"]].join(" ")
-          }
-        >
-          <Link
-            to={`/patients/group-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/edit-group-patient/${id}`}
-          >
-            Edit
-          </Link>
-          <li onClick={deleteHandler}>Delete</li>
-        </ul> */}
       </header>
       <main>
         <h2>{`${targetedPatient.firstName} ${targetedPatient.lastName}`}</h2>

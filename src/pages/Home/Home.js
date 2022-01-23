@@ -39,7 +39,7 @@ const Home = () => {
         <td>{patient.dateOfBirth}</td>
         <td>{patient.phone}</td>
         <td>{patient.email}</td>
-        <td>{patient.physiotherapist}</td>
+        <td>{`${patient.physiotherapist.firstName} ${patient.physiotherapist.lastName}`}</td>
       </tr>
     );
     return tableContentEl;

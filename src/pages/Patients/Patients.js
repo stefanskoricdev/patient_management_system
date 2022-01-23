@@ -56,7 +56,7 @@ const Patients = () => {
             <Redirect to={`${path}/patients-list`} />
           </Route>
           <Route path={`${path}/patients-list`}>
-            <PatientsList />
+            <PatientsList rootPath={path} />
           </Route>
           <Route path={`${path}/individual-patients`}>
             <IndividualPatients />

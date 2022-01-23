@@ -7,7 +7,9 @@ export const checkAppointment = (
 ) => {
   //Take all patients from targeted physio
   const targetedPatients = patientType.filter(
-    (patient) => patient.physiotherapist === physio.firstName
+    (patient) =>
+      `${patient.physiotherapist.firstName} ${patient.physiotherapist.lastName}` ===
+      `${physio.firstName} ${physio.lastName}`
   );
   if (targetedPatients.length > 0) {
     //Transform them so we pass an id to patient.position object,
@@ -72,6 +74,7 @@ export const checkAppointment = (
         };
       }
     );
+
     //Conditions which create "red zones" on schedule so we cant appoint a patient
     //to allready taken day and time
     const isTakenResults = [];

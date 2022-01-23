@@ -40,6 +40,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
     hours: physiotherapist.workingHours[0],
     minutes: "0",
     duration: "30",
+    type: "individual",
   };
   let patientToEdit;
   let appointmentIndex;
@@ -67,6 +68,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       hours: patientToEdit.appointment[appointmentIndex].hours,
       minutes: patientToEdit.appointment[appointmentIndex].minutes,
       duration: patientToEdit.appointment[appointmentIndex].duration,
+      type: "individual",
     };
   }
 
@@ -103,7 +105,10 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       dateOfBirth: inputValue.dob,
       observation: inputValue.observation,
       physioId: physiotherapist.id,
-      physiotherapist: physiotherapist.firstName,
+      physiotherapist: {
+        firstName: physiotherapist.firstName,
+        lastName: physiotherapist.lastName,
+      },
       appointment: isAddMode
         ? [
             {
@@ -133,6 +138,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
           ),
       date: currentDate,
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
+      type: "individual",
     };
 
     const isAppointmentTaken = checkAppointment(

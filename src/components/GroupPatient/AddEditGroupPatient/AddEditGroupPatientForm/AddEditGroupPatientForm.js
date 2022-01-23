@@ -32,6 +32,7 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
     email: "",
     dob: "",
     observation: "",
+    type: "group",
   };
   let patientToEdit;
 
@@ -58,6 +59,7 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
       email,
       dob: dateOfBirth,
       observation,
+      type: "group",
     };
   }
 
@@ -88,6 +90,7 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
       email,
       dob,
       observation,
+      type,
     } = inputValue;
     const newGroupPatient = {
       id: isAddMode ? query.id : id,
@@ -101,7 +104,10 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
       dateOfBirth: dob,
       observation,
       physioId: physiotherapist.id,
-      physiotherapist: physiotherapist.firstName,
+      physiotherapist: {
+        firstName: physiotherapist.firstName,
+        lastName: physiotherapist.lastName,
+      },
       appointment: isAddMode
         ? {
             time: query.time,
@@ -113,6 +119,7 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
       dateCreated: isAddMode
         ? firebase.firestore.FieldValue.serverTimestamp()
         : patientToEdit.dateCreated,
+      type: type,
     };
 
     if (isAddMode) {
