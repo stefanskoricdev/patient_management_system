@@ -1,5 +1,5 @@
 import styles from "./AddAppointment.module.scss";
-import { useContext, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import { checkAppointment } from "../../../helpers/checkAppointment";
 import { WarningMessage } from "../../UI/Messages/Messages";
@@ -101,8 +101,7 @@ const AddAppointment = ({ physiotherapist }) => {
       `/patients/individual-patients/${physiotherapist.firstName}${physiotherapist.lastName}/schedule`
     );
   };
-
-  return (
+  const formEl = (
     <form className={styles.AddAppointmentForm} onSubmit={onSubmit}>
       <h2>Add appointment</h2>
       <section className={styles.WorkingDays}>
@@ -160,6 +159,8 @@ const AddAppointment = ({ physiotherapist }) => {
       <button type="submit">ADD</button>
     </form>
   );
+
+  return <Fragment>{formEl}</Fragment>;
 };
 
 export default AddAppointment;

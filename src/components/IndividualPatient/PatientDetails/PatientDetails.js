@@ -7,6 +7,10 @@ import AppContext from "../../../store/AppProvider";
 import maleAvatar from "../../../assets/img/male_avatar.svg";
 import femaleAvatar from "../../../assets/img/female_avatar.svg";
 import Popover from "../../UI/Popover/Popover";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const mySwal = withReactContent(Swal);
 
 const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
   const { id } = useParams();
@@ -50,21 +54,35 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
       }
       //If patient has more then one appointment we have to update it so we dont
       //lose other appointments. We perform update and only remove selected appointment
-      const targetedPatientIndex = individualPatients.findIndex(
-        (patient) => patient.id === pat.id
-      );
-      pat.appointment.splice(findIndex, 1);
-      const updatedPatientsList = [...individualPatients];
-      updatedPatientsList[targetedPatientIndex] = pat;
-      updateData(
-        setIsLoading,
-        collection,
-        transformedId,
-        pat,
-        setIndividualPatients,
-        updatedPatientsList
-      );
-      history.push(customPath);
+      mySwal
+        .fire({
+          title: "Are you sure you want to delete data?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "rgb(197, 27, 21)",
+          cancelButtonColor: "rgb(101, 195, 157)",
+          confirmButtonText: "Yes, delete it!",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            const targetedPatientIndex = individualPatients.findIndex(
+              (patient) => patient.id === pat.id
+            );
+            pat.appointment.splice(findIndex, 1);
+            const updatedPatientsList = [...individualPatients];
+            updatedPatientsList[targetedPatientIndex] = pat;
+            updateData(
+              setIsLoading,
+              collection,
+              transformedId,
+              pat,
+              setIndividualPatients,
+              updatedPatientsList
+            );
+            history.push(customPath);
+          }
+        });
     };
 
     return (

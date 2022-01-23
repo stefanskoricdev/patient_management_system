@@ -1,5 +1,5 @@
 import styles from "./AddEditPatientForm.module.scss";
-import { useContext, useState } from "react";
+import { useContext, useState, Fragment } from "react";
 import { sendData, updateData } from "../../../actions/actions";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { WarningMessage } from "../../../UI/Messages/Messages";
@@ -181,7 +181,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
     );
   };
 
-  return (
+  const formEL = (
     <form
       noValidate
       className={styles.AddEditPatientForm}
@@ -363,6 +363,8 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       <button type="submit">{isAddMode ? "ADD" : "EDIT"}</button>
     </form>
   );
+
+  return <Fragment>{formEL}</Fragment>;
 };
 
 export default AddEditPatientForm;

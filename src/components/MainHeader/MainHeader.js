@@ -34,7 +34,7 @@ const MainHeader = ({ openNavHandler }) => {
         />
         <Popover isVisible={popoverShow}>
           <li>
-            <Link to="/profile">User Profile</Link>
+            <Link to="/profile">Profile</Link>
           </li>
           <li onClick={logout}>Logout</li>
         </Popover>
