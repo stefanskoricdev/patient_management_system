@@ -6,6 +6,7 @@ import { ErrorMessage } from "../../UI/Messages/Messages";
 import FormInput from "../../UI/Forms/FormInput/FormInput";
 import AuthContext from "../../../store/AuthProvider";
 import validateForm from "../../../helpers/validateForm";
+import profileDefault from "../../../assets/img/profileDefault.png";
 
 const EditProfile = () => {
   const authCtx = useContext(AuthContext);
@@ -187,7 +188,10 @@ const EditProfile = () => {
   return (
     <section className={styles.EditProfile}>
       <div key="uniqueKey" className={styles.ProfileImg}>
-        <img src={profileImgUrl} alt="userImg" />
+        <img
+          src={profileImgUrl !== "" ? profileImgUrl : profileDefault}
+          alt="userImg"
+        />
       </div>
       <form onSubmit={editProfileHandler} className={styles.ProfileForm}>
         {formInputs.map((input) => (

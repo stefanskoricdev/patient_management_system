@@ -4,23 +4,34 @@
 @import "../../assets/colors/colors";
 
 .Scheduler {
-    position: relative;
-    width: 100%;
-    padding: 1rem 0;
-    border-radius: 1rem;
+  position: relative;
+  width: 100%;
+  border-radius: .5rem;
 
-    .Nav {
-        margin: 1rem 0;
+  .Nav {
+    display: flex;
 
-        .Link {
-            margin-right: 1rem;
-            font-size: 2rem;
-            color: $dark-blue;
-        }
+    .Link {
+      display: flex;
+      align-items: center;
+      margin-right: 1rem;
+      font-size: 0.8rem;
+      color: $dark-blue;
 
-        a.active,
-        a:hover {
-            color: $whiteish;
-        }
+      p {
+        font-weight: 600;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      svg {
+        margin: 0 0.5rem;
+      }
     }
+
+    a.active,
+    a:hover {
+      color: $whiteish;
+    }
+  }
 }

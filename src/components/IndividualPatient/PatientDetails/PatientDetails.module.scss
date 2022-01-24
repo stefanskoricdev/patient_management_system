@@ -13,7 +13,7 @@
         background-color: $dark-blue;
         border-radius: .5rem .5rem 0 0;
 
-        div {
+        .AvatarWrapper {
             position: absolute;
             width: 10rem;
             height: 10rem;
@@ -27,7 +27,7 @@
             }
         }
 
-        div:before {
+        .AvatarWrapper:before {
             content: "";
             display: block;
             width: 12rem;
@@ -40,9 +40,7 @@
         }
 
         .OptionsBtn {
-            position: absolute;
-            top: .5rem;
-            right: .5rem;
+            position: relative;
             width: 3rem;
             height: 2rem;
             background-color: inherit;
@@ -51,39 +49,8 @@
             font-size: 1.5rem;
         }
 
-        .Options {
-            position: absolute;
-            display: flex;
-            flex-flow: column;
-            top: 2.5rem;
-            right: .5rem;
-            width: fit-content;
-            padding: .5rem;
-            background-color: $light-blue;
-            border-radius: .5rem 0 .5rem .5rem;
-            opacity: 0;
-            transform: translateX(110%) rotateZ(-90deg);
-            transition: transform 200ms ease-in-out, opacity 200ms ease-in-out;
-
-            li,
-            a {
-                margin-top: .5rem;
-                padding: 0 .2rem;
-                cursor: pointer;
-                transition: color 100ms linear;
-            }
-
-            li:hover,
-            a:hover {
-                color: $whiteish;
-                transition: color 100ms linear;
-            }
-        }
-
-        .Options.active {
-            opacity: 1;
-            transform: translateX(0) rotateZ(0);
-            transition: transform 200ms ease-in-out, opacity 200ms ease-in-out;
+        .OptionsBtn:hover {
+            transform: scale(1);
         }
     }
 

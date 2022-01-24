@@ -1,5 +1,5 @@
 import styles from "./AddEditPatientForm.module.scss";
-import { useContext, useState } from "react";
+import { useContext, useState, Fragment } from "react";
 import { sendData, updateData } from "../../../actions/actions";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { WarningMessage } from "../../../UI/Messages/Messages";
@@ -40,6 +40,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
     hours: physiotherapist.workingHours[0],
     minutes: "0",
     duration: "30",
+    type: "individual",
   };
   let patientToEdit;
   let appointmentIndex;
@@ -67,6 +68,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       hours: patientToEdit.appointment[appointmentIndex].hours,
       minutes: patientToEdit.appointment[appointmentIndex].minutes,
       duration: patientToEdit.appointment[appointmentIndex].duration,
+      type: "individual",
     };
   }
 
@@ -103,7 +105,10 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       dateOfBirth: inputValue.dob,
       observation: inputValue.observation,
       physioId: physiotherapist.id,
-      physiotherapist: physiotherapist.firstName,
+      physiotherapist: {
+        firstName: physiotherapist.firstName,
+        lastName: physiotherapist.lastName,
+      },
       appointment: isAddMode
         ? [
             {
@@ -133,6 +138,7 @@ const AddEditPatientForm = ({ physiotherapist }) => {
           ),
       date: currentDate,
       dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
+      type: "individual",
     };
 
     const isAppointmentTaken = checkAppointment(
@@ -176,10 +182,12 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       );
     }
 
-    history.push(`/patients/individual-patients/${physiotherapist.firstName}`);
+    history.push(
+      `/patients/individual-patients/${physiotherapist.firstName}${physiotherapist.lastName}`
+    );
   };
 
-  return (
+  const formEL = (
     <form
       noValidate
       className={styles.AddEditPatientForm}
@@ -217,15 +225,17 @@ const AddEditPatientForm = ({ physiotherapist }) => {
             />
           </label>
           <section className={styles.GenderWrapper}>
-            <label>Select gender: </label>
-            <select
-              name="gender"
-              value={inputValue.gender}
-              onChange={onChangeHandler}
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
+            <label>
+              Select gender:
+              <select
+                name="gender"
+                value={inputValue.gender}
+                onChange={onChangeHandler}
+              >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </label>
           </section>
           <label>
             City:
@@ -274,16 +284,18 @@ const AddEditPatientForm = ({ physiotherapist }) => {
           </label>
         </section>
         <section className={styles.AdditionalInfo}>
-          <label>
-            <p>Observation:</p>
-            <textarea
-              name="observation"
-              rows="8"
-              cols="80"
-              value={inputValue.observation}
-              onChange={onChangeHandler}
-            />
-          </label>
+          <section className={styles.Observation}>
+            <h3>Observation:</h3>
+            <label>
+              <textarea
+                name="observation"
+                rows="8"
+                cols="80"
+                value={inputValue.observation}
+                onChange={onChangeHandler}
+              />
+            </label>
+          </section>
           <section className={styles.WorkingDays}>
             <h3>Select day of visit:</h3>
             <label>
@@ -357,6 +369,8 @@ const AddEditPatientForm = ({ physiotherapist }) => {
       <button type="submit">{isAddMode ? "ADD" : "EDIT"}</button>
     </form>
   );
+
+  return <Fragment>{formEL}</Fragment>;
 };
 
 export default AddEditPatientForm;

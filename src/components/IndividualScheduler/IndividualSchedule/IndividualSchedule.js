@@ -11,7 +11,7 @@ const colorPallete = [
 ];
 
 const IndividualSchedule = ({ patients, physiotherapist }) => {
-  const { firstName, workingDays, workingHours } = physiotherapist;
+  const { firstName, lastName, workingDays, workingHours } = physiotherapist;
   const indexValue = workingDays.length * workingHours.length;
 
   const workingDaysEl = workingDays.map((day) => (
@@ -85,7 +85,11 @@ const IndividualSchedule = ({ patients, physiotherapist }) => {
                     leftPosValueMoreDays:
                       (dayIndex * 100) / workingDays.length + 0.5,
                     leftPosValueLessDays: dayIndex * 20 + 0.5,
+                    // 0.5% is to centralize element inside parent el
+                    //which is 20% width!
                     heightValue: patient.appointment[i].duration * 0.2 - 0.1,
+                    //0.1rem subtraction is to avoid shadow of element to overflow to
+                    //element below
                     widthValue: 100 / workingDays.length - 1,
                   };
                   const {
@@ -100,7 +104,7 @@ const IndividualSchedule = ({ patients, physiotherapist }) => {
                     <Link
                       //We pass an index to the route so we can use it in PATIENT DETAIL and EDIT PATIENT components
                       //To enable adding multiple appointments to same patient end to delete those appointments separately
-                      to={`/patients/individual-patients/${firstName.toLowerCase()}/patient-details/${
+                      to={`/patients/individual-patients/${firstName.toLowerCase()}${lastName.toLowerCase()}/patient-details/${
                         patient.id
                       }index=${i}`}
                       key={patient.id + i}

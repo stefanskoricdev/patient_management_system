@@ -7,9 +7,6 @@ import AuthContext from "../../../../store/AuthProvider";
 import FormInput from "../../../UI/Forms/FormInput/FormInput";
 import validateForm from "../../../../helpers/validateForm";
 
-const DEFAULT_PROFILE_IMG_URL =
-  "https://firebasestorage.googleapis.com/v0/b/dmf-patient-management-d003a.appspot.com/o/user-circle-solid-240.png?alt=media&token=43ff9eff-b670-49c5-a93a-74582edc6719";
-
 const AddUserForm = () => {
   let history = useHistory();
 
@@ -62,7 +59,7 @@ const AddUserForm = () => {
       lastName: lastName,
       email: email,
       password: password,
-      profileImgUrl: DEFAULT_PROFILE_IMG_URL,
+      profileImgUrl: "",
     };
 
     AddUser(

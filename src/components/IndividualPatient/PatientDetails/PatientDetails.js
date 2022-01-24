@@ -6,6 +6,11 @@ import { deleteData, updateData } from "../../actions/actions";
 import AppContext from "../../../store/AppProvider";
 import maleAvatar from "../../../assets/img/male_avatar.svg";
 import femaleAvatar from "../../../assets/img/female_avatar.svg";
+import Popover from "../../UI/Popover/Popover";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const mySwal = withReactContent(Swal);
 
 const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
   const { id } = useParams();
@@ -17,14 +22,14 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
   const appCtx = useContext(AppContext);
   const { individualPatients, setIndividualPatients, setIsLoading } = appCtx;
 
-  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [popoverShow, setPopoverShow] = useState(false);
 
   const history = useHistory();
   const { path } = useRouteMatch();
   const customPath = path.split(":")[0];
 
   const optionsClickHandler = () => {
-    setIsOptionsOpen((prevValue) => !prevValue);
+    setPopoverShow((prevValue) => !prevValue);
   };
 
   const targetedPatient = individualPatients.filter(
@@ -49,27 +54,41 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
       }
       //If patient has more then one appointment we have to update it so we dont
       //lose other appointments. We perform update and only remove selected appointment
-      const targetedPatientIndex = individualPatients.findIndex(
-        (patient) => patient.id === pat.id
-      );
-      pat.appointment.splice(findIndex, 1);
-      const updatedPatientsList = [...individualPatients];
-      updatedPatientsList[targetedPatientIndex] = pat;
-      updateData(
-        setIsLoading,
-        collection,
-        transformedId,
-        pat,
-        setIndividualPatients,
-        updatedPatientsList
-      );
-      history.push(customPath);
+      mySwal
+        .fire({
+          title: "Are you sure you want to delete data?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "rgb(197, 27, 21)",
+          cancelButtonColor: "rgb(101, 195, 157)",
+          confirmButtonText: "Yes, delete it!",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            const targetedPatientIndex = individualPatients.findIndex(
+              (patient) => patient.id === pat.id
+            );
+            pat.appointment.splice(findIndex, 1);
+            const updatedPatientsList = [...individualPatients];
+            updatedPatientsList[targetedPatientIndex] = pat;
+            updateData(
+              setIsLoading,
+              collection,
+              transformedId,
+              pat,
+              setIndividualPatients,
+              updatedPatientsList
+            );
+            history.push(customPath);
+          }
+        });
     };
 
     return (
       <Fragment key={pat.id}>
         <header>
-          <div>
+          <div className={styles.AvatarWrapper}>
             <img
               src={pat.gender === "male" ? maleAvatar : femaleAvatar}
               alt="avatar"
@@ -77,8 +96,27 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
           </div>
           <button onClick={optionsClickHandler} className={styles.OptionsBtn}>
             <i className="fas fa-ellipsis-h"></i>
+            <Popover isVisible={popoverShow}>
+              <li>
+                <Link
+                  to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/edit-patient/${id}`}
+                  onClick={() => setShowAddPatient(false)}
+                >
+                  Edit Patient
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/add-appointment/${id}`}
+                  onClick={() => setShowAddPatient(false)}
+                >
+                  Add appointment
+                </Link>
+              </li>
+              <li onClick={deleteHandler}>Delete</li>
+            </Popover>
           </button>
-          <ul
+          {/* <ul
             onClick={optionsClickHandler}
             className={
               !isOptionsOpen
@@ -87,19 +125,19 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
             }
           >
             <Link
-              to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}/edit-patient/${id}`}
+              to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/edit-patient/${id}`}
               onClick={() => setShowAddPatient(false)}
             >
               Edit
             </Link>
             <Link
-              to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}/add-appointment/${id}`}
+              to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/add-appointment/${id}`}
               onClick={() => setShowAddPatient(false)}
             >
               Add appointment
             </Link>
             <li onClick={deleteHandler}>Delete</li>
-          </ul>
+          </ul> */}
         </header>
         <main>
           <h2>{`${pat.firstName} ${pat.lastName}`}</h2>

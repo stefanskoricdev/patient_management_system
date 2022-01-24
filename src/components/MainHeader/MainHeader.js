@@ -1,11 +1,19 @@
 import styles from "./MainHeader.module.scss";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../store/AuthProvider";
+import profileDefaultImg from "../../assets/img/profileDefault.png";
+import Popover from "../UI/Popover/Popover";
 
 const MainHeader = ({ openNavHandler }) => {
   const authCtx = useContext(AuthContext);
-  const { displayName, profileImgUrl } = authCtx;
+  const { displayName, profileImgUrl, logout } = authCtx;
+
+  const [popoverShow, setPopoverShow] = useState(false);
+
+  const togglePopover = () => {
+    setPopoverShow((prevState) => !prevState);
+  };
 
   return (
     <header className={styles.MainHeader}>
@@ -18,11 +26,18 @@ const MainHeader = ({ openNavHandler }) => {
         <div data-id="nav-btn"></div>
         <div data-id="nav-btn"></div>
       </button>
-      <div className={styles.UserAvatar}>
+      <div onClick={togglePopover} className={styles.UserAvatar}>
         <p>{displayName}</p>
-        <Link to="/profile">
-          <img src={profileImgUrl} alt="profileImg" />
-        </Link>
+        <img
+          src={profileImgUrl !== "" ? profileImgUrl : profileDefaultImg}
+          alt="profileImg"
+        />
+        <Popover isVisible={popoverShow}>
+          <li>
+            <Link to="/profile">Profile</Link>
+          </li>
+          <li onClick={logout}>Logout</li>
+        </Popover>
       </div>
     </header>
   );

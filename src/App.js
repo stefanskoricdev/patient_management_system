@@ -1,15 +1,16 @@
 import styles from "./App.module.scss";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, lazy, Suspense } from "react";
 import Layout from "./components/Layout/Layout";
-import Home from "./pages/Home/Home";
-import Patients from "./pages/Patients/Patients";
-import Notes from "./pages/Notes/Notes";
 import Loader from "./components/UI/Loader/Loader";
 import Login from "./pages/Login/Login";
 import AuthContext from "./store/AuthProvider";
-import Settings from "./pages/Settings/Settings";
-import Profile from "./pages/Profile/Profile";
+
+const Home = lazy(() => import("./pages/Home/Home"));
+const Patients = lazy(() => import("./pages/Patients/Patients"));
+const Notes = lazy(() => import("./pages/Notes/Notes"));
+const Profile = lazy(() => import("./pages/Profile/Profile"));
+const Settings = lazy(() => import("./pages/Settings/Settings"));
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -37,31 +38,33 @@ function App() {
       {isLoggedIn && (
         <Layout className={styles.Layout}>
           {isLoading && <Loader />}
-          <Switch>
-            <Route path="/" exact>
-              <Redirect to="/home" />
-            </Route>
-            <Route path="/home">
-              <Home />
-            </Route>
-            <Route path="/patients">
-              <Patients />
-            </Route>
-            <Route path="/notes">
-              <Notes />
-            </Route>
-            <Route path="/profile">
-              <Profile />
-            </Route>
-            {isAdmin && (
-              <Route path="/settings">
-                <Settings />
+          <Suspense fallback={<Loader />}>
+            <Switch>
+              <Route path="/" exact>
+                <Redirect to="/home" />
               </Route>
-            )}
-            <Route path="*">
-              <Redirect to="/home" />
-            </Route>
-          </Switch>
+              <Route path="/home">
+                <Home />
+              </Route>
+              <Route path="/patients">
+                <Patients />
+              </Route>
+              <Route path="/notes">
+                <Notes />
+              </Route>
+              <Route path="/profile">
+                <Profile />
+              </Route>
+              {isAdmin && (
+                <Route path="/settings">
+                  <Settings />
+                </Route>
+              )}
+              <Route path="*">
+                <Redirect to="/home" />
+              </Route>
+            </Switch>
+          </Suspense>
         </Layout>
       )}
     </div>

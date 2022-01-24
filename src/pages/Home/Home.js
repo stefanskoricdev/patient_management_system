@@ -39,7 +39,7 @@ const Home = () => {
         <td>{patient.dateOfBirth}</td>
         <td>{patient.phone}</td>
         <td>{patient.email}</td>
-        <td>{patient.physiotherapist}</td>
+        <td>{`${patient.physiotherapist.firstName} ${patient.physiotherapist.lastName}`}</td>
       </tr>
     );
     return tableContentEl;
@@ -52,7 +52,7 @@ const Home = () => {
         <p>{currentDate}</p>
       </header>
       <main className={styles.Main}>
-        <section className={styles.Stats}>
+        <section className={styles.LeftSideWrapper}>
           <div className={styles.CurrentPatients}>
             <h1>Current Patients</h1>
             <p>
@@ -66,7 +66,7 @@ const Home = () => {
             isLoading={isLoading}
           />
         </section>
-        <section className={styles.PatientsListWrapper}>
+        <section className={styles.RightSideWrapper}>
           <table className={styles.PatientsListTable}>
             <caption>
               <h1>Patients List</h1>

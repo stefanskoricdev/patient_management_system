@@ -32,6 +32,7 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
     email: "",
     dob: "",
     observation: "",
+    type: "group",
   };
   let patientToEdit;
 
@@ -58,6 +59,7 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
       email,
       dob: dateOfBirth,
       observation,
+      type: "group",
     };
   }
 
@@ -88,6 +90,7 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
       email,
       dob,
       observation,
+      type,
     } = inputValue;
     const newGroupPatient = {
       id: isAddMode ? query.id : id,
@@ -101,7 +104,10 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
       dateOfBirth: dob,
       observation,
       physioId: physiotherapist.id,
-      physiotherapist: physiotherapist.firstName,
+      physiotherapist: {
+        firstName: physiotherapist.firstName,
+        lastName: physiotherapist.lastName,
+      },
       appointment: isAddMode
         ? {
             time: query.time,
@@ -113,6 +119,7 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
       dateCreated: isAddMode
         ? firebase.firestore.FieldValue.serverTimestamp()
         : patientToEdit.dateCreated,
+      type: type,
     };
 
     if (isAddMode) {
@@ -138,7 +145,9 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
       );
     }
 
-    history.push(`/patients/group-patients/${physiotherapist.firstName}`);
+    history.push(
+      `/patients/group-patients/${physiotherapist.firstName}${physiotherapist.lastName}`
+    );
   };
 
   const changeFormPageHandler = () => {
@@ -147,9 +156,11 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
 
   useEffect(() => {
     if (!query && !id) {
-      history.push(`/patients/group-patients/${physiotherapist.firstName}`);
+      history.push(
+        `/patients/group-patients/${physiotherapist.firstName}${physiotherapist.lastName}`
+      );
     }
-  }, [query, history, physiotherapist.firstName, id]);
+  }, [query, history, physiotherapist.firstName, physiotherapist.lastName, id]);
 
   return (
     <form noValidate onSubmit={submitPatientHandler} className={styles.Form}>
@@ -239,16 +250,18 @@ const AddEditGroupPatientForm = ({ physiotherapist }) => {
             </label>
           </section>
           <section className={styles.AdditionalInfo}>
-            <label>
-              <p>Observation:</p>
-              <textarea
-                name="observation"
-                rows="8"
-                cols="80"
-                value={inputValue.observation}
-                onChange={onChangeHandler}
-              />
-            </label>
+            <section className={styles.Observation}>
+              <label>
+                <p>Observation:</p>
+                <textarea
+                  name="observation"
+                  rows="8"
+                  cols="80"
+                  value={inputValue.observation}
+                  onChange={onChangeHandler}
+                />
+              </label>
+            </section>
           </section>
         </main>
         <button onClick={changeFormPageHandler} type="button">

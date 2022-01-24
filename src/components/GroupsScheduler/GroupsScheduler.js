@@ -29,7 +29,7 @@ const GroupsScheduler = ({ physiotherapist, isLoading, groupPatients }) => {
           <Route path={`${path}/add-group-patient`}>
             <AddEditGroupPatient physiotherapist={physiotherapist} />
           </Route>
-          <Route path={`${path}/edit-group-patient/:id`}>
+          <Route path={`${path}/edit-patient/:id`}>
             <AddEditGroupPatient physiotherapist={physiotherapist} />
           </Route>
           <Route path={`${path}/group-patient-details/:id`}>

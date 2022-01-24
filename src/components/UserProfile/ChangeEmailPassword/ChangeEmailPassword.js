@@ -14,7 +14,7 @@ const ChangeEmailPassword = ({ data }) => {
   const history = useHistory();
 
   const [inputValue, setInputValue] = useState({
-    currentData: "Enter current email",
+    currentData: "",
     newData: "",
     confirmationData: "",
   });

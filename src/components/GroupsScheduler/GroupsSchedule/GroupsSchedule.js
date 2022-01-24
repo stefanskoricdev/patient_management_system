@@ -23,7 +23,7 @@ const GroupSchedule = ({ physiotherapist, patients }) => {
           </header>
           <Link
             to={{
-              pathname: `/patients/group-patients/${physiotherapist.firstName}/add-group-patient/${physiotherapist.id}-${config[i].workingDays}-${config[i].workingHours}-a`,
+              pathname: `/patients/group-patients/${physiotherapist.firstName}${physiotherapist.lastName}/add-group-patient/${physiotherapist.id}-${config[i].workingDays}-${config[i].workingHours}-a`,
               query: {
                 time: `${config[i].workingHours}`,
                 day: `${config[i].workingDays}`,
@@ -34,7 +34,7 @@ const GroupSchedule = ({ physiotherapist, patients }) => {
           ></Link>
           <Link
             to={{
-              pathname: `/patients/group-patients/${physiotherapist.firstName}/add-group-patient/${physiotherapist.id}-${config[i].workingDays}-${config[i].workingHours}-b`,
+              pathname: `/patients/group-patients/${physiotherapist.firstName}${physiotherapist.lastName}/add-group-patient/${physiotherapist.id}-${config[i].workingDays}-${config[i].workingHours}-b`,
               query: {
                 time: `${config[i].workingHours}`,
                 day: `${config[i].workingDays}`,
@@ -45,7 +45,7 @@ const GroupSchedule = ({ physiotherapist, patients }) => {
           ></Link>
           <Link
             to={{
-              pathname: `/patients/group-patients/${physiotherapist.firstName}/add-group-patient/${physiotherapist.id}-${config[i].workingDays}-${config[i].workingHours}-c`,
+              pathname: `/patients/group-patients/${physiotherapist.firstName}${physiotherapist.lastName}/add-group-patient/${physiotherapist.id}-${config[i].workingDays}-${config[i].workingHours}-c`,
               query: {
                 time: `${config[i].workingHours}`,
                 day: `${config[i].workingDays}`,
@@ -56,7 +56,7 @@ const GroupSchedule = ({ physiotherapist, patients }) => {
           ></Link>
           <Link
             to={{
-              pathname: `/patients/group-patients/${physiotherapist.firstName}/add-group-patient/${physiotherapist.id}-${config[i].workingDays}-${config[i].workingHours}-d`,
+              pathname: `/patients/group-patients/${physiotherapist.firstName}${physiotherapist.lastName}/add-group-patient/${physiotherapist.id}-${config[i].workingDays}-${config[i].workingHours}-d`,
               query: {
                 time: `${config[i].workingHours}`,
                 day: `${config[i].workingDays}`,
@@ -67,7 +67,7 @@ const GroupSchedule = ({ physiotherapist, patients }) => {
           ></Link>
           <Link
             to={{
-              pathname: `/patients/group-patients/${physiotherapist.firstName}/add-group-patient/${physiotherapist.id}-${config[i].workingDays}-${config[i].workingHours}-e`,
+              pathname: `/patients/group-patients/${physiotherapist.firstName}${physiotherapist.lastName}/add-group-patient/${physiotherapist.id}-${config[i].workingDays}-${config[i].workingHours}-e`,
               query: {
                 time: `${config[i].workingHours}`,
                 day: `${config[i].workingDays}`,
@@ -100,7 +100,7 @@ const GroupSchedule = ({ physiotherapist, patients }) => {
                 };
                 return (
                   <Link
-                    to={`/patients/group-patients/${physiotherapist.firstName}/group-patient-details/${patient.id}`}
+                    to={`/patients/group-patients/${physiotherapist.firstName}${physiotherapist.lastName}/group-patient-details/${patient.id}`}
                     style={{
                       top: `${positionValues.top}rem`,
                       left: `${positionValues.left}rem`,

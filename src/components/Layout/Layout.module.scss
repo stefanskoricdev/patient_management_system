@@ -1,29 +1,31 @@
 .Layout {
-    position: relative;
-    min-height: 100vh;
-    padding: .5rem 0;
+  position: relative;
+  min-height: 100vh;
+  padding: 0.5rem 0;
 
-    .Main {
-        padding-top: 4rem;
-    }
+  .Main {
+    padding-top: 4rem;
+  }
 }
 
 @media (min-width: 1023px) {
-    .Layout {
-        .Main {
-            padding-top: 0;
-        }
+  .Layout {
+    padding: 0.5rem;
+
+    .Main {
+      padding-top: 0;
     }
+  }
 }
 
 @media (min-width: 1600px) {
-    .Layout {
-        padding: .5rem 10rem;
-    }
+  .Layout {
+    padding: 0.5rem 10rem;
+  }
 }
 
 @media (min-width: 2500px) {
-    .Layout {
-        padding: .5rem 20rem;
-    }
+  .Layout {
+    padding: 0.5rem 20rem;
+  }
 }

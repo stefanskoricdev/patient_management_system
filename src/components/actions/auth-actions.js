@@ -4,7 +4,7 @@ import {
   SuccessMessage,
   WarningMessage,
 } from "../UI/Messages/Messages";
-import { deleteData, updateData } from "./actions";
+import { deleteData } from "./actions";
 import firebase from "firebase/app";
 
 export const AddUser = (

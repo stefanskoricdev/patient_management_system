@@ -2,151 +2,171 @@
 @import "../../assets/mixins/pages";
 
 .Home {
-    @include pageWrapper;
+  @include pageWrapper;
 
-    @include pageHeader;
+  @include pageHeader;
 
-    .Main {
-        h1 {
-            font-size: 1.2rem;
-        }
-
-        .Stats {
-            .CurrentPatients {
-                width: 30rem;
-                max-width: 95%;
-                margin: 1rem auto;
-                padding: 1rem;
-                background-color: $dark-blue;
-                border-radius: 1rem;
-                text-align: center;
-
-                p {
-                    font-size: 1.5rem;
-                    margin: 1rem 0;
-                }
-            }
-        }
-
-        .PatientsListWrapper {
-            width: 30rem;
-            max-width: 95%;
-            min-height: 100%;
-            margin: 1rem auto 0;
-            display: flex;
-            flex-direction: column;
-
-            .PatientsListTable {
-                table-layout: fixed;
-                width: 100%;
-                background-color: $dark-blue;
-                padding: 1rem 0;
-                border-radius: 0 0 1rem 1rem;
-
-                caption {
-                    border-bottom: 2px solid $light-blue;
-                    background-color: inherit;
-                    border-radius: 1rem 1rem 0 0;
-                }
-
-                tbody {
-                    display: block;
-                    max-height: 15rem;
-                    overflow: scroll;
-                    border-collapse: collapse;
-
-                    tr {
-                        display: block;
-                        width: 100%;
-                    }
-
-                    th {
-                        border-bottom: 1px solid $light-blue;
-                    }
-
-                    th,
-                    td {
-                        width: fit-content;
-                        min-width: 15rem;
-                        padding: .5rem;
-                        text-align: left;
-                        border-right: 1px solid $light-blue;
-                    }
-                }
-            }
-
-            .NotesList {
-                width: 100%;
-                max-height: 20rem;
-                overflow-y: scroll;
-                margin: 1rem auto 0;
-                padding: 1rem;
-                background-color: $dark-blue;
-                border: 1px solid $dark-blue;
-                border-radius: 1rem;
-
-                h1,
-                h2 {
-                    text-align: center;
-                }
-
-                li {
-                    width: 30rem;
-                    max-width: 95%;
-                    display: flex;
-                    flex-flow: column;
-                    justify-content: space-between;
-                    margin: 1rem auto;
-                    padding: 0 .5rem;
-                    background-color: $light-blue;
-                    font-size: 1rem;
-                    border-radius: 1rem;
-
-                    p {
-                        width: 95%;
-                        word-wrap: break-word;
-                        cursor: pointer;
-                    }
-
-                    footer {
-                        display: flex;
-                        justify-content: space-between;
-
-                        span {
-                            margin: .5rem 0;
-                            text-align: right;
-                            color: rgb(211, 211, 211);
-                        }
-                    }
-                }
-
-                .Checked {
-                    p {
-                        text-decoration: line-through;
-                    }
-                }
-            }
-        }
-
-
+  .Main {
+    h1 {
+      font-size: 1.2rem;
     }
+
+    .LeftSideWrapper {
+      width: 30rem;
+      max-width: 95%;
+      margin: 0 auto 1rem;
+
+      .CurrentPatients {
+        width: 100%;
+        padding: 1rem;
+        margin: 1rem auto;
+        background-color: $dark-blue;
+        border-radius: .5rem;
+        text-align: center;
+
+        p {
+          font-size: 1.5rem;
+          margin: 1rem 0;
+        }
+      }
+    }
+
+    .RightSideWrapper {
+      width: 30rem;
+      max-width: 95%;
+      margin: 1rem auto 0;
+
+      .PatientsListTable {
+        table-layout: fixed;
+        width: 100%;
+        background-color: $dark-blue;
+        padding: 1rem 0;
+        border-radius: 0 0 .5rem .5rem;
+
+        caption {
+          border-bottom: 2px solid $light-blue;
+          background-color: inherit;
+          border-radius: .5rem .5rem 0 0;
+        }
+
+        tbody {
+          display: block;
+          max-height: 15rem;
+          overflow: scroll;
+          border-collapse: collapse;
+
+          tr {
+            display: block;
+            width: 100%;
+          }
+
+          th {
+            border-bottom: 1px solid $light-blue;
+          }
+
+          th,
+          td {
+            width: fit-content;
+            min-width: 15rem;
+            padding: 0.5rem;
+            text-align: left;
+            border-right: 1px solid $light-blue;
+          }
+        }
+      }
+
+      .NotesList {
+        width: 100%;
+        max-height: 20rem;
+        overflow-y: scroll;
+        margin: 1rem auto 0;
+        padding: 1rem;
+        background-color: $dark-blue;
+        border: 1px solid $dark-blue;
+        border-radius: .5rem;
+
+        h1,
+        h2 {
+          text-align: center;
+        }
+
+        li {
+          width: 30rem;
+          max-width: 95%;
+          display: flex;
+          flex-flow: column;
+          justify-content: space-between;
+          margin: 1rem auto;
+          padding: 0 0.5rem;
+          background-color: $light-blue;
+          font-size: 1rem;
+          border-radius: .5rem;
+
+          p {
+            width: 95%;
+            word-wrap: break-word;
+          }
+
+          footer {
+            display: flex;
+            justify-content: space-between;
+
+            span {
+              margin: 0.5rem;
+              color: rgb(211, 211, 211);
+            }
+          }
+        }
+
+        .Checked {
+          p {
+            text-decoration: line-through;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: 1023px) {
-    .Home {
-        @include pageWrapper1023;
+  .Home {
+    @include pageWrapper1023;
 
-        .Main {
-            display: flex;
+    .Main {
+      display: flex;
 
-            .Stats {
-                width: 50%;
-            }
+      .LeftSideWrapper {
+        width: 50%;
 
-            .PatientsListWrapper {
-                width: 40rem;
-                max-width: 50%;
-            }
+        .CurrentPatients {
+          width: 95%;
         }
+      }
+
+      .RightSideWrapper {
+        width: 50%;
+
+        .PatientsListTable {
+          width: 95%;
+          margin: 0 auto;
+        }
+
+        .NotesList {
+          width: 95%;
+        }
+      }
     }
+  }
+}
+
+@media (min-width: 1100px) {
+  .Home {
+    .Main {
+
+      .LeftSideWrapper,
+      .RightSideWrapper {
+        width: auto;
+      }
+    }
+  }
 }

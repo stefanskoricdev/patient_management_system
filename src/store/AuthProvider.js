@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { getData } from "../components/actions/actions";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const mySwal = withReactContent(Swal);
 
 const AuthContext = React.createContext();
 
@@ -43,15 +47,30 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logoutHandler = () => {
-    if (isAdmin) {
-      setIsAdmin(false);
-      localStorage.removeItem("isAdmin");
-    }
-    setToken(null);
-    localStorage.removeItem("token");
-    localStorage.removeItem("displayName");
-    localStorage.removeItem("userID");
-    localStorage.removeItem("profileImg");
+    mySwal
+      .fire({
+        title: "Are you sure you wish to logout?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "rgb(197, 27, 21)",
+        cancelButtonColor: "rgb(101, 195, 157)",
+        confirmButtonText: "Yes!",
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          if (isAdmin) {
+            setIsAdmin(false);
+            localStorage.removeItem("isAdmin");
+          }
+          setToken(null);
+          localStorage.removeItem("token");
+          localStorage.removeItem("displayName");
+          localStorage.removeItem("userID");
+          localStorage.removeItem("profileImg");
+          return;
+        }
+        return;
+      });
   };
 
   useEffect(() => {
