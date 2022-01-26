@@ -6,6 +6,7 @@ import {
   Redirect,
   Switch,
   useRouteMatch,
+  useLocation,
 } from "react-router-dom";
 import AddEditPatient from "../IndividualPatient/AddEditPatient/AddEditPatient";
 import IndividualSchedule from "./IndividualSchedule/IndividualSchedule";
@@ -21,17 +22,19 @@ const IndividualScheduler = ({
 
   const { path } = useRouteMatch();
 
+  const location = useLocation();
+
   const filteredPatients = individualPatients.filter(
     (patient) => patient.physioId === physiotherapist.id
   );
-  // getData() in App Provider fetches data from firebase and adds it to patients state
-  // which is sent in this component through appContext and then filtered according
-  //to which physio this component belongs to (we get that through props).
-  //This way we avoid data being fetched every time we click physio tab!
 
   useEffect(() => {
+    if (location.pathname !== `${path}/schedule`) {
+      setShowAddPatientBtn(false);
+      return;
+    }
     setShowAddPatientBtn(true);
-  }, [individualPatients]);
+  }, [location, path]);
 
   return (
     <section className={styles.Scheduler}>
