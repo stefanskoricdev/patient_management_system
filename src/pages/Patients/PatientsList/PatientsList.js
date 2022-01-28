@@ -20,6 +20,8 @@ const PatientsList = ({ rootPath }) => {
 
   const history = useHistory();
 
+  console.log(groupPatients);
+
   const allPatientsList = groupPatients.concat(individualPatients);
 
   const [patientsList, setPatientsList] = useState(allPatientsList);

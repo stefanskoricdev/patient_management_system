@@ -162,7 +162,13 @@ export const deletePhysio = (
               setIsLoading(false);
               return;
             }
-            batchDelete(patientsCollection, physio, setPatients, setIsLoading);
+            batchDeletePatients(
+              patientsCollection,
+              "physioId",
+              physio,
+              setPatients,
+              setIsLoading
+            );
           })
           .catch((error) => {
             setIsLoading(false);
@@ -172,9 +178,15 @@ export const deletePhysio = (
     });
 };
 
-export const batchDelete = (collection, physio, setPatients, setIsLoading) => {
+export const batchDeletePatients = (
+  collection,
+  property,
+  data,
+  setPatients,
+  setIsLoading
+) => {
   db.collection(collection)
-    .where("physioId", "==", physio.id)
+    .where(property, "==", data.id)
     .get()
     .then((query) => {
       const batch = db.batch();
