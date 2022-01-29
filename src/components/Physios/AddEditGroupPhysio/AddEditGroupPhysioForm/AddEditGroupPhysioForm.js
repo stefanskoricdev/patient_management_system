@@ -1,9 +1,8 @@
 import styles from "./AddEditGroupPhysioForm.module.scss";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { ErrorMessage, WarningMessage } from "../../../UI/Messages/Messages";
 import {
   batchDeletePatients,
-  deletePhysio,
   sendData,
   updateData,
 } from "../../../actions/actions";
@@ -13,7 +12,6 @@ import validateForm from "../../../../helpers/validateForm";
 import uuid from "react-uuid";
 import AppContext from "../../../../store/AppProvider";
 import firebase from "firebase/app";
-import db from "../../../../services/firebase";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
@@ -304,7 +302,6 @@ const AddEditGroupPhysioForm = ({ workingHours, rootPath }) => {
           );
         })}
       </div>
-      {/* {isAddMode && ( */}
       <div className={styles.CreateGroup}>
         <h3>Create Group:</h3>
         <label>
