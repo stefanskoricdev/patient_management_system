@@ -215,95 +215,93 @@ const AddEditPhysioForm = ({ rootPath, workingDays, workingHours }) => {
     history.push(rootPath);
   };
 
-  return (
-    <Fragment>
-      <form
-        onSubmit={submitHandler}
-        noValidate
-        className={styles.AddEditPhysioForm}
-      >
-        <h2>
-          {isAddMode
-            ? "Add Individual Physiotherapist"
-            : "Edit Individual Physiotherapist"}
-        </h2>
-        <div className={styles.BasicInfo}>
-          {basicInfoInputs.map((info) => {
-            const { label, name, type, value } = info;
+  const formEl = (
+    <form
+      onSubmit={submitHandler}
+      noValidate
+      className={styles.AddEditPhysioForm}
+    >
+      <h2>
+        {isAddMode
+          ? "Add Individual Physiotherapist"
+          : "Edit Individual Physiotherapist"}
+      </h2>
+      <div className={styles.BasicInfo}>
+        {basicInfoInputs.map((info) => {
+          const { label, name, type, value } = info;
+          return (
+            <FormInput
+              key={name}
+              label={label}
+              name={name}
+              type={type}
+              value={value}
+              onChange={handleBasicInputChange}
+            />
+          );
+        })}
+      </div>
+      <section className={styles.WorkingDays}>
+        <h3>Select working days:</h3>
+        <div>
+          {workingDays.map((day, i) => {
             return (
-              <FormInput
-                key={name}
-                label={label}
-                name={name}
-                type={type}
-                value={value}
-                onChange={handleBasicInputChange}
-              />
+              <label key={day}>
+                {day}
+                <input
+                  name={`${day}`}
+                  value={`${i}_${day}`}
+                  type="checkbox"
+                  onChange={(event) => {
+                    handleCheckboxChange(
+                      event,
+                      i,
+                      daysCheckedState,
+                      setDaysCheckedState,
+                      setDaysInputValue,
+                      daysInputValue
+                    );
+                  }}
+                  checked={daysCheckedState[i]}
+                />
+              </label>
             );
           })}
         </div>
-        <section className={styles.WorkingDays}>
-          <h3>Select working days:</h3>
-          <div>
-            {workingDays.map((day, i) => {
-              return (
-                <label key={day}>
-                  {day}
-                  <input
-                    name={`${day}`}
-                    value={`${i}_${day}`}
-                    type="checkbox"
-                    onChange={(event) => {
-                      handleCheckboxChange(
-                        event,
-                        i,
-                        daysCheckedState,
-                        setDaysCheckedState,
-                        setDaysInputValue,
-                        daysInputValue
-                      );
-                    }}
-                    checked={daysCheckedState[i]}
-                  />
-                </label>
-              );
-            })}
-          </div>
-        </section>
-        <section className={styles.WorkingHours}>
-          <h3>Select working hours:</h3>
-          <div>
-            {workingHours.map((hour, i) => {
-              return (
-                <label key={hour}>
-                  {hour}
-                  <input
-                    name={`${hour}`}
-                    value={`${i}_${hour}`}
-                    type="checkbox"
-                    onChange={(event) => {
-                      handleCheckboxChange(
-                        event,
-                        i,
-                        hoursCheckedState,
-                        setHoursCheckedState,
-                        setHoursInputValue,
-                        hoursInputValue
-                      );
-                    }}
-                    checked={hoursCheckedState[i]}
-                  />
-                </label>
-              );
-            })}
-          </div>
-        </section>
-        <button className={styles.SubmitBtn}>
-          {isAddMode ? "Add" : "Edit"}
-        </button>
-      </form>
-    </Fragment>
+      </section>
+      <section className={styles.WorkingHours}>
+        <h3>Select working hours:</h3>
+        <div>
+          {workingHours.map((hour, i) => {
+            return (
+              <label key={hour}>
+                {hour}
+                <input
+                  name={`${hour}`}
+                  value={`${i}_${hour}`}
+                  type="checkbox"
+                  onChange={(event) => {
+                    handleCheckboxChange(
+                      event,
+                      i,
+                      hoursCheckedState,
+                      setHoursCheckedState,
+                      setHoursInputValue,
+                      hoursInputValue
+                    );
+                  }}
+                  checked={hoursCheckedState[i]}
+                />
+              </label>
+            );
+          })}
+        </div>
+      </section>
+      <button className={styles.SubmitBtn}>{isAddMode ? "Add" : "Edit"}</button>
+    </form>
   );
+
+  return <Fragment>{formEl}</Fragment>;
 };
 
 export default AddEditPhysioForm;
