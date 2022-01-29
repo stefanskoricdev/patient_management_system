@@ -1,14 +1,6 @@
 import styles from "./GroupsSchedule.module.scss";
 import { Link } from "react-router-dom";
-
-const colorPallete = [
-  "FFE194",
-  "6D97C9",
-  "8CC3A0",
-  "E9DA90",
-  "F29D72",
-  "D17484",
-];
+import { colorPallete } from "../../../helpers/appConfig";
 
 const GroupSchedule = ({ physiotherapist, patients }) => {
   const { groupCfg: config } = physiotherapist;
