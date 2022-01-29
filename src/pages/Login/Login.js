@@ -14,7 +14,7 @@ const Login = () => {
 
   const [showInfo, setShowInfo] = useState(true);
 
-  const handleClick = () => {
+  const handleShowInfo = () => {
     setShowInfo(false);
   };
 
@@ -29,7 +29,7 @@ const Login = () => {
         <LoginForm setLoading={setIsLoading} />
         {!isLoading && showInfo && (
           <Backdrop>
-            <LoginInfo handleClick={handleClick} />
+            <LoginInfo handleClick={handleShowInfo} />
           </Backdrop>
         )}
       </section>
