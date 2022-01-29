@@ -60,7 +60,6 @@ const EditProfile = () => {
       const imgRef = storageRef.child(
         `profileImages/${userId}/${fileRef.name}`
       );
-
       const addToStorage = () => {
         imgRef
           .put(fileRef)
@@ -68,6 +67,7 @@ const EditProfile = () => {
             snapshot.ref
               .getDownloadURL()
               .then((url) => {
+                console.log(url);
                 updatedUser = {
                   id: userId,
                   firstName: firstName,
@@ -187,7 +187,7 @@ const EditProfile = () => {
 
   return (
     <section className={styles.EditProfile}>
-      <div key="uniqueKey" className={styles.ProfileImg}>
+      <div className={styles.ProfileImg}>
         <img
           src={profileImgUrl !== "" ? profileImgUrl : profileDefault}
           alt="userImg"
@@ -214,7 +214,6 @@ const EditProfile = () => {
             ref={fileInput}
           />
         </label>
-
         <button>Update</button>
       </form>
     </section>
