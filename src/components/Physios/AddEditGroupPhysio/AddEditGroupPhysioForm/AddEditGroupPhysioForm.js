@@ -1,6 +1,6 @@
 import styles from "./AddEditGroupPhysioForm.module.scss";
 import { useContext, useState, useEffect } from "react";
-import { WarningMessage } from "../../../UI/Messages/Messages";
+import { ErrorMessage, WarningMessage } from "../../../UI/Messages/Messages";
 import {
   batchDeletePatients,
   deletePhysio,
@@ -106,10 +106,6 @@ const AddEditGroupPhysioForm = ({ workingHours, rootPath }) => {
     });
   };
 
-  useEffect(() => {
-    console.log(group);
-  }, [group]);
-
   const checkIsGroupTaken = (arr, val) => {
     return arr.some((arrValue) => {
       return JSON.stringify(arrValue) === JSON.stringify(val);
@@ -131,18 +127,34 @@ const AddEditGroupPhysioForm = ({ workingHours, rootPath }) => {
     setGroup((prevState) => [...prevState, groupConfig]);
   };
 
+  const handleQuery = (query, batch, setState, additionalData) => {
+    query.forEach((doc) => {
+      if (
+        doc.ref.id.includes(
+          `${additionalData.id}-${additionalData.workingDays}-${additionalData.workingHours}`
+        )
+      ) {
+        batch.delete(doc.ref);
+        setState((prevState) =>
+          prevState.filter((pat) => pat.id !== doc.ref.id)
+        );
+      }
+    });
+  };
+
   const removeGroupItemHandler = (e) => {
     const itemIndex = e.currentTarget.dataset.index;
     const itemsList = [...group];
     const updatedItemsList = itemsList.filter(
       (_, i) => i !== parseInt(itemIndex)
     );
-    const { workingDays, workingHours } = itemsList[itemIndex];
+    const targetedItem = itemsList[itemIndex];
+
     const targetedPatients = groupPatients.filter((patient) => {
       if (
         patient.physioId === id &&
-        patient.appointment.day === workingDays &&
-        patient.appointment.time === workingHours
+        patient.appointment.day === targetedItem.workingDays &&
+        patient.appointment.time === targetedItem.workingHours
       ) {
         return patient;
       }
@@ -172,36 +184,28 @@ const AddEditGroupPhysioForm = ({ workingHours, rootPath }) => {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            const { workingDays, workingHours } = itemsList[itemIndex];
-            const batchDelete = () => {
-              setIsLoading(true);
-              db.collection(groupsCollection)
-                .where("physioId", "==", id)
-                .get()
-                .then((query) => {
-                  const batch = db.batch();
-                  query.forEach((doc) => {
-                    if (
-                      doc.ref.id.includes(
-                        `${id}-${workingDays}-${workingHours}`
-                      )
-                    ) {
-                      batch.delete(doc.ref);
-                      setGroupPatients((prevState) =>
-                        prevState.filter((pat) => pat.id !== doc.ref.id)
-                      );
-                    }
-                  });
-                  return batch.commit();
-                })
-                .then(() => {
-                  setGroup(updatedItemsList);
-                  setIsLoading(false);
-                })
-                .catch((err) => console.log(err));
-            };
-            batchDelete();
+            setIsLoading(true);
+            batchDeletePatients(
+              groupsCollection,
+              "physioId",
+              id,
+              setGroupPatients,
+              setIsLoading,
+              handleQuery,
+              {
+                id,
+                workingDays: targetedItem.workingDays,
+                workingHours: targetedItem.workingHours,
+              }
+            );
           }
+        })
+        .then(() => {
+          setGroup(updatedItemsList);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          ErrorMessage(err);
         });
       return;
     }
@@ -226,7 +230,7 @@ const AddEditGroupPhysioForm = ({ workingHours, rootPath }) => {
       }
       return false;
     });
-    if (physioExists) {
+    if (isAddMode && physioExists) {
       WarningMessage(
         "This physio allready exists!",
         "Please create another physio",

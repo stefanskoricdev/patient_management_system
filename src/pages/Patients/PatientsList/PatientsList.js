@@ -20,8 +20,6 @@ const PatientsList = ({ rootPath }) => {
 
   const history = useHistory();
 
-  console.log(groupPatients);
-
   const allPatientsList = groupPatients.concat(individualPatients);
 
   const [patientsList, setPatientsList] = useState(allPatientsList);
@@ -43,6 +41,51 @@ const PatientsList = ({ rootPath }) => {
       inputRef: lastNameRef,
     },
   ];
+
+  const patientsListTableEl = patientsList.map((patient) => {
+    return (
+      <tr key={patient.id}>
+        <td>
+          <button
+            onClick={() => {
+              deleteData(
+                setIsLoading,
+                patient.type === "individual"
+                  ? setIndividualPatients
+                  : setGroupPatients,
+                patient.type === "individual"
+                  ? individualCollection
+                  : groupsCollection,
+                patient.id,
+                history,
+                rootPath
+              );
+            }}
+          >
+            <i className="fas fa-user-times"></i>
+          </button>
+          <Link
+            to={`${rootPath}/${patient.type}-patients/${
+              patient.physiotherapist.firstName
+            }${patient.physiotherapist.lastName}/edit-patient/${patient.id}${
+              patient.type === "individual" ? "index=0" : ""
+            }`}
+          >
+            <i className="fas fa-user-edit"></i>
+          </Link>
+        </td>
+        <td>{patient.firstName}</td>
+        <td>{patient.lastName}</td>
+        <td>{patient.dateOfBirth}</td>
+        <td>{patient.gender}</td>
+        <td>{patient.city}</td>
+        <td>{patient.address}</td>
+        <td>{patient.phone}</td>
+        <td>{patient.email}</td>
+        <td>{`${patient.physiotherapist.firstName} ${patient.physiotherapist.lastName}`}</td>
+      </tr>
+    );
+  });
 
   useEffect(() => {
     setPatientsList(groupPatients.concat(individualPatients));
@@ -88,50 +131,7 @@ const PatientsList = ({ rootPath }) => {
                 <th>Email</th>
                 <th>Physiotherapist</th>
               </tr>
-              {patientsList.map((patient) => {
-                return (
-                  <tr key={patient.id}>
-                    <td>
-                      <button
-                        onClick={() => {
-                          deleteData(
-                            setIsLoading,
-                            patient.type === "individual"
-                              ? setIndividualPatients
-                              : setGroupPatients,
-                            patient.type === "individual"
-                              ? individualCollection
-                              : groupsCollection,
-                            patient.id,
-                            history,
-                            rootPath
-                          );
-                        }}
-                      >
-                        <i className="fas fa-user-times"></i>
-                      </button>
-                      <Link
-                        to={`${rootPath}/${patient.type}-patients/${
-                          patient.physiotherapist.firstName
-                        }${patient.physiotherapist.lastName}/edit-patient/${
-                          patient.id
-                        }${patient.type === "individual" ? "index=0" : ""}`}
-                      >
-                        <i className="fas fa-user-edit"></i>
-                      </Link>
-                    </td>
-                    <td>{patient.firstName}</td>
-                    <td>{patient.lastName}</td>
-                    <td>{patient.dateOfBirth}</td>
-                    <td>{patient.gender}</td>
-                    <td>{patient.city}</td>
-                    <td>{patient.address}</td>
-                    <td>{patient.phone}</td>
-                    <td>{patient.email}</td>
-                    <td>{`${patient.physiotherapist.firstName} ${patient.physiotherapist.lastName}`}</td>
-                  </tr>
-                );
-              })}
+              {patientsListTableEl}
             </tbody>
           </table>
         )}
