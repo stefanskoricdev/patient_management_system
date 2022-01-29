@@ -132,7 +132,9 @@ export const deletePhysio = (
   patients,
   patientsCollection,
   setPatients,
-  setIsLoading
+  setIsLoading,
+  handleQuery,
+  additionalData
 ) => {
   mySwal
     .fire({
@@ -162,7 +164,15 @@ export const deletePhysio = (
               setIsLoading(false);
               return;
             }
-            batchDelete(patientsCollection, physio, setPatients, setIsLoading);
+            batchDeletePatients(
+              patientsCollection,
+              "physioId",
+              physio.id,
+              setPatients,
+              setIsLoading,
+              handleQuery,
+              additionalData
+            );
           })
           .catch((error) => {
             setIsLoading(false);
@@ -172,19 +182,22 @@ export const deletePhysio = (
     });
 };
 
-export const batchDelete = (collection, physio, setPatients, setIsLoading) => {
+export const batchDeletePatients = (
+  collection,
+  property,
+  data,
+  setPatients,
+  setIsLoading,
+  handleQuery,
+  additionalData
+) => {
   db.collection(collection)
-    .where("physioId", "==", physio.id)
+    .where(property, "==", data)
     .get()
     .then((query) => {
       const batch = db.batch();
 
-      query.forEach((doc) => {
-        batch.delete(doc.ref);
-        setPatients((prevState) =>
-          prevState.filter((data) => data.id !== doc.ref.id)
-        );
-      });
+      handleQuery(query, batch, setPatients, additionalData);
 
       return batch.commit();
     })

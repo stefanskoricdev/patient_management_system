@@ -12,6 +12,22 @@ const List = ({
   setIsLoading,
   deleteHandler,
 }) => {
+  const {
+    physiosCollection,
+    patientType,
+    patientTypeCollection,
+    setPatients,
+    setPhysios,
+  } = deletionData;
+
+  const handleBatchQuery = (query, batch, setState) => {
+    query.forEach((doc) => {
+      batch.delete(doc.ref);
+      setState((prevState) =>
+        prevState.filter((data) => data.id !== doc.ref.id)
+      );
+    });
+  };
   return (
     <Fragment>
       <header>
@@ -44,13 +60,6 @@ const List = ({
                       </Link>
                       <button
                         onClick={() => {
-                          const {
-                            physiosCollection,
-                            patientType,
-                            patientTypeCollection,
-                            setPatients,
-                            setPhysios,
-                          } = deletionData;
                           deleteHandler(
                             physiosCollection,
                             dataItem,
@@ -64,7 +73,8 @@ const List = ({
                             dataItem.physioType === "individual"
                               ? setPatients.individual
                               : setPatients.group,
-                            setIsLoading
+                            setIsLoading,
+                            handleBatchQuery
                           );
                         }}
                       >

@@ -116,28 +116,6 @@ const PatientDetails = ({ collection, physiotherapist, setShowAddPatient }) => {
               <li onClick={deleteHandler}>Delete</li>
             </Popover>
           </button>
-          {/* <ul
-            onClick={optionsClickHandler}
-            className={
-              !isOptionsOpen
-                ? styles.Options
-                : [styles.Options, styles["active"]].join(" ")
-            }
-          >
-            <Link
-              to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/edit-patient/${id}`}
-              onClick={() => setShowAddPatient(false)}
-            >
-              Edit
-            </Link>
-            <Link
-              to={`/patients/individual-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/add-appointment/${id}`}
-              onClick={() => setShowAddPatient(false)}
-            >
-              Add appointment
-            </Link>
-            <li onClick={deleteHandler}>Delete</li>
-          </ul> */}
         </header>
         <main>
           <h2>{`${pat.firstName} ${pat.lastName}`}</h2>

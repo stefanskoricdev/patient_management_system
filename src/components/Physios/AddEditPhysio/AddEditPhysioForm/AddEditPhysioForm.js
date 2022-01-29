@@ -1,5 +1,5 @@
 import styles from "./AddEditPhysioForm.module.scss";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { sendData, updateData } from "../../../actions/actions";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { Fragment } from "react";
@@ -20,16 +20,20 @@ const AddEditPhysioForm = ({ rootPath, workingDays, workingHours }) => {
 
   const isAddMode = !id;
 
-  let initialValue = {
+  const initialValue = useRef({
     firstName: "",
     lastName: "",
     email: "",
     phoneNumber: "",
-  };
-  let initialDaysValue = [];
-  let initialHoursValue = [];
-  let initialDaysCheckValue = new Array(workingDays.length).fill(false);
-  let initialHoursCheckValue = new Array(workingHours.length).fill(false);
+  });
+  const initialDaysValue = useRef([]);
+  const initialHoursValue = useRef([]);
+  const initialDaysCheckValue = useRef(
+    new Array(workingDays.length).fill(false)
+  );
+  const initialHoursCheckValue = useRef(
+    new Array(workingHours.length).fill(false)
+  );
   let physioToEdit;
 
   if (physios.length < 1 && !isAddMode) history.push(rootPath);
@@ -48,37 +52,63 @@ const AddEditPhysioForm = ({ rootPath, workingDays, workingHours }) => {
       return hours.substr(0, index);
     });
 
-    initialValue = {
+    initialValue.current = {
       firstName: physioToEdit.firstName,
       lastName: physioToEdit.lastName,
       email: physioToEdit.email,
       phoneNumber: physioToEdit.phoneNumber,
     };
 
-    initialDaysValue = [...physioToEdit.workingDays];
-    initialHoursValue = [...physioToEdit.workingHours];
+    initialDaysValue.current = [...physioToEdit.workingDays];
+    initialHoursValue.current = [...physioToEdit.workingHours];
 
     dayIndex.forEach((index) => {
       const transformedIndex = parseInt(index);
-      initialDaysCheckValue[transformedIndex] = true;
+      initialDaysCheckValue.current[transformedIndex] = true;
     });
     hoursIndex.forEach((index) => {
       const transformedIndex = parseInt(index);
-      initialHoursCheckValue[transformedIndex] = true;
+      initialHoursCheckValue.current[transformedIndex] = true;
     });
   }
 
-  const [inputValues, setInputValues] = useState(initialValue);
+  const [inputValues, setInputValues] = useState(initialValue.current);
 
-  const [daysInputValue, setDaysInputValue] = useState(initialDaysValue);
+  const [daysInputValue, setDaysInputValue] = useState(
+    initialDaysValue.current
+  );
   const [daysCheckedState, setDaysCheckedState] = useState(
-    initialDaysCheckValue
+    initialDaysCheckValue.current
   );
 
-  const [hoursInputValue, setHoursInputValue] = useState(initialHoursValue);
-  const [hoursCheckedState, setHoursCheckedState] = useState(
-    initialHoursCheckValue
+  const [hoursInputValue, setHoursInputValue] = useState(
+    initialHoursValue.current
   );
+  const [hoursCheckedState, setHoursCheckedState] = useState(
+    initialHoursCheckValue.current
+  );
+
+  useEffect(() => {
+    if (isAddMode) {
+      initialValue.current = {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+      };
+      initialDaysValue.current = [];
+      initialHoursValue.current = [];
+      initialDaysCheckValue.current = new Array(workingDays.length).fill(false);
+      initialHoursCheckValue.current = new Array(workingHours.length).fill(
+        false
+      );
+      setInputValues(initialValue.current);
+      setDaysInputValue(initialDaysValue.current);
+      setHoursInputValue(initialHoursValue.current);
+      setDaysCheckedState(initialDaysCheckValue.current);
+      setHoursCheckedState(initialHoursCheckValue.current);
+    }
+  }, [isAddMode, workingDays, workingHours]);
 
   const basicInfoInputs = [
     {
@@ -180,100 +210,98 @@ const AddEditPhysioForm = ({ rootPath, workingDays, workingHours }) => {
       );
     }
 
-    setDaysCheckedState(initialDaysCheckValue);
-    setHoursCheckedState(initialHoursCheckValue);
+    setDaysCheckedState(initialDaysCheckValue.current);
+    setHoursCheckedState(initialHoursCheckValue.current);
     history.push(rootPath);
   };
 
-  return (
-    <Fragment>
-      <form
-        onSubmit={submitHandler}
-        noValidate
-        className={styles.AddEditPhysioForm}
-      >
-        <h2>
-          {isAddMode
-            ? "Add Individual Physiotherapist"
-            : "Edit Individual Physiotherapist"}
-        </h2>
-        <div className={styles.BasicInfo}>
-          {basicInfoInputs.map((info) => {
-            const { label, name, type, value } = info;
+  const formEl = (
+    <form
+      onSubmit={submitHandler}
+      noValidate
+      className={styles.AddEditPhysioForm}
+    >
+      <h2>
+        {isAddMode
+          ? "Add Individual Physiotherapist"
+          : "Edit Individual Physiotherapist"}
+      </h2>
+      <div className={styles.BasicInfo}>
+        {basicInfoInputs.map((info) => {
+          const { label, name, type, value } = info;
+          return (
+            <FormInput
+              key={name}
+              label={label}
+              name={name}
+              type={type}
+              value={value}
+              onChange={handleBasicInputChange}
+            />
+          );
+        })}
+      </div>
+      <section className={styles.WorkingDays}>
+        <h3>Select working days:</h3>
+        <div>
+          {workingDays.map((day, i) => {
             return (
-              <FormInput
-                key={name}
-                label={label}
-                name={name}
-                type={type}
-                value={value}
-                onChange={handleBasicInputChange}
-              />
+              <label key={day}>
+                {day}
+                <input
+                  name={`${day}`}
+                  value={`${i}_${day}`}
+                  type="checkbox"
+                  onChange={(event) => {
+                    handleCheckboxChange(
+                      event,
+                      i,
+                      daysCheckedState,
+                      setDaysCheckedState,
+                      setDaysInputValue,
+                      daysInputValue
+                    );
+                  }}
+                  checked={daysCheckedState[i]}
+                />
+              </label>
             );
           })}
         </div>
-        <section className={styles.WorkingDays}>
-          <h3>Select working days:</h3>
-          <div>
-            {workingDays.map((day, i) => {
-              return (
-                <label key={day}>
-                  {day}
-                  <input
-                    name={`${day}`}
-                    value={`${i}_${day}`}
-                    type="checkbox"
-                    onChange={(event) => {
-                      handleCheckboxChange(
-                        event,
-                        i,
-                        daysCheckedState,
-                        setDaysCheckedState,
-                        setDaysInputValue,
-                        daysInputValue
-                      );
-                    }}
-                    checked={daysCheckedState[i]}
-                  />
-                </label>
-              );
-            })}
-          </div>
-        </section>
-        <section className={styles.WorkingHours}>
-          <h3>Select working hours:</h3>
-          <div>
-            {workingHours.map((hour, i) => {
-              return (
-                <label key={hour}>
-                  {hour}
-                  <input
-                    name={`${hour}`}
-                    value={`${i}_${hour}`}
-                    type="checkbox"
-                    onChange={(event) => {
-                      handleCheckboxChange(
-                        event,
-                        i,
-                        hoursCheckedState,
-                        setHoursCheckedState,
-                        setHoursInputValue,
-                        hoursInputValue
-                      );
-                    }}
-                    checked={hoursCheckedState[i]}
-                  />
-                </label>
-              );
-            })}
-          </div>
-        </section>
-        <button className={styles.SubmitBtn}>
-          {isAddMode ? "Add" : "Edit"}
-        </button>
-      </form>
-    </Fragment>
+      </section>
+      <section className={styles.WorkingHours}>
+        <h3>Select working hours:</h3>
+        <div>
+          {workingHours.map((hour, i) => {
+            return (
+              <label key={hour}>
+                {hour}
+                <input
+                  name={`${hour}`}
+                  value={`${i}_${hour}`}
+                  type="checkbox"
+                  onChange={(event) => {
+                    handleCheckboxChange(
+                      event,
+                      i,
+                      hoursCheckedState,
+                      setHoursCheckedState,
+                      setHoursInputValue,
+                      hoursInputValue
+                    );
+                  }}
+                  checked={hoursCheckedState[i]}
+                />
+              </label>
+            );
+          })}
+        </div>
+      </section>
+      <button className={styles.SubmitBtn}>{isAddMode ? "Add" : "Edit"}</button>
+    </form>
   );
+
+  return <Fragment>{formEl}</Fragment>;
 };
 
 export default AddEditPhysioForm;
