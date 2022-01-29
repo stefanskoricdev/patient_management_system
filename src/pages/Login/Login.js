@@ -17,6 +17,7 @@ const Login = () => {
   const handleClick = () => {
     setShowInfo(false);
   };
+
   return (
     <Fragment>
       {isLoading && <Loader />}

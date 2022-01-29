@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "dmf-patient-management-d003a"
+    "patient-management-app": "dmf-app-c1b0f"
   },
   "targets": {}
 }

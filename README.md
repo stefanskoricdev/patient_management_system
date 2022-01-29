@@ -12,7 +12,7 @@
 
 Patient management CRUD app created with ReactJS and Firebase.
 
-[LINK TO DEMO](https://dmf-patient-management-d003a.web.app)
+[LINK TO DEMO](https://dmf-app-c1b0f.web.app/login)
 
 Credentials:
 
