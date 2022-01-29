@@ -12,14 +12,6 @@ const List = ({
   setIsLoading,
   deleteHandler,
 }) => {
-  const {
-    physiosCollection,
-    patientType,
-    patientTypeCollection,
-    setPatients,
-    setPhysios,
-  } = deletionData;
-
   const handleBatchQuery = (query, batch, setState) => {
     query.forEach((doc) => {
       batch.delete(doc.ref);
@@ -60,6 +52,13 @@ const List = ({
                       </Link>
                       <button
                         onClick={() => {
+                          const {
+                            physiosCollection,
+                            patientType,
+                            patientTypeCollection,
+                            setPatients,
+                            setPhysios,
+                          } = deletionData;
                           deleteHandler(
                             physiosCollection,
                             dataItem,
