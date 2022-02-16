@@ -10,7 +10,7 @@
 
 ## General Info
 
-Patient management CRUD app created with ReactJS and Firebase.
+This is a clinical and practice management system for healthcare establishments, which helps user to manage patient records, treatments, scheduling and complete care.\ It is fully dynamic web app which allows user to create custom health care professional profile and schedule. It allows you to create patient profile with basic info and professional examination.\ User can also use centralized dashboard to gain visibility into key performance indicator as well as patient listing and important notes made by users. User can utilize this app using multiple devices like mobile, tablet, laptop or desktops.
 
 [LINK TO DEMO](https://dmf-app-c1b0f.web.app/login)
 
