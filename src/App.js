@@ -11,6 +11,7 @@ const Patients = lazy(() => import("./pages/Patients/Patients"));
 const Notes = lazy(() => import("./pages/Notes/Notes"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
 const Settings = lazy(() => import("./pages/Settings/Settings"));
+const About = lazy(() => import("./pages/About/About"));
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -54,6 +55,9 @@ function App() {
               </Route>
               <Route path="/profile">
                 <Profile />
+              </Route>
+              <Route path="/about">
+                <About />
               </Route>
               {isAdmin && (
                 <Route path="/settings">

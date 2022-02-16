@@ -1,0 +1,35 @@
+@import "../../assets/colors/colors";
+@import "../../assets/mixins/pages";
+
+.About {
+    @include pageWrapper;
+
+    @include pageHeader;
+
+    main {
+        height: 100%;
+        width: 60rem;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 1rem;
+        line-height: 1.5;
+        background-color: $dark-blue;
+        border-radius: .5rem;
+        font-size: .875rem;
+
+        ul {
+            padding-left: .5rem;
+
+            li {
+                margin: .5rem;
+                list-style: circle;
+            }
+        }
+    }
+}
+
+@media (min-width: 1023px) {
+    .About {
+        @include pageWrapper1023
+    }
+}

@@ -36,6 +36,9 @@ const MainHeader = ({ openNavHandler }) => {
           <li>
             <Link to="/profile">Profile</Link>
           </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
           <li onClick={logout}>Logout</li>
         </Popover>
       </div>
