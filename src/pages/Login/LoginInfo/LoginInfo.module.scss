@@ -1,58 +1,84 @@
 @import "../../../assets/colors/colors";
 
 .LoginInfoWrapper {
-    max-height: 95%;
-    width: 30rem;
-    max-width: calc(98% - 2rem);
-    border-radius: .3rem;
-    box-shadow: 5px 5px 20px $dark-blue;
-    background-color: $dark-blue;
-    overflow-y: scroll;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    width: 100%;
+    z-index: 200;
+    background: rgba(159, 186, 176, 0.40);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(17.5px);
+    -webkit-backdrop-filter: blur(17.5px);
 
-    img {
-        display: block;
-        height: 15rem;
-        margin: 0 auto;
-        padding: .5rem 0;
-    }
+    .LoginInfoContent {
+        width: 30rem;
+        min-height: calc(100vh - 1rem);
+        max-width: 95%;
+        margin-top: 1rem;
+        border-radius: .3rem;
+        box-shadow: 5px 5px 20px $dark-blue;
+        background-color: $dark-blue;
 
-    h2 {
-        text-align: center;
-    }
-
-    a {
-        color: rgb(85, 124, 252);
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    p,
-    ul {
-        padding: 0 1rem;
-    }
-
-    ul {
-        p {
-            padding: 0;
+        img {
+            display: block;
+            height: 15rem;
+            margin: 0 auto;
+            padding: .5rem 0;
         }
 
-        li {
-            span {
-                color: rgb(85, 124, 252);
+        h2 {
+            text-align: center;
+        }
+
+        a {
+            color: rgb(85, 124, 252);
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        p,
+        ul {
+            padding: 0 1rem;
+        }
+
+        ul {
+            p {
+                padding: 0;
+            }
+
+            li {
+                span {
+                    color: rgb(85, 124, 252);
+                }
             }
         }
-    }
 
-    button {
-        display: block;
-        margin: 2rem auto 1rem;
-        padding: .2rem .5rem;
-        font-size: 1rem;
-        font-weight: 700;
-        color: $dark-blue;
-        border-radius: .5rem;
-        border: none;
+        button {
+            display: block;
+            margin: 2rem auto 1rem;
+            padding: .2rem .5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: $dark-blue;
+            border-radius: .5rem;
+            border: none;
+        }
+    }
+}
+
+@media(min-height: 650px) {
+    .LoginInfoWrapper {
+        align-items: center;
+
+        .LoginInfoContent {
+            height: 650px;
+            min-height: 650px;
+        }
     }
 }

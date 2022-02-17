@@ -6,7 +6,6 @@ import AppContext from "../../store/AppProvider";
 import Loader from "../../components/UI/Loader/Loader";
 import LoginForm from "./LoginForm/LoginForm";
 import LoginInfo from "./LoginInfo/LoginInfo";
-import Backdrop from "../../components/UI/Backdrop/Backdrop";
 
 const Login = () => {
   const appCtx = useContext(AppContext);
@@ -27,11 +26,7 @@ const Login = () => {
           <img className={styles.LoginImg} src={logo} alt="login" />
         </section>
         <LoginForm setLoading={setIsLoading} />
-        {!isLoading && showInfo && (
-          <Backdrop>
-            <LoginInfo handleClick={handleShowInfo} />
-          </Backdrop>
-        )}
+        {showInfo && <LoginInfo handleClick={handleShowInfo} />}
       </section>
     </Fragment>
   );
