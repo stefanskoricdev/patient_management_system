@@ -32,7 +32,7 @@ const MainHeader = ({ openNavHandler }) => {
           src={profileImgUrl !== "" ? profileImgUrl : profileDefaultImg}
           alt="profileImg"
         />
-        <Popover isVisible={popoverShow}>
+        <Popover setIsVisible={setPopoverShow} isVisible={popoverShow}>
           <li>
             <Link to="/profile">Profile</Link>
           </li>

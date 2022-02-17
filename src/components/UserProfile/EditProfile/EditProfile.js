@@ -7,6 +7,10 @@ import FormInput from "../../UI/Forms/FormInput/FormInput";
 import AuthContext from "../../../store/AuthProvider";
 import validateForm from "../../../helpers/validateForm";
 import profileDefault from "../../../assets/img/profileDefault.png";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const mySwal = withReactContent(Swal);
 
 const EditProfile = () => {
   const authCtx = useContext(AuthContext);
@@ -21,8 +25,6 @@ const EditProfile = () => {
     setDisplayName,
   } = authCtx;
 
-  const storageRef = storage.ref();
-
   const [value, setValue] = useState({
     firstName: "",
     lastName: "",
@@ -30,7 +32,78 @@ const EditProfile = () => {
     dob: "",
   });
 
+  const [showRemoveBtn, setShowRemoveBtn] = useState(false);
+
+  const storageRef = storage.ref();
+
   const fileInput = useRef();
+
+  const toggleRemoveBtnHandler = () => {
+    if (profileImgUrl !== "") setShowRemoveBtn((prevState) => !prevState);
+  };
+
+  const removeProfileImgHandler = () => {
+    mySwal
+      .fire({
+        title: "Are you sure you want to delete data?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "rgb(197, 27, 21)",
+        cancelButtonColor: "rgb(101, 195, 157)",
+        confirmButtonText: "Yes, delete it!",
+      })
+      .then((res) => {
+        if (res.isConfirmed) {
+          setIsLoading(true);
+          storageRef
+            .child(`profileImages/${userId}`)
+            .listAll()
+            .then((res) => {
+              const userImgPath = `profileImages/${userId}/${res.items[0].name}`;
+              storageRef
+                .child(userImgPath)
+                .delete()
+                .then(() => {
+                  const { firstName, lastName, phoneNumber, dob, email } =
+                    value;
+                  const usersList = [...users];
+                  const updatedUser = {
+                    id: userId,
+                    firstName,
+                    lastName,
+                    phoneNumber,
+                    email,
+                    dob,
+                    profileImgUrl: "",
+                  };
+                  updateData(
+                    setIsLoading,
+                    usersCollection,
+                    userId,
+                    updatedUser,
+                    setUsers,
+                    usersList,
+                    ["profileImg"],
+                    [""]
+                  );
+                  return { imgUrl: "" };
+                })
+                .then((data) => {
+                  setProfileImgUrl(data.imgUrl);
+                })
+                .catch((err) => {
+                  setIsLoading(false);
+                  ErrorMessage(err);
+                });
+            })
+            .catch((err) => {
+              setIsLoading(false);
+              ErrorMessage(err);
+            });
+        }
+      });
+  };
 
   const editProfileHandler = (e) => {
     e.preventDefault();
@@ -56,7 +129,7 @@ const EditProfile = () => {
     const fileRef = fileInput.current.files[0];
     // If there is a file inside file input send files to firebase storage.
     if (fileRef) {
-      const profileImgsRef = storageRef.child(`profileImages/${userId}`);
+      const profileImgDirRef = storageRef.child(`profileImages/${userId}`);
       const imgRef = storageRef.child(
         `profileImages/${userId}/${fileRef.name}`
       );
@@ -67,7 +140,6 @@ const EditProfile = () => {
             snapshot.ref
               .getDownloadURL()
               .then((url) => {
-                console.log(url);
                 updatedUser = {
                   id: userId,
                   firstName: firstName,
@@ -100,7 +172,7 @@ const EditProfile = () => {
 
       //Check if user already has existing profile img.
       //If it has, delete it first and then add new one.
-      profileImgsRef.listAll().then((res) => {
+      profileImgDirRef.listAll().then((res) => {
         const responseItems = res.items;
         const targetedUserImg = responseItems.find((item) => item.name);
         if (!!targetedUserImg) {
@@ -189,9 +261,22 @@ const EditProfile = () => {
     <section className={styles.EditProfile}>
       <div className={styles.ProfileImg}>
         <img
+          onMouseEnter={toggleRemoveBtnHandler}
           src={profileImgUrl !== "" ? profileImgUrl : profileDefault}
           alt="userImg"
         />
+        <button
+          onClick={removeProfileImgHandler}
+          onMouseLeave={toggleRemoveBtnHandler}
+          className={
+            showRemoveBtn
+              ? [styles.RemoveImgBtn, styles["active"]].join(" ")
+              : styles.RemoveImgBtn
+          }
+        >
+          <i className="fas fa-trash-alt"></i>
+          <p>Remove</p>
+        </button>
       </div>
       <form onSubmit={editProfileHandler} className={styles.ProfileForm}>
         {formInputs.map((input) => (

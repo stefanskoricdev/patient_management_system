@@ -47,7 +47,7 @@ const GroupPatientDetails = ({ physiotherapist }) => {
         </div>
         <button onClick={optionsClickHandler} className={styles.OptionsBtn}>
           <i className="fas fa-ellipsis-h"></i>
-          <Popover isVisible={popoverShow}>
+          <Popover setIsVisible={setPopoverShow} isVisible={popoverShow}>
             <li>
               <Link
                 to={`/patients/group-patients/${physiotherapist.firstName.toLowerCase()}${physiotherapist.lastName.toLowerCase()}/edit-patient/${id}`}

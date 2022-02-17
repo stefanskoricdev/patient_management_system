@@ -2,8 +2,6 @@
 
 .Popover {
   position: absolute;
-  top: 100%;
-  left: 0;
   width: fit-content;
   min-width: 8rem;
   visibility: hidden;
@@ -13,6 +11,7 @@
   box-shadow: 5px 5px 5px rgba(49, 49, 49, 0.637);
   border-radius: 0.5rem;
   padding: 1rem 0.5rem;
+  z-index: 180;
 
   li {
     font-size: 1rem;
@@ -33,7 +32,7 @@
 
 .Popover.active {
   top: 100%;
-  left: 0;
+  left: -1.2rem;
   visibility: visible;
   opacity: 1;
   transition: all 200ms cubic-bezier(0.75, -0.02, 0.2, 0.97);
@@ -43,5 +42,11 @@
   li:hover {
     color: $dark-blue;
     transition: all 200ms linear;
+  }
+}
+
+@media(min-width: 1600px) {
+  .Popover.active {
+    left: 0;
   }
 }

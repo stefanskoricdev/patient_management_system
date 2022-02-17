@@ -18,6 +18,39 @@
             border-radius: 100%;
             background-color: $light-blue;
         }
+
+        .RemoveImgBtn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            visibility: hidden;
+            opacity: 0;
+            left: calc(50% - 5rem);
+            width: 10rem;
+            height: 10rem;
+            border-radius: 100%;
+            background-color: rgba(53, 52, 52, 0.8);
+            border: none;
+            cursor: pointer;
+            color: white;
+            transition: all 200ms linear;
+            font-size: 1.2rem;
+
+            p {
+                margin: 0 1rem;
+            }
+        }
+
+        .RemoveImgBtn:hover {
+            transform: scale(1);
+        }
+
+        .RemoveImgBtn.active {
+            visibility: visible;
+            opacity: 1;
+        }
     }
 
     .ProfileImg::before {
