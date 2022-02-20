@@ -28,8 +28,7 @@ export const AppProvider = ({ children }) => {
       getData(setIsLoading, setPhysios, PHYSIOS_COLLECTION);
     }
     //Getting data here and send trough app via context
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn]);
+  }, [isLoggedIn, setIsLoading]);
 
   useEffect(() => {
     setCurrentDate(getDate());
