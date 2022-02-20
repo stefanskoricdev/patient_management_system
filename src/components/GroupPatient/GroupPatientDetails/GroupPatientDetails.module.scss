@@ -4,7 +4,7 @@
   border-radius: 0.5rem;
   color: $dark-blue;
   font-weight: 600;
-  overflow: hidden;
+  overflow: visible;
 
   header {
     width: 100%;
@@ -44,6 +44,7 @@
       position: relative;
       width: 3rem;
       height: 2rem;
+      margin: .2rem;
       background-color: inherit;
       border: none;
       color: $light-blue;
