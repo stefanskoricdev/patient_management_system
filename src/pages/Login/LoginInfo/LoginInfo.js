@@ -1,8 +1,10 @@
+import ReactDOM from "react-dom";
 import styles from "../LoginInfo/LoginInfo.module.scss";
 import character from "../../../assets/img/guy_with_glasses.svg";
+import { Fragment } from "react";
 
 const LoginInfo = ({ handleClick }) => {
-  return (
+  const LoginInfoEl = (
     <section className={styles.LoginInfoWrapper}>
       <section className={styles.LoginInfoContent}>
         <img src={character} alt="desk-illustration" />
@@ -34,6 +36,14 @@ const LoginInfo = ({ handleClick }) => {
         <button onClick={handleClick}>Proceed</button>
       </section>
     </section>
+  );
+  return (
+    <Fragment>
+      {ReactDOM.createPortal(
+        LoginInfoEl,
+        document.getElementById("login-modal")
+      )}
+    </Fragment>
   );
 };
 
