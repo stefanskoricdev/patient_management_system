@@ -9,7 +9,8 @@ html {
 *:before,
 *:after {
   box-sizing: inherit;
-  scrollbar-color: rgb(159, 186, 176);
+  scrollbar-color: rgb(100, 101, 106) $dark-blue;
+  scrollbar-width: thin;
   -webkit-tap-highlight-color: transparent;
 }
 

@@ -9,7 +9,7 @@
             border: 2px solid $dark-blue;
             padding: .5rem;
             max-height: 40rem;
-            overflow: scroll;
+            overflow: auto;
 
             header {
                 display: flex;
@@ -29,7 +29,6 @@
 
             table {
                 display: block;
-                width: 100%;
                 border-collapse: collapse;
 
                 tbody {

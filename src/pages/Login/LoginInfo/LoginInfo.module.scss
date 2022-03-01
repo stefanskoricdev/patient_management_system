@@ -9,11 +9,16 @@
     height: 100%;
     min-height: 100vh;
     width: 100%;
-    z-index: 200;
-    background: rgba(159, 186, 176, 0.40);
+    background: rgba(71, 71, 71, 0.7);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(17.5px);
-    -webkit-backdrop-filter: blur(17.5px);
+
+    @supports(backdrop-filter: blur(17.5px)) {
+        background: rgba(159, 186, 176, 0.40);
+        backdrop-filter: blur(17.5px);
+        -webkit-backdrop-filter: blur(17.5px);
+    }
+
+    z-index: 199;
 
     .LoginInfoContent {
         width: 30rem;
